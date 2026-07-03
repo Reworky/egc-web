@@ -16,7 +16,7 @@ export default function TelegramLoginButton({
   onAuth,
 }: {
   botUsername: string;
-  onAuth: (user: object) => void;
+  onAuth: (user: Record<string, string>) => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
