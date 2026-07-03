@@ -7,9 +7,10 @@ function authHeader(): HeadersInit {
 }
 
 async function get<T>(path: string, auth = false): Promise<T> {
+  const isServer = typeof window === 'undefined';
   const res = await fetch(`${BASE}${path}`, {
     headers: auth ? authHeader() : {},
-    next: { revalidate: 60 },
+    ...(isServer ? { next: { revalidate: 60 } } : {}),
   });
   if (!res.ok) throw new Error(`API error ${res.status}`);
   return res.json();
