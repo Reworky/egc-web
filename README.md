@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EXPERIENCE GAMING CLUB — Web
 
-## Getting Started
+Веб-сайт EGC на Next.js 14 (App Router). Подключается к REST API Telegram-бота.
 
-First, run the development server:
+## Страницы
+
+| Страница | Путь | Описание |
+|----------|------|----------|
+| Главная | `/` | Hero, статистика клуба, рейтинг игроков |
+| Квесты | `/quests` | Каталог с фильтром по игре и сложности |
+| Магазин | `/shop` | Список наград с ценами в EXC |
+| Профиль | `/profile` | Личный кабинет, история квестов и заявок |
+
+## Стек
+
+- Next.js 16 (App Router, TypeScript)
+- Tailwind CSS v4
+- Шрифты: Orbitron (логотип/заголовки), Rajdhani (подзаголовки), Inter (текст)
+
+## API эндпоинты (бэкенд)
+
+Бэкенд — Spring Boot бот на порту 8080. Базовый URL задаётся через `NEXT_PUBLIC_API_URL`.
+
+| Endpoint | Используется на |
+|----------|----------------|
+| `GET /api/stats` | Главная |
+| `GET /api/leaderboard?type=overall\|weekly` | Главная |
+| `GET /api/quests` | Квесты |
+| `GET /api/quests/games` | Квесты |
+| `GET /api/shop/items` | Магазин |
+| `GET /api/profile` | Профиль (JWT) |
+| `GET /api/profile/submissions` | Профиль (JWT) |
+| `GET /api/profile/rewards` | Профиль (JWT) |
+
+## Запуск
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Открой [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Переменные окружения (.env.local)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8080
+NEXT_PUBLIC_BOT_USERNAME=EXPERIENCEgamingbot
+```
 
-## Learn More
+Для продакшена укажи реальный адрес сервера в `NEXT_PUBLIC_API_URL`.
 
-To learn more about Next.js, take a look at the following resources:
+## Деплой
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Совместим с Vercel, Nginx + Node.js, Docker. Перед деплоем обязательно обнови `NEXT_PUBLIC_API_URL` на адрес продакшен-сервера.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Связанные проекты
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **gamebot** — Spring Boot Telegram-бот + REST API
+- **egc-landing** — Статический лендинг EGC
