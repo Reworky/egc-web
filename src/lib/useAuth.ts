@@ -16,7 +16,7 @@ export function useAuth() {
       .finally(() => setLoading(false));
   }, []);
 
-  const login = useCallback(async (tgData: Record<string, string>) => {
+  const login = useCallback(async (tgData: Record<string, unknown>) => {
     const { token } = await api.authTelegram(tgData);
     localStorage.setItem('egc_token', token);
     const profile = await api.profile();
