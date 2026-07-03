@@ -90,7 +90,7 @@ export default async function ShopPage() {
         <p className="font-semibold text-white">Хочешь заказать награду или вывести EXC?</p>
         <p className="text-sm" style={{ color: 'var(--muted)' }}>Заявки оформляются через бот. Вывод доступен в рублях и USDT (Telegram Wallet, сеть TON)</p>
         <a
-          href="https://t.me/EXPERIENCEgamingbot"
+          href="https://t.me/invitetogamebot"
           target="_blank" rel="noopener noreferrer"
           className="btn-primary px-8 py-3 text-sm inline-flex items-center gap-2"
         >

@@ -50,7 +50,7 @@ export default async function Home() {
 
           <div className="flex gap-4 justify-center flex-wrap pt-2">
             <a
-              href="https://t.me/EXPERIENCEgamingbot"
+              href="https://t.me/invitetogamebot"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl text-base font-bold text-white transition-all"

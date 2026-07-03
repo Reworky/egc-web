@@ -2,8 +2,7 @@
 
 import { useAuth } from '@/lib/useAuth';
 import ProfileTabs from '@/components/ProfileTabs';
-
-const BOT_URL = 'https://t.me/EXPERIENCEgamingbot';
+import TelegramLoginButton from '@/components/TelegramLoginButton';
 
 export default function ProfilePage() {
   const { user, loading, login, logout } = useAuth();
@@ -24,26 +23,9 @@ export default function ProfilePage() {
         <p style={{ color: 'var(--muted)' }}>
           Войди через Telegram чтобы видеть баланс, историю квестов и заявки на награды
         </p>
-        <a
-          href={BOT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-white transition-all"
-          style={{
-            background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%)',
-            boxShadow: '0 0 30px rgba(168,85,247,0.5), 0 4px 20px rgba(0,0,0,0.4)',
-            fontFamily: "'Inter', sans-serif",
-            fontSize: '1rem',
-            letterSpacing: '0.03em',
-          }}
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="white" style={{ flexShrink: 0 }}>
-            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/>
-          </svg>
-          <span style={{ lineHeight: 1 }}>Открыть EGC</span>
-        </a>
+        <TelegramLoginButton botUsername="invitetogamebot" onAuth={login} />
         <p className="text-xs" style={{ color: 'var(--muted)' }}>
-          Зарегистрируйся в боте и возвращайся сюда
+          Войди через Telegram — аккаунт создаётся автоматически через бота
         </p>
       </div>
     );
