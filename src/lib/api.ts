@@ -31,12 +31,19 @@ export const api = {
   profile: () => get<UserProfile>('/api/profile', true),
   submissions: () => get<Submission[]>('/api/profile/submissions', true),
   rewards: () => get<RewardRequest[]>('/api/profile/rewards', true),
-  authTelegram: (data: Record<string, unknown>) =>
-    fetch(`${BASE}/api/auth/telegram`, {
+  authTelegram: async (data: Record<string, unknown>): Promise<{ token: string; registered: boolean }> => {
+    const r = await fetch(`${BASE}/api/auth/telegram`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-    }).then(r => r.json()) as Promise<{ token: string; registered: boolean }>,
+    });
+    const text = await r.text();
+    try {
+      return JSON.parse(text);
+    } catch {
+      throw new Error(`HTTP ${r.status}: ${text.substring(0, 300)}`);
+    }
+  },
 };
 
 export interface ClubStats {
