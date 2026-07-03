@@ -23,7 +23,7 @@ export default function TelegramLoginButton({
   useEffect(() => {
     if (!ref.current) return;
     // Telegram Login Widget ожидает глобальный колбэк
-    (window as any).onTelegramAuth = (user: TelegramUser) => onAuth(user);
+    (window as any).onTelegramAuth = (user: TelegramUser) => onAuth(user as unknown as Record<string, unknown>);
 
     const script = document.createElement('script');
     script.src = 'https://telegram.org/js/telegram-widget.js?22';
