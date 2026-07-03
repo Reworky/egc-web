@@ -30,7 +30,7 @@ export const api = {
   profile: () => get<UserProfile>('/api/profile', true),
   submissions: () => get<Submission[]>('/api/profile/submissions', true),
   rewards: () => get<RewardRequest[]>('/api/profile/rewards', true),
-  authTelegram: (data: Record<string, string>) =>
+  authTelegram: (data: Record<string, unknown>) =>
     fetch(`${BASE}/api/auth/telegram`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
