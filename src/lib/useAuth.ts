@@ -6,6 +6,7 @@ import { api, UserProfile } from './api';
 export function useAuth() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem('egc_token');
@@ -17,10 +18,16 @@ export function useAuth() {
   }, []);
 
   const login = useCallback(async (tgData: Record<string, unknown>) => {
-    const { token } = await api.authTelegram(tgData);
-    localStorage.setItem('egc_token', token);
-    const profile = await api.profile();
-    setUser(profile);
+    try {
+      setError(null);
+      const res = await api.authTelegram(tgData);
+      if (!res.token) { setError('Нет токена: ' + JSON.stringify(res)); return; }
+      localStorage.setItem('egc_token', res.token);
+      const profile = await api.profile();
+      setUser(profile);
+    } catch (e: unknown) {
+      setError(String(e));
+    }
   }, []);
 
   const logout = useCallback(() => {
@@ -28,5 +35,5 @@ export function useAuth() {
     setUser(null);
   }, []);
 
-  return { user, loading, login, logout };
+  return { user, loading, login, logout, error };
 }

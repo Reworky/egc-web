@@ -5,7 +5,7 @@ import ProfileTabs from '@/components/ProfileTabs';
 import TelegramLoginButton from '@/components/TelegramLoginButton';
 
 export default function ProfilePage() {
-  const { user, loading, login, logout } = useAuth();
+  const { user, loading, login, logout, error } = useAuth();
 
 
   if (loading) {
@@ -24,6 +24,11 @@ export default function ProfilePage() {
           Войди через Telegram чтобы видеть баланс, историю квестов и заявки на награды
         </p>
         <TelegramLoginButton botUsername="invitetogamebot" onAuth={login} />
+        {error && (
+          <div className="text-xs rounded-lg px-3 py-2 text-left break-all" style={{ background: '#ef444422', color: '#ef4444', border: '1px solid #ef444444' }}>
+            ❌ {error}
+          </div>
+        )}
         <p className="text-xs" style={{ color: 'var(--muted)' }}>
           Войди через Telegram — аккаунт создаётся автоматически через бота
         </p>
