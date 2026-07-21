@@ -31,6 +31,15 @@ export const api = {
   profile: () => get<UserProfile>('/api/profile', true),
   submissions: () => get<Submission[]>('/api/profile/submissions', true),
   rewards: () => get<RewardRequest[]>('/api/profile/rewards', true),
+  wheelStatus: () => get<WheelStatus>('/api/wheel', true),
+  wheelSpin: async (): Promise<SpinResponse> => {
+    const r = await fetch(`${BASE}/api/wheel/spin`, {
+      method: 'POST',
+      headers: { ...authHeader() },
+    });
+    if (!r.ok) throw new Error(`API error ${r.status}`);
+    return r.json();
+  },
   authTelegram: async (data: Record<string, unknown>): Promise<{ token: string; registered: boolean }> => {
     const r = await fetch(`${BASE}/api/auth/telegram`, {
       method: 'POST',
@@ -115,6 +124,22 @@ export interface Submission {
   moderatorComment: string | null;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface WheelStatus {
+  tickets: number;
+  spinsToday: number;
+  maxSpinsPerDay: number;
+}
+
+export interface SpinResponse {
+  success: boolean;
+  message: string;
+  type: string | null;
+  excAmount: number;
+  label: string | null;
+  newTickets: number;
+  spinsToday: number;
 }
 
 export interface RewardRequest {
