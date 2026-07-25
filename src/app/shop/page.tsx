@@ -27,12 +27,6 @@ export default async function ShopPage() {
             <span style={{ color: 'var(--muted)' }}>Курс:</span>
             <strong className="gradient-text-gold">100 EXC = 1 ₽</strong>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm"
-            style={{ background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.2)' }}>
-            <span>💎</span>
-            <span style={{ color: 'var(--muted)' }}>Вывод в</span>
-            <strong style={{ color: '#38bdf8' }}>GRAM (TON)</strong>
-          </div>
           {stats && (
             <div className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm"
               style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)' }}>
