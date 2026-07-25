@@ -13,7 +13,7 @@ export default function LeaderboardTabs({ initial }: { initial: LeaderboardEntry
     if (data[tab]) return;
     setLoading(true);
     api.leaderboard(tab)
-      .then(d => setData(prev => ({ ...prev, [tab]: d })))
+      .then(r => setData(prev => ({ ...prev, [tab]: r.entries })))
       .finally(() => setLoading(false));
   }, [tab]);
 

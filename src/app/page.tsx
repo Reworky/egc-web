@@ -8,13 +8,13 @@ const HOW_STEPS = [
   { icon: '🤖', title: 'Открой бота', desc: 'Зарегистрируйся в Telegram-боте EGC, выбери интересы и платформы.' },
   { icon: '🎯', title: 'Бери квесты', desc: 'Выполняй задания в любимых играх — от простых до сложных.' },
   { icon: '🪙', title: 'Получай EXC', desc: 'За каждый выполненный квест начисляются EXC и опыт. Чем сложнее — тем больше награда.' },
-  { icon: '🚀', title: 'Расти и выводи', desc: 'Прокачивай аккаунт EGC, повышай уровень и лимиты вывода. Конвертируй EXC в рубли или USDT — 100 EXC = 1 ₽.' },
+  { icon: '🚀', title: 'Расти и выводи', desc: 'Прокачивай аккаунт EGC, повышай уровень и лимиты вывода. Конвертируй EXC в рубли или GRAM (TON) — 100 EXC = 1 ₽.' },
 ];
 
 export default async function Home() {
   const [stats, leaderboard] = await Promise.all([
     api.stats().catch(() => null),
-    api.leaderboard('overall').catch(() => []),
+    api.leaderboard('overall').catch(() => ({ entries: [], me: null })),
   ]);
 
   return (
@@ -124,7 +124,7 @@ export default async function Home() {
       {/* ── Рейтинг ── */}
       <section className="space-y-6">
         <h2 className="section-title">Рейтинг игроков</h2>
-        <LeaderboardTabs initial={leaderboard} />
+        <LeaderboardTabs initial={leaderboard.entries} />
       </section>
 
     </div>

@@ -19,7 +19,7 @@ async function get<T>(path: string, auth = false): Promise<T> {
 export const api = {
   stats: () => get<ClubStats>('/api/stats'),
   leaderboard: (type: 'overall' | 'weekly' = 'overall') =>
-    get<LeaderboardEntry[]>(`/api/leaderboard?type=${type}`),
+    get<LeaderboardResponse>(`/api/leaderboard?type=${type}`),
   quests: (params?: { game?: string; category?: string }) => {
     const q = new URLSearchParams();
     if (params?.game) q.set('game', params.game);
@@ -72,6 +72,13 @@ export interface LeaderboardEntry {
   profileTitle: string | null;
   xp: number;
   completedQuests: number;
+  leagueName?: string | null;
+  leagueExcPrize?: number;
+}
+
+export interface LeaderboardResponse {
+  entries: LeaderboardEntry[];
+  me: LeaderboardEntry | null;
 }
 
 export interface Quest {
