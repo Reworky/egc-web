@@ -31,7 +31,7 @@ export default async function ShopPage() {
             style={{ background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.2)' }}>
             <span>💎</span>
             <span style={{ color: 'var(--muted)' }}>Вывод в</span>
-            <strong style={{ color: '#38bdf8' }}>USDT · TON</strong>
+            <strong style={{ color: '#38bdf8' }}>GRAM (TON)</strong>
           </div>
           {stats && (
             <div className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm"
@@ -88,7 +88,7 @@ export default async function ShopPage() {
       <div className="card p-6 text-center space-y-4"
         style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.1), rgba(236,72,153,0.05))' }}>
         <p className="font-semibold text-white">Хочешь заказать награду или вывести EXC?</p>
-        <p className="text-sm" style={{ color: 'var(--muted)' }}>Заявки оформляются через бот. Вывод доступен в рублях и USDT (Telegram Wallet, сеть TON)</p>
+        <p className="text-sm" style={{ color: 'var(--muted)' }}>Заявки оформляются через бот. Вывод доступен в рублях и GRAM (Telegram Wallet, сеть TON)</p>
         <a
           href="https://t.me/invitetogamebot"
           target="_blank" rel="noopener noreferrer"
