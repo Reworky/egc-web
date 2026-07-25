@@ -29,31 +29,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-6">
         {/* Логотип */}
         <Link href="/" className="shrink-0 flex items-center gap-2 group">
-          <img src="/logo.png" alt="EGC" style={{ width: 36, height: 36, objectFit: 'contain', mixBlendMode: 'screen', flexShrink: 0 }} />
-          <div className="hidden sm:flex flex-col leading-none">
-            <span style={{
-              fontFamily: "'Orbitron', sans-serif",
-              fontWeight: 900,
-              fontSize: '0.95rem',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'white',
-            }}>
-              EXPERIENCE
-            </span>
-            <span style={{
-              fontFamily: "'Rajdhani', sans-serif",
-              fontWeight: 700,
-              fontSize: '0.65rem',
-              letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-              background: 'linear-gradient(135deg, #a855f7, #f472b6)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}>
-              GAMING CLUB
-            </span>
-          </div>
+          <img src="/logo.png" alt="EGC" style={{ width: 40, height: 40, objectFit: 'contain', mixBlendMode: 'screen', flexShrink: 0 }} />
         </Link>
 
         {/* Навигация */}
