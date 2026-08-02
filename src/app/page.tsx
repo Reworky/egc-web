@@ -79,11 +79,13 @@ export default async function Home() {
       </section>
 
       {/* ── Как это работает ── */}
-      <section className="space-y-6">
-        <h2 className="section-title">Как это работает</h2>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <section className="space-y-6" style={{ position: 'relative', overflow: 'hidden' }}>
+        <div className="section-glow-blob" style={{ width: 400, height: 400, background: 'rgba(58,100,237,0.10)', top: -80, left: -100 }} />
+        <div className="section-glow-blob" style={{ width: 280, height: 280, background: 'rgba(155,58,237,0.08)', bottom: -60, right: -60 }} />
+        <h2 className="section-title" style={{ position: 'relative' }}>Как это работает</h2>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4" style={{ position: 'relative' }}>
           {HOW_STEPS.map((step, i) => (
-            <div key={i} className="card p-6 space-y-3">
+            <div key={i} className="card card-sweep how-step p-6 space-y-3">
               <div className="flex items-center gap-3">
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0"
@@ -109,22 +111,26 @@ export default async function Home() {
 
       {/* ── Статистика ── */}
       {stats && (
-        <section className="space-y-6">
-          <h2 className="section-title">Статистика клуба</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <StatCard label="Игроков в клубе"      value={stats.totalPlayers.toLocaleString('ru')}          icon="👥" />
-            <StatCard label="Квестов выполнено"     value={stats.totalQuestsCompleted.toLocaleString('ru')}  icon="✅" />
-            <StatCard label="EXC выдано"            value={stats.totalExcIssued.toLocaleString('ru')}        icon="🪙" accent="#fbbf24" />
-            <StatCard label="Топ игра"              value={stats.topGame || '—'}                             icon="🎮" />
-            <StatCard label="Здоровье фонда"        value={`${stats.healthRatioPercent}%`}                   icon="📈" accent="#4ade80" />
+        <section className="space-y-6" style={{ position: 'relative', overflow: 'hidden' }}>
+          <div className="section-glow-blob" style={{ width: 360, height: 360, background: 'rgba(155,58,237,0.10)', top: '50%', right: -80, transform: 'translateY(-50%)' }} />
+          <h2 className="section-title" style={{ position: 'relative' }}>Статистика клуба</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3" style={{ position: 'relative' }}>
+            <div className="stat-item"><StatCard label="Игроков в клубе"      value={stats.totalPlayers.toLocaleString('ru')}          icon="👥" /></div>
+            <div className="stat-item"><StatCard label="Квестов выполнено"     value={stats.totalQuestsCompleted.toLocaleString('ru')}  icon="✅" /></div>
+            <div className="stat-item"><StatCard label="EXC выдано"            value={stats.totalExcIssued.toLocaleString('ru')}        icon="🪙" accent="#fbbf24" /></div>
+            <div className="stat-item"><StatCard label="Топ игра"              value={stats.topGame || '—'}                             icon="🎮" /></div>
+            <div className="stat-item"><StatCard label="Здоровье фонда"        value={`${stats.healthRatioPercent}%`}                   icon="📈" accent="#4ade80" /></div>
           </div>
         </section>
       )}
 
       {/* ── Рейтинг ── */}
-      <section className="space-y-6">
-        <h2 className="section-title">Рейтинг игроков</h2>
-        <LeaderboardTabs initial={leaderboard.entries} />
+      <section className="space-y-6" style={{ position: 'relative', overflow: 'hidden' }}>
+        <div className="section-glow-blob" style={{ width: 500, height: 500, background: 'rgba(58,100,237,0.08)', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
+        <h2 className="section-title" style={{ position: 'relative' }}>Рейтинг игроков</h2>
+        <div style={{ position: 'relative' }}>
+          <LeaderboardTabs initial={leaderboard.entries} />
+        </div>
       </section>
 
     </div>

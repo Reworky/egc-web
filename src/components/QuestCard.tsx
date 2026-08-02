@@ -17,7 +17,7 @@ export default function QuestCard({ quest }: { quest: Quest }) {
   const lineColor = CAT_LINE[quest.category] ?? '#7c3aed';
 
   return (
-    <div className="card flex flex-col overflow-hidden" style={{ padding: 0 }}>
+    <div className="card card-sweep flex flex-col overflow-hidden" style={{ padding: 0 }}>
       {/* цветная полоска */}
       <div className="h-0.5 w-full" style={{ background: `linear-gradient(90deg, ${lineColor}, transparent)` }} />
 

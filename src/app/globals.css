@@ -221,3 +221,41 @@ h1, h2 {
 .rank-1 { background: linear-gradient(90deg, rgba(251,191,36,0.08) 0%, transparent 100%) !important; }
 .rank-2 { background: linear-gradient(90deg, rgba(203,213,225,0.06) 0%, transparent 100%) !important; }
 .rank-3 { background: linear-gradient(90deg, rgba(205,127,50,0.06) 0%, transparent 100%) !important; }
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.52s ease, transform 0.52s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── Light sweep on cards ── */
+.card-sweep { position: relative; overflow: hidden; }
+.card-sweep::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 25%, rgba(255,255,255,0.06) 50%, transparent 75%);
+  transition: left 0.55s ease;
+  pointer-events: none;
+}
+.card-sweep:hover::after { left: 140%; }
+
+/* ── Section glow blobs ── */
+.section-glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(70px);
+  z-index: 0;
+}
