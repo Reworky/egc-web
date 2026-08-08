@@ -9,7 +9,9 @@ export const metadata: Metadata = {
   title: 'EXPERIENCE GAMING CLUB',
   description: 'Выполняй квесты, зарабатывай EXC, выводи реальные деньги',
   icons: {
-    icon: '/logo.png',
+    icon: [
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+    ],
     apple: '/apple-icon.png',
   },
 };
