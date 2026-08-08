@@ -48,7 +48,10 @@ export default function Navbar() {
           WebkitBackdropFilter: 'blur(20px)',
         }}
       >
-        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
+        <div
+          className="max-w-6xl mx-auto h-14 flex items-center justify-between gap-4"
+          style={{ paddingLeft: 'max(16px, env(safe-area-inset-left))', paddingRight: 'max(16px, env(safe-area-inset-right))' }}
+        >
 
           {/* Логотип */}
           <Link href="/" className="shrink-0 flex items-center gap-2">
@@ -102,9 +105,15 @@ export default function Navbar() {
           </div>
 
           {/* Мобильный правый блок: Auth + бургер */}
-          <div className="flex md:hidden items-center gap-3">
-            {/* Войти показываем только когда меню закрыто */}
-            {!user && !open && (
+          <div className="flex md:hidden items-center gap-2">
+            {user ? (
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
+                style={{ background: 'linear-gradient(135deg, var(--accent), var(--pink))' }}
+              >
+                {user.nickname.charAt(0).toUpperCase()}
+              </div>
+            ) : (
               <Link href="/profile" className="btn-primary px-3 py-1 text-xs inline-block">
                 Войти
               </Link>
@@ -114,8 +123,12 @@ export default function Navbar() {
             <button
               onClick={() => setOpen(v => !v)}
               aria-label="Меню"
-              className="flex flex-col justify-center items-center w-9 h-9 rounded-lg gap-1.5"
-              style={{ border: '1px solid rgba(124,58,237,0.3)', background: 'rgba(124,58,237,0.1)' }}
+              className="flex flex-col justify-center items-center rounded-lg gap-1.5"
+              style={{
+                width: 36, height: 36, flexShrink: 0,
+                border: '1px solid rgba(124,58,237,0.3)',
+                background: 'rgba(124,58,237,0.1)',
+              }}
             >
               <span
                 style={{
