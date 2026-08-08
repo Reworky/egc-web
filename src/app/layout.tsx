@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <img src="/logo.png" alt="EGC" style={{ width: 28, height: 28, objectFit: 'contain', mixBlendMode: 'screen', flexShrink: 0 }} />
               Experience Gaming Club
             </span>
-<span>© 2025 EGC. Все права защищены.</span>
+<span>© {new Date().getFullYear()} EGC. Все права защищены.</span>
           </div>
         </footer>
       </body>
