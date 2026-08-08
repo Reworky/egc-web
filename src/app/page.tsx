@@ -4,12 +4,6 @@ import LeaderboardTabs from '@/components/LeaderboardTabs';
 
 export const revalidate = 60;
 
-const HOW_STEPS = [
-  { icon: '🤖', title: 'Открой бота', desc: 'Зарегистрируйся в Telegram-боте EGC, выбери интересы и платформы.' },
-  { icon: '🎯', title: 'Бери квесты', desc: 'Выполняй задания в любимых играх — от простых до сложных.' },
-  { icon: '🪙', title: 'Получай EXC', desc: 'За каждый выполненный квест начисляются EXC и опыт. Чем сложнее — тем больше награда.' },
-  { icon: '🚀', title: 'Расти и выводи', desc: 'Прокачивай аккаунт EGC, повышай уровень и лимиты вывода. Конвертируй EXC в рубли или GRAM (TON) — 100 EXC = 1 ₽.' },
-];
 
 export default async function Home() {
   const [stats, leaderboard] = await Promise.all([
@@ -75,37 +69,6 @@ export default async function Home() {
               Смотреть квесты
             </a>
           </div>
-        </div>
-      </section>
-
-      {/* ── Как это работает ── */}
-      <section className="space-y-6" style={{ position: 'relative', overflow: 'hidden' }}>
-        <div className="section-glow-blob" style={{ width: 400, height: 400, background: 'rgba(58,100,237,0.10)', top: -80, left: -100 }} />
-        <div className="section-glow-blob" style={{ width: 280, height: 280, background: 'rgba(155,58,237,0.08)', bottom: -60, right: -60 }} />
-        <h2 className="section-title" style={{ position: 'relative' }}>Как это работает</h2>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4" style={{ position: 'relative' }}>
-          {HOW_STEPS.map((step, i) => (
-            <div key={i} className="card card-sweep how-step p-6 space-y-3">
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0"
-                  style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.3), rgba(236,72,153,0.2))' }}
-                >
-                  {step.icon}
-                </div>
-                <div
-                  className="text-lg font-black"
-                  style={{ background: 'linear-gradient(90deg, white, #a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
-                >
-                  {i + 1}.
-                </div>
-              </div>
-              <div>
-                <div className="font-bold text-white">{step.title}</div>
-                <p className="text-sm mt-1" style={{ color: 'var(--muted)' }}>{step.desc}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
