@@ -9,6 +9,7 @@ const links = [
   { href: '/quests',  label: 'Квесты'  },
   { href: '/shop',    label: 'Магазин' },
   { href: '/wheel',   label: '🎰 Колесо' },
+  { href: '/about',   label: 'О платформе' },
   { href: '/profile', label: 'Профиль' },
 ];
 
