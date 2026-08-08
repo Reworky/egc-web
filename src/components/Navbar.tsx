@@ -103,14 +103,8 @@ export default function Navbar() {
 
           {/* Мобильный правый блок: Auth + бургер */}
           <div className="flex md:hidden items-center gap-3">
-            {user ? (
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
-                style={{ background: 'linear-gradient(135deg, var(--accent), var(--pink))' }}
-              >
-                {user.nickname.charAt(0).toUpperCase()}
-              </div>
-            ) : (
+            {/* Войти показываем только когда меню закрыто */}
+            {!user && !open && (
               <Link href="/profile" className="btn-primary px-3 py-1 text-xs inline-block">
                 Войти
               </Link>
@@ -169,6 +163,21 @@ export default function Navbar() {
           }}
         >
           <div className="flex flex-col p-4 gap-1 overflow-y-auto">
+            {/* Блок пользователя вверху меню */}
+            {user && (
+              <div
+                className="flex items-center gap-3 px-4 py-3 mb-2 rounded-xl"
+                style={{ background: 'rgba(124,58,237,0.12)', border: '1px solid rgba(124,58,237,0.2)' }}
+              >
+                <div
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
+                  style={{ background: 'linear-gradient(135deg, var(--accent), var(--pink))' }}
+                >
+                  {user.nickname.charAt(0).toUpperCase()}
+                </div>
+                <span className="font-semibold" style={{ color: 'white' }}>{user.nickname}</span>
+              </div>
+            )}
             {links.map(l => (
               <Link
                 key={l.href}
