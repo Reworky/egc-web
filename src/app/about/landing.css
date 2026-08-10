@@ -192,6 +192,7 @@
 }
 
 .landing-page .hero h1 {
+  font-family: 'Inter', sans-serif;
   font-size: clamp(38px, 7vw, 72px);
   font-weight: 900;
   line-height: 1.05;
@@ -201,6 +202,8 @@
 }
 
 .landing-page .hero h1 .accent {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
   color: var(--purple-light);
 }
 
