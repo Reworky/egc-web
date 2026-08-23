@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import BackgroundCanvas from '@/components/BackgroundCanvas';
 import ScrollRevealInit from '@/components/ScrollRevealInit';
+import YandexAd from '@/components/YandexAd';
 
 export const metadata: Metadata = {
   title: 'EXPERIENCE GAMING CLUB',
@@ -29,6 +30,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gtag('js', new Date());
           gtag('config', 'G-W5XKYX6MDJ');
         `}</Script>
+        <Script id="yandex-rtb-init" strategy="afterInteractive">{`
+          window.yaContextCb = window.yaContextCb || [];
+        `}</Script>
+        <Script src="https://yandex.ru/ads/system/context.js" strategy="afterInteractive" async />
       </head>
       <body className="min-h-full flex flex-col">
         <BackgroundCanvas />
@@ -37,6 +42,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ScrollRevealInit />
         <main className="flex-1 page-content">{children}</main>
         <footer className="page-content border-t py-8 text-center text-sm" style={{ borderColor: 'var(--border)', color: 'var(--muted)' }}>
+          <div className="max-w-6xl mx-auto px-4 mb-6">
+            <YandexAd blockId="R-A-19801285-1" />
+          </div>
           <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
             <span className="font-semibold flex items-center gap-2" style={{ color: 'white' }}>
               <img src="/logo.png" alt="EGC" style={{ width: 28, height: 28, objectFit: 'contain', mixBlendMode: 'screen', flexShrink: 0 }} />
