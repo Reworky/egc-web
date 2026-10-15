@@ -3,11 +3,16 @@ import { api, Quest } from '@/lib/api';
 import LeaderboardTabs from '@/components/LeaderboardTabs';
 import CountUp from '@/components/CountUp';
 import PayoutFeed from '@/components/PayoutFeed';
+import Reviews from '@/components/Reviews';
 import './home.css';
 
 export const revalidate = 60;
 
 const BOT_URL = 'https://t.me/invitetogamebot';
+const REVIEWS_URL = 'https://t.me/egc_payouts';
+// Цель первого вывода и стартовый бонус: те же числа, что в боте (WalletController.MIN_WITHDRAWAL, WELCOME_BONUS_EXC)
+const FIRST_WITHDRAWAL_EXC = 5000;
+const WELCOME_BONUS_EXC = 200;
 
 const FEATURES = [
   { icon: '🎯', title: 'Квесты по играм', text: 'Brawl Stars, Clash Royale, Clash of Clans, PUBG и другие. Награда в EXC видна до старта, а для многих квестов прогресс считается сам.', href: '/quests', cta: 'Каталог квестов' },
@@ -22,6 +27,9 @@ const FAQ = [
   { q: 'Это правда бесплатно?', a: 'Да. Вступить и играть в клубе бесплатно, регистрация проходит через Telegram. За регистрацию бот сразу начисляет 200 EXC стартового капитала.' },
   { q: 'Как выводятся деньги?', a: 'EXC можно вывести на карту по СБП, в Telegram Stars или в GRAM. Актуальные лимиты и курс всегда показывает бот, а последние выплаты видны выше на этой странице.' },
   { q: 'Нужен ли пароль от игрового аккаунта?', a: 'Нет. Достаточно игрового тега или скриншота. Никому не передавай вход в аккаунт: ни клубу, ни «помощникам».' },
+  { q: 'Как быстро приходят деньги?', a: 'После заявки на вывод её проверяет администратор, затем выплата уходит выбранным способом. Статус заявки виден в боте, а готовые выплаты появляются в ленте выше.' },
+  { q: 'Безопасны ли мои данные?', a: 'Мы работаем только с твоим Telegram-аккаунтом и игровым тегом. Пароли, коды подтверждения и вход в игровой аккаунт нам не нужны, и мы их никогда не просим.' },
+  { q: 'Как связаться с поддержкой?', a: 'Напиши в раздел поддержки в боте: ответим там же. Если вопрос про сотрудничество, смотри страницу «Партнёрам».' },
   { q: 'Как проверяются квесты?', a: 'Часть квестов проверяется автоматически по игровому тегу, остальные подтверждаются скриншотом, который смотрит модератор.' },
 ];
 
@@ -42,6 +50,15 @@ function pickFeatured(quests: Quest[]): Quest[] {
   return [...best.values()].sort((a, b) => b.rewardCoins - a.rewardCoins).slice(0, 6);
 }
 
+/** Типичная награда за квест (медиана по обычным квестам): на ней считаем «путь до первой выплаты». */
+function typicalReward(quests: Quest[]): number {
+  const r = quests
+    .filter(q => !q.councilOnly && !q.sponsored && !q.externalAutoApprove && !q.campaignClosed && q.rewardCoins > 0)
+    .map(q => q.rewardCoins)
+    .sort((a, b) => a - b);
+  return r.length ? r[Math.floor(r.length / 2)] : 0;
+}
+
 export default async function Home() {
   const [stats, leaderboard, quests, games] = await Promise.all([
     api.stats().catch(() => null),
@@ -50,6 +67,8 @@ export default async function Home() {
     api.games().catch(() => [] as string[]),
   ]);
   const featured = pickFeatured(quests);
+  const typical = typicalReward(quests);
+  const questsToFirst = typical > 0 ? Math.ceil((FIRST_WITHDRAWAL_EXC - WELCOME_BONUS_EXC) / typical) : 0;
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
@@ -72,6 +91,11 @@ export default async function Home() {
             </a>
             <Link href="/quests" className="hm-btn hm-btn-ghost">Смотреть квесты</Link>
           </div>
+          <ul className="hm-perks">
+            <li>🎁 {WELCOME_BONUS_EXC} EXC за регистрацию</li>
+            <li>🆓 Вступление бесплатно</li>
+            <li>💸 Вывод: СБП · Stars · GRAM</li>
+          </ul>
         </div>
       </section>
 
@@ -107,6 +131,20 @@ export default async function Home() {
             </div>
           ))}
         </div>
+        {questsToFirst > 0 && (
+          <div className="hm-path">
+            <div className="hm-path-top">
+              <b>Путь до первой выплаты</b>
+              <span>≈ {questsToFirst} {questsToFirst % 10 === 1 && questsToFirst % 100 !== 11 ? 'квест' : [2, 3, 4].includes(questsToFirst % 10) && ![12, 13, 14].includes(questsToFirst % 100) ? 'квеста' : 'квестов'} по {typical.toLocaleString('ru')} EXC</span>
+            </div>
+            <div className="hm-path-bar" aria-hidden="true"><i /></div>
+            <div className="hm-path-scale">
+              <span>🎁 {WELCOME_BONUS_EXC} EXC в подарок</span>
+              <span>🎯 {FIRST_WITHDRAWAL_EXC.toLocaleString('ru')} EXC — можно выводить</span>
+            </div>
+            <p>Расчёт по типичной награде за квест сейчас. Реальный путь зависит от выбранных квестов и твоей активности.</p>
+          </div>
+        )}
       </section>
 
       {/* ── Что внутри клуба ── */}
@@ -183,6 +221,9 @@ export default async function Home() {
         </section>
       )}
 
+      {/* ── Отзывы ── */}
+      <Reviews channelUrl={REVIEWS_URL} />
+
       {/* ── Рейтинг ── */}
       <section className="hm-section reveal" style={{ position: 'relative', overflow: 'hidden' }}>
         <div className="hm-head">
@@ -233,6 +274,10 @@ export default async function Home() {
         <p>Открой бота в Telegram, привяжи игровой тег и забери первый квест: награда видна до старта.</p>
         <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">🚀 Открыть EGC в Telegram</a>
       </section>
+
+      <p className="hm-disclaimer">
+        Награды и выплаты зависят от выполнения квестов и проверки результата, они не гарантируются. Суммы в рублях ориентировочные: курс вывода зависит от состояния фонда клуба. Цифры на странице обновляются автоматически.
+      </p>
     </div>
   );
 }

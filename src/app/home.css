@@ -29,6 +29,10 @@
 .hm-live i { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; animation: hm-pulse 1.4s ease-in-out infinite; }
 .hm-pay-totals { display: grid; gap: 12px; grid-template-columns: 1fr; margin-bottom: 14px; }
 @media (min-width: 640px) { .hm-pay-totals { grid-template-columns: 1fr 1fr; } }
+.hm-pay-totals.with-total { grid-template-columns: 1fr; }
+@media (min-width: 640px) { .hm-pay-totals.with-total { grid-template-columns: 1fr 1fr; } .hm-pay-total-main { grid-column: 1 / -1; } }
+.hm-pay-total-main { background: linear-gradient(135deg, rgba(245,158,11,.24), rgba(124,58,237,.16)); border-color: rgba(245,158,11,.5); }
+.hm-pay-total-main b { font-size: clamp(34px, 6vw, 50px); }
 .hm-pay-total { padding: 18px 20px; border-radius: 16px; background: linear-gradient(135deg, rgba(245,158,11,.14), rgba(15,15,34,.75)); border: 1px solid rgba(245,158,11,.3); }
 .hm-pay-total b { display: block; font-family: 'Exo 2', sans-serif; font-weight: 800; font-size: clamp(28px, 5vw, 38px); line-height: 1.1; background: linear-gradient(135deg, #fde68a, #f59e0b); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .hm-pay-total span { display: block; margin-top: 4px; font-size: 13px; color: var(--muted); }
@@ -126,6 +130,32 @@
 .hm-faq-item summary::after { content: '+'; font-size: 22px; color: #a78bfa; transition: transform .2s; }
 .hm-faq-item[open] summary::after { transform: rotate(45deg); }
 .hm-faq-item p { padding: 0 20px 18px; color: #94a3b8; font-size: 14px; line-height: 1.6; }
+
+/* Плюсы под кнопками героя */
+.hm-perks { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 12px; margin: 22px 0 0; padding: 0; list-style: none; }
+.hm-perks li { padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #ddd6fe; background: rgba(124,58,237,.14); border: 1px solid rgba(168,85,247,.28); }
+
+/* Путь до первой выплаты */
+.hm-path { margin-top: 18px; padding: 20px 22px; border-radius: 18px; background: linear-gradient(135deg, rgba(245,158,11,.1), rgba(15,15,34,.8)); border: 1px solid rgba(245,158,11,.28); }
+.hm-path-top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px 14px; }
+.hm-path-top b { font-family: 'Exo 2', sans-serif; font-weight: 800; font-size: 18px; text-transform: uppercase; letter-spacing: .03em; color: #fff; }
+.hm-path-top span { font-weight: 700; color: #fbbf24; }
+.hm-path-bar { height: 10px; margin: 14px 0 8px; border-radius: 999px; background: rgba(255,255,255,.07); overflow: hidden; }
+.hm-path-bar i { display: block; width: 4%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #7c3aed, #f59e0b); }
+.hm-path-scale { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 12px; font-weight: 600; color: #c4b5fd; }
+.hm-path p { margin-top: 10px; font-size: 12px; color: var(--muted); }
+
+/* Отзывы */
+.hm-reviews { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .hm-reviews { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .hm-reviews { grid-template-columns: repeat(3, 1fr); } }
+.hm-review { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 20px; border-radius: 18px; background: rgba(15,15,34,.78); border: 1px solid rgba(168,85,247,.22); }
+.hm-review-stars { color: #fbbf24; letter-spacing: 2px; font-size: 16px; }
+.hm-review blockquote { margin: 0; color: #e2e8f0; font-size: 14px; line-height: 1.6; }
+.hm-review figcaption { margin-top: auto; font-size: 12px; font-weight: 700; color: #a78bfa; }
+
+/* Сноска внизу */
+.hm-disclaimer { margin: 28px auto 0; max-width: 760px; text-align: center; font-size: 12px; line-height: 1.6; color: var(--muted); }
 
 @media (prefers-reduced-motion: reduce) {
   .hm-hero-glow::before, .hm-hero-glow::after, .hm-shimmer, .hm-eyebrow i, .hm-live i, 

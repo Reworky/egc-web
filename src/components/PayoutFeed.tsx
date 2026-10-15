@@ -16,6 +16,8 @@ interface Feed {
   dayCount: number;
   weekRub: number;
   weekCount: number;
+  totalRub?: number;
+  totalCount?: number;
   reviewsUrl?: string;
 }
 
@@ -62,7 +64,13 @@ export default function PayoutFeed() {
         <span className="hm-live"><i />LIVE</span>
       </div>
 
-      <div className="hm-pay-totals">
+      <div className={`hm-pay-totals${feed?.totalRub ? ' with-total' : ''}`}>
+        {(!feed || feed.totalRub) ? (
+          <div className="hm-pay-total hm-pay-total-main">
+            <b>{feed?.totalRub ? rub(feed.totalRub) : '…'}</b>
+            <span>выплачено игрокам за всё время{feed?.totalCount ? ` · ${feed.totalCount.toLocaleString('ru-RU')} выплат` : ''}</span>
+          </div>
+        ) : null}
         <div className="hm-pay-total">
           <b>{feed ? rub(feed.weekRub) : '…'}</b>
           <span>выплачено за 7 дней{feed ? ` · ${feed.weekCount} выплат` : ''}</span>
