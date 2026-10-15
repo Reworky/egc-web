@@ -57,7 +57,7 @@ function drawWheel(canvas: HTMLCanvasElement, rotation: number) {
     ctx.rotate(start + SLICE / 2);
     ctx.textAlign = 'right';
     ctx.fillStyle = sec.textColor;
-    ctx.font = `bold ${size < 320 ? 10 : 12}px 'Rajdhani', sans-serif`;
+    ctx.font = `bold ${size < 320 ? 10 : 12}px 'Exo 2', sans-serif`;
     ctx.fillText(sec.label, r - 10, 4);
     ctx.restore();
   });

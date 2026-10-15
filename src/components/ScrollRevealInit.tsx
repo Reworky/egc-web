@@ -22,7 +22,8 @@ export default function ScrollRevealInit() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
+          // Блок, который пролистнули быстрым скроллом (он уже выше экрана), тоже показываем.
+          if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
             entry.target.classList.add('visible');
             observer.unobserve(entry.target);
           }

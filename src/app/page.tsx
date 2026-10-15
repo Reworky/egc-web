@@ -2,10 +2,28 @@ import Link from 'next/link';
 import { api, Quest } from '@/lib/api';
 import LeaderboardTabs from '@/components/LeaderboardTabs';
 import CountUp from '@/components/CountUp';
-import PayoutTicker from '@/components/PayoutTicker';
+import PayoutFeed from '@/components/PayoutFeed';
 import './home.css';
 
 export const revalidate = 60;
+
+const BOT_URL = 'https://t.me/invitetogamebot';
+
+const FEATURES = [
+  { icon: '🎯', title: 'Квесты по играм', text: 'Brawl Stars, Clash Royale, Clash of Clans, PUBG и другие. Награда в EXC видна до старта, а для многих квестов прогресс считается сам.', href: '/quests', cta: 'Каталог квестов' },
+  { icon: '🛒', title: 'Магазин наград', text: 'Тратить EXC можно на донат в играх, подарочные карты и бусты, а не только выводить деньгами.', href: '/shop', cta: 'Открыть магазин' },
+  { icon: '🎰', title: 'Колесо фортуны', text: 'Крути колесо и забирай призы: EXC, буст опыта, рамку профиля. Попытки даёт активность в клубе.', href: '/wheel', cta: 'Крутить колесо' },
+  { icon: '🛡️', title: 'Отряды', text: 'Собери команду из друзей: в отряде играть веселее, а за состав из 3–5 человек клуб даёт бонус.', href: BOT_URL, cta: 'Создать отряд в боте', external: true },
+  { icon: '🏆', title: 'Турниры и рейтинг', text: 'Соревнуйся с другими игроками: недельный и общий рейтинг, турниры с призами и повышение уровня за опыт.', href: BOT_URL, cta: 'Смотреть в боте', external: true },
+  { icon: '👑', title: 'EGC Pass', text: 'Подписка с перками для тех, кто играет много: больше возможностей и приятные бонусы к награде.', href: BOT_URL, cta: 'Подробнее в боте', external: true },
+];
+
+const FAQ = [
+  { q: 'Это правда бесплатно?', a: 'Да. Вступить и играть в клубе бесплатно, регистрация проходит через Telegram. За регистрацию бот сразу начисляет 200 EXC стартового капитала.' },
+  { q: 'Как выводятся деньги?', a: 'EXC можно вывести на карту по СБП, в Telegram Stars или в GRAM. Актуальные лимиты и курс всегда показывает бот, а последние выплаты видны выше на этой странице.' },
+  { q: 'Нужен ли пароль от игрового аккаунта?', a: 'Нет. Достаточно игрового тега или скриншота. Никому не передавай вход в аккаунт: ни клубу, ни «помощникам».' },
+  { q: 'Как проверяются квесты?', a: 'Часть квестов проверяется автоматически по игровому тегу, остальные подтверждаются скриншотом, который смотрит модератор.' },
+];
 
 const STEPS = [
   { icon: '🎯', title: 'Выбери квест', text: 'Игры, которые ты любишь: Brawl Stars, Clash Royale, Clash of Clans, PUBG и другие. Награда видна до старта.' },
@@ -49,13 +67,12 @@ export default async function Home() {
             Выполняй игровые квесты, зарабатывай <strong className="gradient-text-gold">EXC</strong> и выводи реальные деньги
           </p>
           <div className="hm-cta-row">
-            <a href="https://t.me/invitetogamebot" target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">
+            <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">
               🚀 Открыть EGC
             </a>
             <Link href="/quests" className="hm-btn hm-btn-ghost">Смотреть квесты</Link>
           </div>
         </div>
-        <PayoutTicker />
       </section>
 
       {/* ── Клуб в цифрах ── */}
@@ -68,6 +85,9 @@ export default async function Home() {
           <div className="hm-stat"><div className="hm-stat-icon">📈</div><div className="hm-stat-num green">{stats.healthRatioPercent}%</div><div className="hm-stat-label">здоровье фонда</div></div>
         </section>
       )}
+
+      {/* ── Последние выплаты ── */}
+      <PayoutFeed />
 
       {/* ── Как это работает ── */}
       <section className="hm-section reveal">
@@ -86,6 +106,33 @@ export default async function Home() {
               <p>{s.text}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ── Что внутри клуба ── */}
+      <section className="hm-section reveal">
+        <div className="hm-head">
+          <div>
+            <div className="hm-kicker">Не только квесты</div>
+            <h2 className="section-title">Что внутри клуба</h2>
+          </div>
+        </div>
+        <div className="hm-features">
+          {FEATURES.map(f => {
+            const inner = (
+              <>
+                <div className="hm-step-icon">{f.icon}</div>
+                <h3>{f.title}</h3>
+                <p>{f.text}</p>
+                <span className="hm-feature-cta">{f.cta} →</span>
+              </>
+            );
+            return f.external ? (
+              <a key={f.title} href={f.href} target="_blank" rel="noopener noreferrer" className="hm-feature">{inner}</a>
+            ) : (
+              <Link key={f.title} href={f.href} className="hm-feature">{inner}</Link>
+            );
+          })}
         </div>
       </section>
 
@@ -147,11 +194,44 @@ export default async function Home() {
         <LeaderboardTabs initial={leaderboard.entries} limit={10} />
       </section>
 
+      {/* ── Партнёрам ── */}
+      <section className="hm-section reveal">
+        <div className="hm-partner">
+          <div>
+            <div className="hm-kicker">Для игровых студий</div>
+            <h2 className="section-title">Живые игроки и проверенный результат</h2>
+            <p>Размещаем квесты на установку и достижение уровней в вашей игре. Каждое выполнение проверяется, а цифры проверки открыты: смотрите сами.</p>
+          </div>
+          <div className="hm-partner-btns">
+            <Link href="/partners" className="hm-btn hm-btn-main">Стать партнёром</Link>
+            <Link href="/partners/proof" className="hm-btn hm-btn-ghost">Как мы проверяем</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Вопросы ── */}
+      <section className="hm-section reveal">
+        <div className="hm-head">
+          <div>
+            <div className="hm-kicker">Коротко о главном</div>
+            <h2 className="section-title">Частые вопросы</h2>
+          </div>
+        </div>
+        <div className="hm-faq">
+          {FAQ.map(f => (
+            <details key={f.q} className="hm-faq-item">
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
       {/* ── Финальный призыв ── */}
       <section className="hm-final reveal">
         <h2 className="font-heading">Готов начать?</h2>
         <p>Открой бота в Telegram, привяжи игровой тег и забери первый квест: награда видна до старта.</p>
-        <a href="https://t.me/invitetogamebot" target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">🚀 Открыть EGC в Telegram</a>
+        <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">🚀 Открыть EGC в Telegram</a>
       </section>
     </div>
   );
