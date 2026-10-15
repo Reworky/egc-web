@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import './partners.css';
 
 const COLLAB_ITEMS = [
@@ -12,7 +13,7 @@ const COLLAB_ITEMS = [
   {
     icon: '📣',
     title: 'Охват аудитории',
-    desc: 'Анонс вашего продукта в нашем Telegram-боте с более чем 500 активными игроками. Нативная интеграция без баннерной слепоты.',
+    desc: 'Анонс вашего продукта в нашем Telegram-боте. Нативная интеграция без баннерной слепоты, реальные цифры аудитории — на странице «Как мы проверяем результат».',
   },
   {
     icon: '🤝',
@@ -60,6 +61,8 @@ const AUDIENCE_CARDS = [
 
 export default function PartnersPage() {
   const [stats, setStats] = useState({ total: 511, newWeek: 0 });
+  // Цифры проверки результата с сервера (/api/public/proof); null - мало данных или сервер недоступен, такой блок не показываем
+  const [proof, setProof] = useState<{ activeWeek: number; approvedPercent: number | null; retention7Percent: number | null } | null>(null);
 
   useEffect(() => {
     fetch('/api/stats')
@@ -71,6 +74,15 @@ export default function PartnersPage() {
             newWeek: data.newUsersWeek ?? 0,
           });
         }
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/public/proof')
+      .then(r => (r.ok ? r.json() : null))
+      .then(d => {
+        if (d) setProof({ activeWeek: d.activeWeek, approvedPercent: d.approvedPercent, retention7Percent: d.retention7Percent });
       })
       .catch(() => {});
   }, []);
@@ -118,19 +130,28 @@ export default function PartnersPage() {
               <div className="stat-label">новых<br />за неделю</div>
             </div>
           )}
-          <div className="stat-item">
-            <div className="stat-num">179</div>
-            <div className="stat-label">активных<br />еженедельно</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-num">88<span>%</span></div>
-            <div className="stat-label">успешных<br />выполнений</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-num">47<span>%</span></div>
-            <div className="stat-label">удержание<br />за 7 дней</div>
-          </div>
+          {proof && (
+            <div className="stat-item">
+              <div className="stat-num">{proof.activeWeek}</div>
+              <div className="stat-label">активных<br />за неделю</div>
+            </div>
+          )}
+          {proof?.approvedPercent != null && (
+            <div className="stat-item">
+              <div className="stat-num">{proof.approvedPercent}<span>%</span></div>
+              <div className="stat-label">заявок<br />одобрено</div>
+            </div>
+          )}
+          {proof?.retention7Percent != null && (
+            <div className="stat-item">
+              <div className="stat-num">{proof.retention7Percent}<span>%</span></div>
+              <div className="stat-label">новых активны<br />через неделю</div>
+            </div>
+          )}
         </div>
+        <p style={{ marginTop: 20 }}>
+          <Link href="/partners/proof" className="btn-secondary">Как мы проверяем результат →</Link>
+        </p>
       </section>
 
       {/* Форматы сотрудничества */}

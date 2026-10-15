@@ -1,0 +1,84 @@
+/* Страница «Как EGC проверяет результат» — дополнения к partners.css, все селекторы внутри .partners-page */
+
+.partners-page .proof-note {
+  margin-top: 16px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.partners-page .proof-list {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0;
+  display: grid;
+  gap: 12px;
+}
+
+.partners-page .proof-list li {
+  background: var(--bg3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+}
+
+.partners-page .proof-list li strong {
+  color: #fff;
+}
+
+.partners-page .proof-table-wrap {
+  margin-top: 24px;
+  overflow-x: auto;
+  background: var(--bg3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.partners-page .proof-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.partners-page .proof-table th,
+.partners-page .proof-table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.partners-page .proof-table th {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.partners-page .proof-table tr:last-child td {
+  border-bottom: none;
+}
+
+.partners-page .proof-table td:nth-child(2) {
+  color: #fff;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.partners-page .proof-table .proof-sample {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.partners-page .proof-date {
+  margin-top: 14px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .partners-page .proof-table th,
+  .partners-page .proof-table td {
+    padding: 12px 12px;
+    font-size: 14px;
+  }
+}
