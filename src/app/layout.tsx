@@ -9,7 +9,7 @@ import YandexAd from '@/components/YandexAd';
 
 export const metadata: Metadata = {
   title: 'EXPERIENCE GAMING CLUB',
-  description: 'Получай реальные деньги за игры: выполняй квесты, зарабатывай EXC, выводи по СБП, в Stars или GRAM. Бесплатно',
+  description: 'Получай реальные деньги за игры: выполняй квесты, зарабатывай EXC, выводи деньги. Бесплатно',
   icons: {
     apple: '/apple-icon.png',
   },
