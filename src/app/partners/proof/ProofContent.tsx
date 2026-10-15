@@ -12,12 +12,11 @@ interface ProofStats {
   activeWeek: number;
   playersApproved: number;
   decided: number;
-  approvedPercent: number | null;
   approved: number;
   autoApprovedPercent: number | null;
   manualDecided: number;
   rejectedManualPercent: number | null;
-  submitted: number;
+  duplicates: number;
   duplicatePercent: number | null;
   retention7Percent: number | null;
   retentionCohort7: number;
@@ -161,8 +160,8 @@ export default function ProofContent() {
                       <td>{stats.playersApproved}</td>
                     </tr>
                     <tr>
-                      <td>Проверено заявок, доля одобренных</td>
-                      <td>{stats.decided} · {pct(stats.approvedPercent, stats.decided)}</td>
+                      <td>Проверено заявок за период</td>
+                      <td>{stats.decided} <span className="proof-sample">одобрено {stats.approved}</span></td>
                     </tr>
                     <tr>
                       <td>Подтверждено автоматически (API, постбэк, проверка подписки)</td>
@@ -173,8 +172,8 @@ export default function ProofContent() {
                       <td>{pct(stats.rejectedManualPercent, stats.manualDecided)}</td>
                     </tr>
                     <tr>
-                      <td>Повторные скриншоты среди сданных заявок</td>
-                      <td>{pct(stats.duplicatePercent, stats.submitted)}</td>
+                      <td>Повторные скриншоты среди проверенных вручную</td>
+                      <td>{pct(stats.duplicatePercent, stats.manualDecided)}</td>
                     </tr>
                     <tr>
                       <td>Новые игроки, активные через неделю</td>

@@ -62,7 +62,7 @@ const AUDIENCE_CARDS = [
 export default function PartnersPage() {
   const [stats, setStats] = useState({ total: 511, newWeek: 0 });
   // Цифры проверки результата с сервера (/api/public/proof); null - мало данных или сервер недоступен, такой блок не показываем
-  const [proof, setProof] = useState<{ activeWeek: number; approvedPercent: number | null; retention7Percent: number | null } | null>(null);
+  const [proof, setProof] = useState<{ activeWeek: number; autoApprovedPercent: number | null; retention7Percent: number | null } | null>(null);
 
   useEffect(() => {
     fetch('/api/stats')
@@ -82,7 +82,7 @@ export default function PartnersPage() {
     fetch('/api/public/proof')
       .then(r => (r.ok ? r.json() : null))
       .then(d => {
-        if (d) setProof({ activeWeek: d.activeWeek, approvedPercent: d.approvedPercent, retention7Percent: d.retention7Percent });
+        if (d) setProof({ activeWeek: d.activeWeek, autoApprovedPercent: d.autoApprovedPercent, retention7Percent: d.retention7Percent });
       })
       .catch(() => {});
   }, []);
@@ -136,10 +136,10 @@ export default function PartnersPage() {
               <div className="stat-label">активных<br />за неделю</div>
             </div>
           )}
-          {proof?.approvedPercent != null && (
+          {proof?.autoApprovedPercent != null && (
             <div className="stat-item">
-              <div className="stat-num">{proof.approvedPercent}<span>%</span></div>
-              <div className="stat-label">заявок<br />одобрено</div>
+              <div className="stat-num">{proof.autoApprovedPercent}<span>%</span></div>
+              <div className="stat-label">результатов подтверждает<br />автоматика</div>
             </div>
           )}
           {proof?.retention7Percent != null && (
