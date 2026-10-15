@@ -1,6 +1,9 @@
 import { api } from '@/lib/api';
+import PageHead from '@/components/PageHead';
 
 export const revalidate = 60;
+
+const BOT_URL = 'https://t.me/invitetogamebot';
 
 export default async function ShopPage() {
   const [items, stats] = await Promise.all([
@@ -15,55 +18,35 @@ export default async function ShopPage() {
   }, {});
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10 space-y-10">
+    <div className="max-w-6xl mx-auto px-4 py-10 space-y-10">
+      <PageHead
+        kicker="Награды"
+        title="Магазин"
+        text="Трать EXC на донат в играх, подарочные карты и бусты или выводи деньгами. Заявки оформляются в боте."
+        chips={<>
+          <span className="pg-chip gold">💱 100 EXC = <b>1 ₽</b></span>
+          {stats && <span className="pg-chip green">📈 Здоровье фонда: <b>{stats.healthRatioPercent}%</b></span>}
+          <span className="pg-chip">🛍 <b>{items.length}</b> позиций</span>
+        </>}
+        actions={<a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">🚀 Открыть магазин в боте</a>}
+      />
 
-      {/* Заголовок */}
-      <div className="space-y-3">
-        <h1 className="text-3xl font-black text-white">🛍️ Магазин наград</h1>
-        <div className="flex flex-wrap gap-3">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm"
-            style={{ background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.25)' }}>
-            <span>💱</span>
-            <span style={{ color: 'var(--muted)' }}>Курс:</span>
-            <strong className="gradient-text-gold">100 EXC = 1 ₽</strong>
-          </div>
-          {stats && (
-            <div className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm"
-              style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)' }}>
-              <span>📈</span>
-              <span style={{ color: 'var(--muted)' }}>Здоровье фонда:</span>
-              <strong style={{ color: '#4ade80' }}>{stats.healthRatioPercent}%</strong>
-            </div>
-          )}
-        </div>
-        <div className="h-px" style={{ background: 'linear-gradient(90deg, rgba(168,85,247,0.6), rgba(236,72,153,0.3), transparent)' }} />
-      </div>
-
-      {/* Категории */}
       {Object.entries(byCategory).map(([category, catItems]) => (
         <section key={category} className="space-y-4">
-          <h2 className="section-title">{category}</h2>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="hm-head" style={{ marginBottom: 0 }}>
+            <div>
+              <div className="hm-kicker">Раздел</div>
+              <h2 className="section-title">{category}</h2>
+            </div>
+          </div>
+          <div className="hm-features">
             {catItems.map(item => (
-              <div key={item.id} className="card p-5 flex flex-col gap-3">
-                {/* иконка категории */}
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-bold text-white">{item.title}</h3>
-                    {item.description && (
-                      <p className="text-xs mt-1 leading-relaxed" style={{ color: 'var(--muted)' }}>
-                        {item.description}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="mt-auto pt-3 flex items-center justify-between"
-                  style={{ borderTop: '1px solid rgba(124,58,237,0.15)' }}>
-                  <span className="exc-badge text-sm">{item.effectivePrice.toLocaleString('ru')} EXC</span>
-                  <span className="text-sm font-semibold" style={{ color: 'var(--muted)' }}>
-                    ≈ {(item.effectivePrice / 100).toFixed(0)} ₽
-                  </span>
+              <div key={item.id} className="hm-item">
+                <h3>{item.title}</h3>
+                {item.description && <p>{item.description}</p>}
+                <div className="hm-reward">
+                  <b>{item.effectivePrice.toLocaleString('ru')} EXC</b>
+                  <span>≈ {(item.effectivePrice / 100).toFixed(0)} ₽</span>
                 </div>
               </div>
             ))}
@@ -72,25 +55,18 @@ export default async function ShopPage() {
       ))}
 
       {items.length === 0 && (
-        <div className="card p-20 text-center space-y-3">
-          <div className="text-5xl">🛒</div>
-          <p className="font-bold text-white">Товары не найдены</p>
+        <div className="hm-empty">
+          <div className="text-4xl">🛒</div>
+          <b>Товары не найдены</b>
+          <p>Загляни чуть позже: ассортимент обновляется.</p>
         </div>
       )}
 
-      {/* CTA */}
-      <div className="card p-6 text-center space-y-4"
-        style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.1), rgba(236,72,153,0.05))' }}>
-        <p className="font-semibold text-white">Хочешь заказать награду или вывести EXC?</p>
-        <p className="text-sm" style={{ color: 'var(--muted)' }}>Заявки оформляются через бот. Вывод доступен в рублях и GRAM (Telegram Wallet, сеть TON)</p>
-        <a
-          href="https://t.me/invitetogamebot"
-          target="_blank" rel="noopener noreferrer"
-          className="btn-primary px-8 py-3 text-sm inline-flex items-center gap-2"
-        >
-          <span>Открыть EGC</span>
-        </a>
-      </div>
+      <section className="hm-final reveal">
+        <h2 className="font-heading">Хочешь забрать награду?</h2>
+        <p>Заказать награду и вывести EXC можно в боте: на карту по СБП, в Telegram Stars или в GRAM.</p>
+        <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">🚀 Открыть EGC в Telegram</a>
+      </section>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import './globals.css';
+import './home.css';
 import Navbar from '@/components/Navbar';
 import BackgroundCanvas from '@/components/BackgroundCanvas';
 import ScrollRevealInit from '@/components/ScrollRevealInit';

@@ -4,7 +4,6 @@ import LeaderboardTabs from '@/components/LeaderboardTabs';
 import CountUp from '@/components/CountUp';
 import PayoutFeed from '@/components/PayoutFeed';
 import Reviews from '@/components/Reviews';
-import './home.css';
 
 export const revalidate = 60;
 
