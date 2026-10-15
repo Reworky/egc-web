@@ -3,6 +3,7 @@
 import { useAuth } from '@/lib/useAuth';
 import ProfileTabs from '@/components/ProfileTabs';
 import TelegramLoginButton from '@/components/TelegramLoginButton';
+import PageHead from '@/components/PageHead';
 
 export default function ProfilePage() {
   const { user, loading, login, logout, error } = useAuth();
@@ -18,20 +19,20 @@ export default function ProfilePage() {
 
   if (!user) {
     return (
-      <div className="max-w-md mx-auto px-4 py-20 text-center space-y-6">
-        <h1 className="text-2xl font-bold text-white">Личный кабинет</h1>
-        <p style={{ color: 'var(--muted)' }}>
-          Войди через Telegram чтобы видеть баланс, историю квестов и заявки на награды
-        </p>
-        <TelegramLoginButton botUsername="invitetogamebot" onAuth={login} />
-        {error && (
-          <div className="text-xs rounded-lg px-3 py-2 text-left break-all" style={{ background: '#ef444422', color: '#ef4444', border: '1px solid #ef444444' }}>
-            ❌ {error}
-          </div>
-        )}
-        <p className="text-xs" style={{ color: 'var(--muted)' }}>
-          Войди через Telegram — аккаунт создаётся автоматически через бота
-        </p>
+      <div className="max-w-xl mx-auto px-4 py-16 space-y-6">
+        <PageHead
+          kicker="Личный кабинет"
+          title="Профиль"
+          text="Войди через Telegram, чтобы видеть баланс, историю квестов и заявки на награды. Аккаунт создаётся автоматически через бота."
+        />
+        <div className="hm-panel space-y-4 text-center">
+          <TelegramLoginButton botUsername="invitetogamebot" onAuth={login} />
+          {error && (
+            <div className="text-xs rounded-lg px-3 py-2 text-left break-all" style={{ background: '#ef444422', color: '#ef4444', border: '1px solid #ef444444' }}>
+              ❌ {error}
+            </div>
+          )}
+        </div>
       </div>
     );
   }
@@ -43,14 +44,13 @@ export default function ProfilePage() {
     : 100;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10 space-y-6">
+    <div className="max-w-3xl mx-auto px-4 py-10 space-y-6">
 
       {/* Шапка */}
-      <div className="rounded-2xl p-6 space-y-4"
-        style={{ background: 'var(--bg2)', border: '1px solid var(--border)' }}>
+      <div className="hm-panel space-y-4">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-white">{user.nickname}</h1>
+            <h1 className="font-heading" style={{ fontSize: '1.9rem', color: '#fff', textTransform: 'none' }}>{user.nickname}</h1>
             {user.profileTitle && (
               <p className="text-sm mt-0.5" style={{ color: 'var(--accent2)' }}>{user.profileTitle}</p>
             )}
@@ -59,7 +59,7 @@ export default function ProfilePage() {
             </p>
           </div>
           <div className="text-right shrink-0">
-            <div className="text-2xl font-bold text-yellow-400">{user.coins.toLocaleString('ru')}</div>
+            <div className="gradient-text-gold" style={{ fontFamily: "'Exo 2', sans-serif", fontWeight: 800, fontSize: '2rem', lineHeight: 1.1 }}>{user.coins.toLocaleString('ru')}</div>
             <div className="text-xs" style={{ color: 'var(--muted)' }}>EXC на балансе</div>
           </div>
         </div>
@@ -70,10 +70,7 @@ export default function ProfilePage() {
             <span>Уровень {user.level} — {user.levelName}</span>
             <span>{user.xp.toLocaleString('ru')} {nextXp ? `/ ${nextXp.toLocaleString('ru')}` : ''} XP</span>
           </div>
-          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg3)' }}>
-            <div className="h-full rounded-full transition-all"
-              style={{ width: `${xpPercent}%`, background: 'var(--accent)' }} />
-          </div>
+          <div className="hm-xp"><i style={{ width: `${xpPercent}%` }} /></div>
           {nextXp && (
             <p className="text-xs" style={{ color: 'var(--muted)' }}>
               До следующего уровня: {(nextXp - user.xp).toLocaleString('ru')} XP
@@ -90,18 +87,16 @@ export default function ProfilePage() {
           { label: 'Лимит/мес', value: `${(user.monthlyWithdrawalLimit / 1000).toFixed(0)}к EXC`, icon: '📤' },
           { label: 'Доступно', value: `${(user.remainingWithdrawalLimit / 1000).toFixed(0)}к EXC`, icon: '💸' },
         ].map(s => (
-          <div key={s.label} className="rounded-xl p-3 text-center"
-            style={{ background: 'var(--bg2)', border: '1px solid var(--border)' }}>
+          <div key={s.label} className="hm-mini">
             <div className="text-lg">{s.icon}</div>
-            <div className="text-lg font-bold text-white mt-1">{s.value}</div>
-            <div className="text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{s.label}</div>
+            <b>{s.value}</b>
+            <span>{s.label}</span>
           </div>
         ))}
       </div>
 
       {/* Платформы и интересы */}
-      <div className="rounded-xl p-4 space-y-2"
-        style={{ background: 'var(--bg2)', border: '1px solid var(--border)' }}>
+      <div className="hm-row space-y-2">
         <div className="flex gap-2 text-sm flex-wrap">
           <span style={{ color: 'var(--muted)' }}>🖥 Платформы:</span>
           <span className="text-white">{user.platformsCsv || '—'}</span>
@@ -116,11 +111,7 @@ export default function ProfilePage() {
       <ProfileTabs />
 
       {/* Выйти */}
-      <button
-        onClick={logout}
-        className="w-full py-2.5 rounded-xl text-sm transition-colors"
-        style={{ background: 'var(--bg2)', border: '1px solid var(--border)', color: 'var(--muted)' }}
-      >
+      <button onClick={logout} className="hm-ghost-btn">
         Выйти из аккаунта
       </button>
     </div>

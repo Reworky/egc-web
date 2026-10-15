@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useAuth } from '@/lib/useAuth';
 import { api, SpinResponse } from '@/lib/api';
+import PageHead from '@/components/PageHead';
 
 const SECTORS = [
   { label: '50 EXC',       color: '#6d28d9', textColor: '#e9d5ff' },
@@ -210,35 +211,20 @@ export default function WheelPage() {
   ];
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10 space-y-10">
+    <div className="max-w-3xl mx-auto px-4 py-10 space-y-10">
 
-      {/* Header */}
-      <div className="space-y-2">
-        <h1 className="text-3xl font-black text-white">🎰 Колесо фортуны</h1>
-        <p style={{ color: 'var(--muted)' }}>
-          Крути колесо и выигрывай EXC, XP-буст или рамку аватара.
-        </p>
-        <div className="h-px" style={{ background: 'linear-gradient(90deg, rgba(168,85,247,0.6), transparent)' }} />
-      </div>
-
-      {/* Status chips */}
-      <div className="flex flex-wrap gap-3">
-        <div className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm"
-          style={{ background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(168,85,247,0.3)' }}>
-          <span>🎟</span>
-          <span style={{ color: 'var(--muted)' }}>Билетов:</span>
-          <strong className="text-white">{user ? (tickets ?? '…') : '—'}</strong>
-        </div>
-        <div className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm"
-          style={{ background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.2)' }}>
-          <span>🔄</span>
-          <span style={{ color: 'var(--muted)' }}>Сегодня:</span>
-          <strong className="text-white">{user ? `${spinsToday} / 10` : '—'}</strong>
-        </div>
-      </div>
+      <PageHead
+        kicker="Призы"
+        title="Колесо фортуны"
+        text="Крути колесо и выигрывай EXC, XP-буст или рамку аватара. Билеты дают квесты и серия дней подряд."
+        chips={<>
+          <span className="pg-chip gold">🎟 Билетов: <b>{user ? (tickets ?? '…') : '—'}</b></span>
+          <span className="pg-chip">🔄 Сегодня: <b>{user ? `${spinsToday} / 10` : '—'}</b></span>
+        </>}
+      />
 
       {/* Wheel */}
-      <div className="flex flex-col items-center gap-4">
+      <div className="hm-wheel-panel flex flex-col items-center gap-4">
         <div className="relative" style={{ width: 320, maxWidth: '100%' }}>
           {/* Arrow */}
           <canvas
@@ -263,17 +249,8 @@ export default function WheelPage() {
           <button
             onClick={spin}
             disabled={!canSpin}
-            className="px-10 py-4 rounded-2xl text-lg font-black text-white transition-all"
-            style={canSpin ? {
-              background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%)',
-              boxShadow: '0 0 30px rgba(168,85,247,0.5), 0 4px 20px rgba(0,0,0,0.4)',
-              cursor: 'pointer',
-            } : {
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              color: 'var(--muted)',
-              cursor: 'not-allowed',
-            }}
+            className={canSpin ? 'hm-btn hm-btn-main' : 'hm-btn hm-btn-off'}
+            style={{ fontSize: 18, padding: '16px 40px' }}
           >
             {spinning ? '⏳ Крутится...' : canSpin ? '🎰 Крутить (−1 🎟)' : tickets === 0 ? '🎟 Нет билетов' : '🚫 Лимит исчерпан'}
           </button>
@@ -309,17 +286,21 @@ export default function WheelPage() {
 
       {/* How to get tickets */}
       <section className="space-y-4">
-        <h2 className="section-title">Как получить билеты 🎟</h2>
+        <div className="hm-head" style={{ marginBottom: 0 }}>
+          <div>
+            <div className="hm-kicker">Как играть</div>
+            <h2 className="section-title">Как получить билеты 🎟</h2>
+          </div>
+        </div>
         <div className="grid sm:grid-cols-3 gap-3">
           {[
-            { icon: '🗺️', title: 'Лёгкий квест', desc: '+1 билет' },
-            { icon: '⚔️', title: 'Средний квест', desc: '+2 билета' },
-            { icon: '🏆', title: 'Сложный квест', desc: '+3 билета' },
+            { icon: '🎯', title: 'Выполнить квест', desc: 'от +1 билета: число указано на карточке квеста (🎟)' },
+            { icon: '📅', title: 'Задания и сундук дня', desc: 'билеты в награду за ежедневные задания' },
             { icon: '🔥', title: '3 дня подряд', desc: '+1 билет' },
             { icon: '💥', title: '7 дней подряд', desc: '+2 билета' },
             { icon: '⭐', title: '14 дней подряд', desc: '+3 билета' },
           ].map((item, i) => (
-            <div key={i} className="card p-4 flex items-center gap-3">
+            <div key={i} className="hm-item" style={{ padding: 16, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
               <div className="text-2xl">{item.icon}</div>
               <div>
                 <div className="font-bold text-white text-sm">{item.title}</div>
@@ -332,8 +313,13 @@ export default function WheelPage() {
 
       {/* Prize table */}
       <section className="space-y-4">
-        <h2 className="section-title">Таблица призов</h2>
-        <div className="card overflow-hidden">
+        <div className="hm-head" style={{ marginBottom: 0 }}>
+          <div>
+            <div className="hm-kicker">Честные шансы</div>
+            <h2 className="section-title">Таблица призов</h2>
+          </div>
+        </div>
+        <div className="hm-table overflow-hidden">
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: '1px solid rgba(168,85,247,0.2)' }}>

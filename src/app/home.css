@@ -195,6 +195,23 @@
 .hm-item h3 { font-size: 16px; font-weight: 700; line-height: 1.35; color: #fff; }
 .hm-item p { color: var(--muted); font-size: 13px; line-height: 1.55; }
 
+/* Колесо и таблицы */
+.hm-wheel-panel { padding: 36px 20px 28px; border-radius: 24px; background: radial-gradient(circle at 50% 30%, rgba(124,58,237,.28), rgba(15,15,34,.85) 70%); border: 1px solid rgba(168,85,247,.35); }
+.hm-btn-off { cursor: not-allowed; color: var(--muted); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); }
+.hm-btn-off:hover { transform: none; }
+.hm-table { border-radius: 18px; background: rgba(15,15,34,.75); border: 1px solid rgba(168,85,247,.22); }
+
+/* Личный кабинет */
+.hm-panel { padding: 24px; border-radius: 20px; background: linear-gradient(160deg, rgba(124,58,237,.16), rgba(15,15,34,.8)); border: 1px solid rgba(168,85,247,.28); }
+.hm-mini { padding: 14px 10px; text-align: center; border-radius: 16px; background: rgba(15,15,34,.78); border: 1px solid rgba(168,85,247,.22); }
+.hm-mini b { display: block; margin-top: 4px; font-family: 'Exo 2', sans-serif; font-weight: 800; font-size: 20px; color: #fff; }
+.hm-mini span { display: block; margin-top: 2px; font-size: 12px; color: var(--muted); }
+.hm-xp { height: 10px; border-radius: 999px; background: rgba(255,255,255,.07); overflow: hidden; }
+.hm-xp i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #7c3aed, #ec4899); transition: width .4s; }
+.hm-row { padding: 16px; border-radius: 16px; background: rgba(15,15,34,.78); border: 1px solid rgba(168,85,247,.2); }
+.hm-ghost-btn { width: 100%; padding: 12px; border-radius: 14px; font-weight: 700; font-size: 14px; color: #c4b5fd; cursor: pointer; background: rgba(255,255,255,.04); border: 1px solid rgba(168,85,247,.28); transition: background .2s, color .2s; }
+.hm-ghost-btn:hover { background: rgba(168,85,247,.16); color: #fff; }
+
 @media (prefers-reduced-motion: reduce) {
   .hm-hero-glow::before, .hm-hero-glow::after, .hm-shimmer, .hm-eyebrow i, .hm-live i, 
   .hm-btn, .hm-step, .hm-quest, .hm-game, .hm-pill, .hm-item { transition: none; }

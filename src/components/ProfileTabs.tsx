@@ -35,8 +35,7 @@ function SubmissionsList() {
   return (
     <div className="space-y-2">
       {data.map(s => (
-        <div key={s.id} className="rounded-xl p-4 flex flex-col gap-2"
-          style={{ background: 'var(--bg2)', border: '1px solid var(--border)' }}>
+        <div key={s.id} className="hm-row flex flex-col gap-2">
           <div className="flex items-start justify-between gap-2">
             <div>
               <p className="font-medium text-white text-sm">{s.questTitle}</p>
@@ -75,8 +74,7 @@ function RewardsList() {
   return (
     <div className="space-y-2">
       {data.map(r => (
-        <div key={r.id} className="rounded-xl p-4 flex flex-col gap-2"
-          style={{ background: 'var(--bg2)', border: '1px solid var(--border)' }}>
+        <div key={r.id} className="hm-row flex flex-col gap-2">
           <div className="flex items-start justify-between gap-2">
             <div>
               <p className="font-medium text-white text-sm">{r.rewardTitle}</p>
@@ -126,12 +124,7 @@ export default function ProfileTabs() {
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
-            className="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-            style={{
-              background: tab === t.id ? 'var(--accent)' : 'var(--bg2)',
-              border: `1px solid ${tab === t.id ? 'var(--accent)' : 'var(--border)'}`,
-              color: tab === t.id ? 'white' : 'var(--muted)',
-            }}
+            className={`hm-pill${tab === t.id ? ' on' : ''}`}
           >
             {t.label}
           </button>
