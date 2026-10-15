@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { api, LeaderboardEntry } from '@/lib/api';
 import LeaderboardTable from './LeaderboardTable';
 
-export default function LeaderboardTabs({ initial }: { initial: LeaderboardEntry[] }) {
+export default function LeaderboardTabs({ initial, limit }: { initial: LeaderboardEntry[]; limit?: number }) {
   const [tab,     setTab    ] = useState<'overall' | 'weekly'>('overall');
   const [data,    setData   ] = useState<Record<string, LeaderboardEntry[]>>({ overall: initial });
   const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ export default function LeaderboardTabs({ initial }: { initial: LeaderboardEntry
       .finally(() => setLoading(false));
   }, [tab]);
 
-  const entries = data[tab] ?? [];
+  const entries = (data[tab] ?? []).slice(0, limit ?? Infinity);
 
   return (
     <div className="space-y-4">

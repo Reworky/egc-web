@@ -1,0 +1,99 @@
+/* Главная страница: игровые акценты поверх общей темы (hm- = home). Анимации отключаются при prefers-reduced-motion. */
+
+.hm-hero { position: relative; text-align: center; padding: 56px 0 8px; }
+.hm-hero-glow { position: absolute; inset: -40px 0 auto; height: 420px; pointer-events: none; overflow: hidden; }
+.hm-hero-glow::before, .hm-hero-glow::after { content: ''; position: absolute; border-radius: 50%; filter: blur(70px); opacity: .55; }
+.hm-hero-glow::before { width: 360px; height: 360px; left: 12%; top: 0; background: radial-gradient(circle, rgba(124,58,237,.55), transparent 70%); animation: hm-float 9s ease-in-out infinite; }
+.hm-hero-glow::after { width: 300px; height: 300px; right: 12%; top: 60px; background: radial-gradient(circle, rgba(236,72,153,.4), transparent 70%); animation: hm-float 11s ease-in-out infinite reverse; }
+@keyframes hm-float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(24px) } }
+
+.hm-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #c4b5fd; background: rgba(124,58,237,.14); border: 1px solid rgba(168,85,247,.35); }
+.hm-eyebrow i { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 10px #4ade80; animation: hm-pulse 1.6s ease-in-out infinite; }
+@keyframes hm-pulse { 0%,100% { opacity: 1; transform: scale(1) } 50% { opacity: .45; transform: scale(.8) } }
+
+.hm-shimmer { background: linear-gradient(90deg, #a78bfa, #f0abfc, #fbbf24, #a78bfa); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: hm-shimmer 8s linear infinite; }
+@keyframes hm-shimmer { to { background-position: 300% 0 } }
+
+.hm-cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.hm-btn { position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; border-radius: 16px; font-weight: 800; font-size: 16px; color: #fff; text-decoration: none; transition: transform .18s ease, box-shadow .18s ease; }
+.hm-btn:hover { transform: translateY(-3px); }
+.hm-btn:active { transform: translateY(0); }
+.hm-btn-main { background: linear-gradient(135deg, #7c3aed 0%, #a855f7 55%, #ec4899 100%); box-shadow: 0 0 28px rgba(168,85,247,.5), 0 6px 20px rgba(0,0,0,.4); }
+.hm-btn-main:hover { box-shadow: 0 0 44px rgba(168,85,247,.8), 0 10px 28px rgba(0,0,0,.5); }
+.hm-btn-ghost { background: rgba(255,255,255,.06); border: 1px solid rgba(168,85,247,.5); backdrop-filter: blur(10px); }
+.hm-btn-ghost:hover { background: rgba(168,85,247,.16); }
+.hm-btn:focus-visible { outline: 2px solid #c4b5fd; outline-offset: 3px; }
+
+/* Лента выплат */
+.hm-ticker { display: flex; align-items: center; gap: 14px; margin-top: 34px; padding: 10px 14px; border-radius: 14px; background: rgba(15,15,34,.7); border: 1px solid rgba(168,85,247,.22); overflow: hidden; }
+.hm-live { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; font-size: 11px; font-weight: 800; letter-spacing: .14em; color: #4ade80; }
+.hm-live i { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; animation: hm-pulse 1.4s ease-in-out infinite; }
+.hm-ticker-track { display: flex; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.hm-ticker-row { display: flex; flex-shrink: 0; gap: 28px; padding-right: 28px; animation: hm-marquee 38s linear infinite; }
+.hm-ticker:hover .hm-ticker-row { animation-play-state: paused; }
+@keyframes hm-marquee { to { transform: translateX(-100%) } }
+.hm-ticker-item { display: inline-flex; align-items: baseline; gap: 8px; white-space: nowrap; font-size: 14px; }
+.hm-ticker-item b { color: #fbbf24; font-weight: 800; }
+.hm-ticker-item span { color: #c4b5fd; font-weight: 600; }
+.hm-ticker-item em { color: var(--muted); font-style: normal; font-size: 13px; }
+
+/* Цифры клуба */
+.hm-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 40px; }
+@media (min-width: 720px) { .hm-stats { grid-template-columns: repeat(5, 1fr); } }
+.hm-stat { padding: 18px 14px; border-radius: 16px; text-align: center; background: linear-gradient(160deg, rgba(124,58,237,.16), rgba(15,15,34,.7)); border: 1px solid rgba(168,85,247,.2); }
+@media (max-width: 719px) { .hm-stat:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+.hm-stat-icon { font-size: 22px; }
+.hm-stat-num { margin-top: 4px; font-family: 'Rajdhani', system-ui, sans-serif; font-weight: 700; font-size: clamp(24px, 4vw, 32px); line-height: 1.1; background: linear-gradient(135deg, #fff, #c084fc); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; overflow-wrap: anywhere; }
+.hm-stat-num.gold { background: linear-gradient(135deg, #fde68a, #f59e0b); -webkit-background-clip: text; background-clip: text; }
+.hm-stat-num.green { background: linear-gradient(135deg, #bbf7d0, #22c55e); -webkit-background-clip: text; background-clip: text; }
+.hm-stat-label { margin-top: 4px; font-size: 12px; color: var(--muted); }
+
+/* Секции */
+.hm-section { margin-top: 84px; }
+.hm-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+.hm-kicker { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #a78bfa; }
+.hm-link { color: #c4b5fd; text-decoration: none; font-weight: 700; font-size: 14px; }
+.hm-link:hover { color: #fff; }
+
+/* Как это работает */
+.hm-steps { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .hm-steps { grid-template-columns: repeat(3, 1fr); } }
+.hm-step { position: relative; padding: 24px 22px 22px; border-radius: 18px; background: rgba(15,15,34,.75); border: 1px solid rgba(168,85,247,.2); transition: transform .2s, border-color .2s; }
+.hm-step:hover { transform: translateY(-4px); border-color: rgba(168,85,247,.55); }
+.hm-step-num { position: absolute; top: 14px; right: 18px; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 34px; color: rgba(168,85,247,.2); }
+.hm-step-icon { width: 46px; height: 46px; display: grid; place-items: center; font-size: 24px; border-radius: 14px; background: linear-gradient(135deg, rgba(124,58,237,.4), rgba(236,72,153,.25)); margin-bottom: 14px; }
+.hm-step h3 { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 20px; text-transform: uppercase; letter-spacing: .03em; }
+.hm-step p { margin-top: 6px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+
+/* Карточки квестов */
+.hm-quests { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .hm-quests { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .hm-quests { grid-template-columns: repeat(3, 1fr); } }
+.hm-quest { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 18px; text-decoration: none; color: inherit; background: linear-gradient(165deg, rgba(31,20,66,.85), rgba(10,10,26,.9)); border: 1px solid rgba(168,85,247,.25); clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%); border-radius: 4px; transition: transform .2s, border-color .2s, box-shadow .2s; }
+.hm-quest:hover { transform: translateY(-5px); border-color: rgba(192,132,252,.8); box-shadow: 0 14px 34px rgba(124,58,237,.3); }
+.hm-quest:focus-visible { outline: 2px solid #c4b5fd; outline-offset: 2px; }
+.hm-quest-top { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.hm-chip { padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .04em; color: #ddd6fe; background: rgba(124,58,237,.28); }
+.hm-chip.auto { color: #bbf7d0; background: rgba(34,197,94,.18); }
+.hm-chip.new { color: #fde68a; background: rgba(245,158,11,.2); }
+.hm-quest h3 { font-size: 17px; font-weight: 700; line-height: 1.3; color: #fff; }
+.hm-quest p { color: var(--muted); font-size: 13px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.hm-reward { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 12px; border-top: 1px dashed rgba(168,85,247,.25); }
+.hm-reward b { font-family: 'Rajdhani', sans-serif; font-size: 24px; font-weight: 700; background: linear-gradient(135deg, #fde68a, #f59e0b); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hm-reward span { font-size: 12px; color: #a78bfa; font-weight: 600; text-align: right; }
+
+/* Игры */
+.hm-games { display: flex; flex-wrap: wrap; gap: 10px; }
+.hm-game { padding: 10px 18px; border-radius: 12px; font-weight: 700; font-size: 14px; color: #e9d5ff; text-decoration: none; background: rgba(124,58,237,.14); border: 1px solid rgba(168,85,247,.28); transition: transform .15s, background .15s, border-color .15s; }
+.hm-game:hover { transform: translateY(-2px); background: rgba(168,85,247,.28); border-color: rgba(192,132,252,.7); }
+
+/* Финальный призыв */
+.hm-final { position: relative; overflow: hidden; margin-top: 90px; padding: 44px 24px; text-align: center; border-radius: 24px; background: linear-gradient(135deg, rgba(124,58,237,.35), rgba(236,72,153,.18)); border: 1px solid rgba(168,85,247,.45); }
+.hm-final h2 { font-size: clamp(26px, 5vw, 38px); }
+.hm-final p { margin: 10px auto 22px; max-width: 520px; color: #cbd5e1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-hero-glow::before, .hm-hero-glow::after, .hm-shimmer, .hm-eyebrow i, .hm-live i, .hm-ticker-row { animation: none !important; }
+  .hm-btn, .hm-step, .hm-quest, .hm-game { transition: none; }
+  .hm-ticker-track { overflow-x: auto; }
+}

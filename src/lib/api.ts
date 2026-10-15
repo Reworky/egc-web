@@ -92,6 +92,13 @@ export interface Quest {
   rewardXp: number;
   rewardCoins: number;
   councilOnly: boolean;
+  // поля, которые бэкенд тоже отдаёт в /api/quests (нужны главной странице)
+  sponsored?: boolean;
+  highlightNew?: boolean;
+  ticketReward?: number;
+  brawlAutoVerify?: boolean;
+  campaignClosed?: boolean;
+  externalAutoApprove?: boolean;
 }
 
 export interface RewardItem {
