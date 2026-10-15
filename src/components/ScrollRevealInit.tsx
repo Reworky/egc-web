@@ -1,7 +1,12 @@
 'use client';
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
+// Layout живёт между переходами, поэтому запускаем заново при смене страницы: иначе при переходе
+// на «Главная» из меню блоки .reveal остаются прозрачными навсегда.
 export default function ScrollRevealInit() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const staggerSelectors = ['.how-step', '.stat-item'];
 
@@ -23,12 +28,18 @@ export default function ScrollRevealInit() {
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -36px 0px' }
+      { threshold: 0.05, rootMargin: '0px 0px -36px 0px' }
     );
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
+    // Страховка: если наблюдатель не сработал, видимую часть страницы всё равно показываем.
+    const fallback = window.setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
+      });
+    }, 1200);
+    return () => { observer.disconnect(); window.clearTimeout(fallback); };
+  }, [pathname]);
 
   return null;
 }
