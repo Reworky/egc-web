@@ -55,6 +55,7 @@ interface Copy {
   playersSuffix: string;
   dataOn: string;
   retentionNote: string;
+  autoNote: string;
   loading: string;
   failed: string;
   verifyTag: string;
@@ -93,7 +94,7 @@ const COPY: Record<Lang, Copy> = {
       {
         icon: '🤝',
         title: 'Подтверждение от студии',
-        desc: 'Для игр без открытого API: постбэк студии или сети, промокод либо выгрузка по согласованному формату. Игрок получает награду только после подтверждения с вашей стороны. Формат обсуждается индивидуально.',
+        desc: 'Для игр без открытого API мы готовы подключить подтверждение с вашей стороны: постбэк, промокоды или выгрузку по согласованному формату. Универсальной интеграции пока нет: каждую такую связку мы настраиваем под студию по договорённости. Игрок получает награду только после подтверждения.',
       },
       {
         icon: '📸',
@@ -107,7 +108,7 @@ const COPY: Record<Lang, Copy> = {
     protections: [
       { title: 'Прирост от базовой линии', text: 'По API засчитывается только то, что произошло после взятия квеста, старые достижения не считаются.' },
       { title: 'Проверка повторных скриншотов', text: 'Скриншот сверяется с прошлыми заявками того же игрока и с чужими заявками; модератор видит предупреждение.' },
-      { title: 'Мультиаккаунты', text: 'Подозрительные аккаунты разбираются вручную, нарушители блокируются.' },
+      { title: 'Мультиаккаунты', text: 'Подозрительные аккаунты отмечаются и разбираются вручную, нарушители блокируются.' },
       { title: 'Кулдауны и лимиты', text: 'Повторная сдача одного квеста ограничена периодом, на награды действуют лимиты.' },
       { title: 'Удержание выплат', text: 'В турнирах приз удерживается до решения модератора, если по результату есть вопросы.' },
       { title: 'Ручной разбор', text: 'Спорные случаи и подозрения проверяет человек, а не только автоматика.' },
@@ -122,7 +123,7 @@ const COPY: Record<Lang, Copy> = {
       playersApproved: 'Игроков с хотя бы одним подтверждённым квестом',
       decided: 'Проверено заявок за период',
       approvedLabel: 'одобрено',
-      auto: 'Подтверждено автоматически (API, постбэк, проверка подписки)',
+      auto: 'Подтверждено без модератора (автопроверка: API, постбэк, проверка подписки)',
       rejectedManual: 'Отклонено модератором из проверенных вручную',
       duplicates: 'Повторные скриншоты среди проверенных вручную',
       retention7: 'Новые игроки, активные через неделю',
@@ -133,14 +134,16 @@ const COPY: Record<Lang, Copy> = {
     dataOn: 'Данные на',
     retentionNote:
       '«Активные через неделю» — доля игроков, зарегистрировавшихся 7–14 дней назад и заходивших в последние 7 дней. Это не точный возврат ровно на 7-й день.',
+    autoNote:
+      '«Подтверждено без модератора» считается по типу квеста: у таких квестов результат проверяет автоматика, и заявка не попадает в очередь модерации.',
     loading: 'Загружаем цифры…',
     failed: 'Цифры временно недоступны. Попробуйте обновить страницу позже.',
     verifyTag: 'Сверка',
     verifyTitle: 'Что студия может проверить сама',
     verify: [
-      'Выгрузка по вашему квесту без персональных данных: хэш идентификатора игрока, время, статус заявки, способ проверки. Её можно сверить с вашими данными.',
-      'Подключение вашего постбэка или промокодов, чтобы подтверждение шло от вас.',
-      'Пробный квест с отчётом: воронка, структура проверок, что отсеяно, сроки.',
+      'Выгрузка без персональных данных: хэш идентификатора игрока, время, статус заявки, квест и способ проверки. Сейчас формируем её по запросу за нужный период; по колонке квеста выбираются строки вашего квеста, и их можно сверить с вашими данными.',
+      'По договорённости: подключение вашего постбэка или промокодов, чтобы подтверждение шло от вас. Это индивидуальная настройка, а не готовая функция.',
+      'Пробный квест с отчётом: воронка, структура проверок, что отсеяно, сроки. Отчёт мы готовим вручную по этой структуре.',
     ],
     payoutsTag: 'Выплаты',
     payoutsTitle: 'Прозрачность выплат',
@@ -154,7 +157,7 @@ const COPY: Record<Lang, Copy> = {
       'Внешнего независимого аудита (например, через AppsFlyer) у нас пока нет: доказательство строится на описании механик и реальных цифрах ниже.',
     ],
     ctaTitle: 'Хотите проверить на пробном квесте?',
-    ctaText: 'Напишите нам: запустим квест под вашу задачу и пришлём отчёт по нашему шаблону.',
+    ctaText: 'Напишите нам: запустим квест под вашу задачу и пришлём отчёт о результатах.',
     ctaTelegram: 'Telegram @GressToEx',
     back: '← К странице партнёрам',
     otherLangLabel: 'English version →',
@@ -177,7 +180,7 @@ const COPY: Record<Lang, Copy> = {
       {
         icon: '🤝',
         title: 'Confirmation from the studio',
-        desc: 'For games without an open API: a postback from the studio or its network, a promo code, or an export in an agreed format. The player is rewarded only after your side confirms. The format is agreed individually.',
+        desc: 'For games without an open API we are ready to connect confirmation from your side: a postback, promo codes, or an export in an agreed format. There is no universal integration yet: each such setup is configured for the studio by agreement. The player is rewarded only after confirmation.',
       },
       {
         icon: '📸',
@@ -191,7 +194,7 @@ const COPY: Record<Lang, Copy> = {
     protections: [
       { title: 'Progress from a baseline', text: 'By API, only what happened after the quest was taken counts; earlier achievements are ignored.' },
       { title: 'Repeated screenshot check', text: "A screenshot is compared with the same player's past submissions and with other players' submissions; the moderator sees a warning." },
-      { title: 'Multi-accounts', text: 'Suspicious accounts are reviewed manually and violators are banned.' },
+      { title: 'Multi-accounts', text: 'Suspicious accounts are flagged and reviewed manually, and violators are banned.' },
       { title: 'Cooldowns and limits', text: 'Re-submitting the same quest is limited by a time window, and rewards are capped by limits.' },
       { title: 'Payout holds', text: 'In tournaments a prize is held until a moderator decides if there are questions about the result.' },
       { title: 'Manual review', text: 'Disputed cases and suspicions are checked by a person, not only by automation.' },
@@ -206,7 +209,7 @@ const COPY: Record<Lang, Copy> = {
       playersApproved: 'Players with at least one confirmed quest',
       decided: 'Submissions reviewed in the period',
       approvedLabel: 'approved',
-      auto: 'Confirmed automatically (game API, postback, subscription check)',
+      auto: 'Confirmed without a moderator (auto-verified: game API, postback, subscription check)',
       rejectedManual: 'Rejected by a moderator among manually reviewed',
       duplicates: 'Repeated screenshots among manually reviewed',
       retention7: 'New players still active after a week',
@@ -217,14 +220,16 @@ const COPY: Record<Lang, Copy> = {
     dataOn: 'Data as of',
     retentionNote:
       '"Still active after a week" is the share of players who registered 7–14 days ago and were active during the last 7 days. It is not an exact day-7 return.',
+    autoNote:
+      '"Confirmed without a moderator" is calculated by quest type: for these quests automation checks the result and the submission does not enter the moderation queue.',
     loading: 'Loading numbers…',
     failed: 'Numbers are temporarily unavailable. Please try again later.',
     verifyTag: 'Cross-check',
     verifyTitle: 'What a studio can verify itself',
     verify: [
-      'An export for your quest without personal data: a hashed player ID, time, submission status and verification method. You can reconcile it with your own data.',
-      'Connecting your postback or promo codes so that confirmation comes from you.',
-      'A trial quest with a report: funnel, verification structure, what was filtered out, timelines.',
+      'An export without personal data: a hashed player ID, time, submission status, quest and verification method. We currently generate it on request for the period you need; filter it by the quest column to get the rows for your quest and reconcile them with your data.',
+      'By agreement: connecting your postback or promo codes so that confirmation comes from you. This is a custom setup, not a ready-made feature.',
+      'A trial quest with a report: funnel, verification structure, what was filtered out, timelines. We prepare the report manually in this structure.',
     ],
     payoutsTag: 'Payouts',
     payoutsTitle: 'Payout transparency',
@@ -238,7 +243,7 @@ const COPY: Record<Lang, Copy> = {
       'We do not have an independent external audit yet (for example via AppsFlyer): the proof rests on the description of our mechanics and the real numbers above.',
     ],
     ctaTitle: 'Want to test it on a trial quest?',
-    ctaText: 'Write to us: we will launch a quest for your task and send a report in our template.',
+    ctaText: 'Write to us: we will launch a quest for your task and send a report on the results.',
     ctaTelegram: 'Telegram @GressToEx',
     back: '← Partners page',
     otherLangLabel: 'Русская версия →',
@@ -367,6 +372,7 @@ export default function ProofContent({ lang = 'ru' }: { lang?: Lang }) {
                 </table>
               </div>
               <div className="proof-date">{t.dataOn} {formatDate(stats.collectedAt, lang)}.</div>
+              <p className="proof-note">{t.autoNote}</p>
               <p className="proof-note">{t.retentionNote}</p>
             </>
           ) : (
