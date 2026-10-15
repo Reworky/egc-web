@@ -94,7 +94,7 @@ const COPY: Record<Lang, Copy> = {
       {
         icon: '🤝',
         title: 'Подтверждение от студии',
-        desc: 'Для игр без открытого API мы готовы подключить подтверждение с вашей стороны: постбэк, промокоды или выгрузку по согласованному формату. Универсальной интеграции пока нет: каждую такую связку мы настраиваем под студию по договорённости. Игрок получает награду только после подтверждения.',
+        desc: 'Если у игры нет открытого API, подтверждение даёт студия: файл подтверждённых игроков, уникальные промокоды или ваш постбэк. Для пробного квеста достаточно файла. Универсальной интеграции пока нет: каждую связку мы настраиваем под студию по договорённости. Игрок получает награду только после подтверждения.',
       },
       {
         icon: '📸',
@@ -141,8 +141,8 @@ const COPY: Record<Lang, Copy> = {
     verifyTag: 'Сверка',
     verifyTitle: 'Что студия может проверить сама',
     verify: [
-      'Выгрузка без персональных данных: хэш идентификатора игрока, время, статус заявки, квест и способ проверки. Сейчас формируем её по запросу за нужный период; по колонке квеста выбираются строки вашего квеста, и их можно сверить с вашими данными.',
-      'По договорённости: подключение вашего постбэка или промокодов, чтобы подтверждение шло от вас. Это индивидуальная настройка, а не готовая функция.',
+      'Выгрузка без персональных данных: хэш идентификатора игрока, время, статус заявки, квест и способ проверки. Сейчас формируем её по запросу за нужный период; по колонке квеста выбираются строки вашего квеста, и их можно сверить с вашими данными. Выгрузки передаются на условиях NDA, хранятся 90 дней и удаляются по запросу студии.',
+      'По договорённости: подтверждение от вас в удобной форме. Самый простой вариант: вы присылаете файл с подтверждёнными игроками (ник или ID и дата события), мы сверяем и начисляем награду. Дальше можно подключить уникальные промокоды или ваш постбэк. Это индивидуальная настройка, а не готовая функция.',
       'Пробный квест с отчётом: воронка, структура проверок, что отсеяно, сроки. Отчёт мы готовим вручную по этой структуре.',
     ],
     payoutsTag: 'Выплаты',
@@ -180,7 +180,7 @@ const COPY: Record<Lang, Copy> = {
       {
         icon: '🤝',
         title: 'Confirmation from the studio',
-        desc: 'For games without an open API we are ready to connect confirmation from your side: a postback, promo codes, or an export in an agreed format. There is no universal integration yet: each such setup is configured for the studio by agreement. The player is rewarded only after confirmation.',
+        desc: 'If a game has no open API, confirmation comes from the studio: a file of confirmed players, unique promo codes, or your postback. For a trial quest a file is enough. There is no universal integration yet: each setup is configured for the studio by agreement. The player is rewarded only after confirmation.',
       },
       {
         icon: '📸',
@@ -227,8 +227,8 @@ const COPY: Record<Lang, Copy> = {
     verifyTag: 'Cross-check',
     verifyTitle: 'What a studio can verify itself',
     verify: [
-      'An export without personal data: a hashed player ID, time, submission status, quest and verification method. We currently generate it on request for the period you need; filter it by the quest column to get the rows for your quest and reconcile them with your data.',
-      'By agreement: connecting your postback or promo codes so that confirmation comes from you. This is a custom setup, not a ready-made feature.',
+      'An export without personal data: a hashed player ID, time, submission status, quest and verification method. We currently generate it on request for the period you need; filter it by the quest column to get the rows for your quest and reconcile them with your data. Exports are shared under an NDA, kept for 90 days and deleted on the studio\'s request.',
+      'By agreement: confirmation from your side in a form that suits you. The simplest option: you send a file of confirmed players (nickname or ID and event date), and we reconcile it and pay the reward. Later we can connect unique promo codes or your postback. This is a custom setup, not a ready-made feature.',
       'A trial quest with a report: funnel, verification structure, what was filtered out, timelines. We prepare the report manually in this structure.',
     ],
     payoutsTag: 'Payouts',
