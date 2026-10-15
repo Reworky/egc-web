@@ -82,7 +82,7 @@ export default async function Home() {
             <span className="hm-shimmer" style={{ display: 'block', letterSpacing: '0.18em', fontSize: '0.55em' }}>— GAMING CLUB —</span>
           </h1>
           <p className="text-lg sm:text-xl max-w-xl mx-auto" style={{ color: 'var(--muted)' }}>
-            Выполняй игровые квесты, зарабатывай <strong className="gradient-text-gold">EXC</strong> и выводи реальные деньги
+            Получай реальные деньги за игры, в которые уже играешь. Выполняй квесты, зарабатывай <strong className="gradient-text-gold">EXC</strong> и выводи по СБП, в Stars или GRAM. Бесплатно
           </p>
           <div className="hm-cta-row">
             <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">
