@@ -370,12 +370,12 @@ export default function AboutPage() {
           <div className="referral-inner">
             <div className="referral-text">
               <h3>Приглашай игроков<br />и получай бонусы</h3>
-              <p>Делись своей реферальной ссылкой из бота. Как только приглашённый друг выполнит первый квест — ты получишь бонус на счёт, а дальше — процент с его заработка.</p>
+              <p>Делись своей реферальной ссылкой из бота. Как только приглашённый друг выполнит 3 квеста и проведёт 3 дня в клубе — ты получишь бонус на счёт, а дальше — процент с его заработка.</p>
 
               <div className="referral-bonuses">
                 <div className="ref-bonus">
                   <div className="dot" />
-                  <div>Ты получаешь <strong style={{ whiteSpace: 'nowrap' }}>2&nbsp;500 EXC</strong> сразу, когда друг выполнит первый квест (а за первого друга — ещё 3 дня EGC Pass)</div>
+                  <div>Ты получаешь <strong style={{ whiteSpace: 'nowrap' }}>2&nbsp;500 EXC</strong>, когда друг выполнит 3 квеста и проведёт 3 дня в клубе (а за первого друга — ещё 3 дня EGC Pass)</div>
                 </div>
                 <div className="ref-bonus">
                   <div className="dot" />
@@ -383,7 +383,7 @@ export default function AboutPage() {
                 </div>
                 <div className="ref-bonus">
                   <div className="dot" />
-                  <div>Твой друг получает <strong style={{ whiteSpace: 'nowrap' }}>3&nbsp;000 EXC</strong> за первый выполненный квест</div>
+                  <div>Твой друг получает <strong style={{ whiteSpace: 'nowrap' }}>3&nbsp;000 EXC</strong> после 3 выполненных квестов и 3 дней в клубе</div>
                 </div>
                 <div className="ref-bonus">
                   <div className="dot" />
@@ -394,7 +394,7 @@ export default function AboutPage() {
 
             <div className="referral-visual">
               <div className="ref-big">3 000</div>
-              <div className="ref-caption">EXC другу<br />за первый квест</div>
+              <div className="ref-caption">EXC другу<br />за 3 квеста и 3 дня</div>
               <a href="https://t.me/invitetogamebot" target="_blank" rel="noopener" className="btn-primary" style={{ marginTop: 8, fontSize: 14, padding: '12px 24px' }}>
                 <svg width="14" height="14" viewBox="0 0 12 12" fill="currentColor" style={{ flexShrink: 0 }}>
                   <polygon points="2,1 10,6 2,11" />
