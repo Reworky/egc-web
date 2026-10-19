@@ -93,6 +93,8 @@ h1, h2 {
 }
 
 .page-content { position: relative; z-index: 1; }
+.social-link { color: #fff; opacity: 0.9; transition: opacity .15s ease, transform .15s ease; display: inline-flex; }
+.social-link:hover { opacity: 1; transform: translateY(-2px); color: var(--accent3, #c084fc); }
 
 /* ── Градиентный текст ── */
 .gradient-text {

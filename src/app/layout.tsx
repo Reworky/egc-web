@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import BackgroundCanvas from '@/components/BackgroundCanvas';
 import ScrollRevealInit from '@/components/ScrollRevealInit';
 import YandexAd from '@/components/YandexAd';
+import SocialLinks from '@/components/SocialLinks';
 
 export const metadata: Metadata = {
   title: 'EXPERIENCE GAMING CLUB',
@@ -45,6 +46,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="page-content border-t py-8 text-center text-sm" style={{ borderColor: 'var(--border)', color: 'var(--muted)' }}>
           <div className="max-w-6xl mx-auto px-4 mb-6">
             <YandexAd blockId="R-A-19801285-1" />
+          </div>
+          <div className="max-w-6xl mx-auto px-4 mb-6">
+            <SocialLinks />
           </div>
           <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
             <span className="font-semibold flex items-center gap-2" style={{ color: 'white' }}>
