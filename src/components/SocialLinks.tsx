@@ -28,7 +28,7 @@ const LINKS = [
 
 export default function SocialLinks() {
   return (
-    <div className="flex items-center justify-center gap-8">
+    <div className="flex items-center justify-center gap-3">
       {LINKS.map((l) => (
         <a
           key={l.name}
@@ -39,7 +39,7 @@ export default function SocialLinks() {
           title={l.name}
           className="social-link"
         >
-          <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
             {l.icon}
           </svg>
         </a>

@@ -47,15 +47,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="max-w-6xl mx-auto px-4 mb-6">
             <YandexAd blockId="R-A-19801285-1" />
           </div>
-          <div className="max-w-6xl mx-auto px-4 mb-6">
-            <SocialLinks />
-          </div>
           <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
             <span className="font-semibold flex items-center gap-2" style={{ color: 'white' }}>
               <img src="/logo.png" alt="EGC" style={{ width: 28, height: 28, objectFit: 'contain', mixBlendMode: 'screen', flexShrink: 0 }} />
               Experience Gaming Club
             </span>
-<span>© {new Date().getFullYear()} EGC. Все права защищены.</span>
+            <SocialLinks />
+            <span>© {new Date().getFullYear()} EGC. Все права защищены.</span>
           </div>
         </footer>
       </body>

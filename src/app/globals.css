@@ -93,8 +93,24 @@ h1, h2 {
 }
 
 .page-content { position: relative; z-index: 1; }
-.social-link { color: #fff; opacity: 0.9; transition: opacity .15s ease, transform .15s ease; display: inline-flex; }
-.social-link:hover { opacity: 1; transform: translateY(-2px); color: var(--accent3, #c084fc); }
+/* ── Иконки соцсетей (футер): стеклянные плитки в стиле кнопок сайта ── */
+.social-link {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 12px;
+  color: var(--accent3);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  transition: color 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.social-link:hover {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(124,58,237,0.45), rgba(168,85,247,0.25));
+  border-color: var(--border-bright);
+  box-shadow: 0 0 18px rgba(168,85,247,0.35);
+  transform: translateY(-2px);
+}
+.social-link:focus-visible { outline: 2px solid var(--accent3); outline-offset: 2px; }
 
 /* ── Градиентный текст ── */
 .gradient-text {
