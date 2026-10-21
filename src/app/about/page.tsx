@@ -83,8 +83,8 @@ export default function AboutPage() {
             </svg>
             &nbsp; Начать получать EXC
           </a>
-          <a href="https://t.me/exgamingclub" target="_blank" rel="noopener" className="btn-secondary">
-            📣&nbsp; Telegram-канал
+          <a href="https://t.me/egc_payouts" target="_blank" rel="noopener" className="btn-secondary">
+            💸&nbsp; Канал выплат
           </a>
         </div>
 
@@ -471,8 +471,8 @@ export default function AboutPage() {
               </svg>
               &nbsp; Начать получать EXC
             </a>
-            <a href="https://t.me/exgamingclub" target="_blank" rel="noopener" className="btn-secondary">
-              📣&nbsp; Подписаться на канал
+            <a href="https://t.me/egc_payouts" target="_blank" rel="noopener" className="btn-secondary">
+              💸&nbsp; Смотреть выплаты
             </a>
           </div>
         </div>
