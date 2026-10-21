@@ -9,7 +9,7 @@ interface Review {
 }
 
 /** Отзывы игроков из бота (публичный /api/public/reviews: только опубликованные в канале выплат, ники замаскированы). Нет отзывов или эндпоинт недоступен: блок скрывается. */
-export default function Reviews({ channelUrl }: { channelUrl: string }) {
+export default function Reviews() {
   const [items, setItems] = useState<Review[] | null>(null);
   const [failed, setFailed] = useState(false);
 
@@ -32,7 +32,6 @@ export default function Reviews({ channelUrl }: { channelUrl: string }) {
           <div className="hm-kicker">Говорят игроки</div>
           <h2 className="section-title">Отзывы</h2>
         </div>
-        <a href={channelUrl} target="_blank" rel="noopener noreferrer" className="hm-link">Все отзывы в Telegram →</a>
       </div>
       <div className="hm-reviews">
         {items
