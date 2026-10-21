@@ -8,6 +8,7 @@ import Reviews from '@/components/Reviews';
 export const revalidate = 60;
 
 const BOT_URL = 'https://t.me/invitetogamebot';
+const REVIEWS_URL = 'https://t.me/egc_payouts';
 // Цель первого вывода и стартовый бонус: те же числа, что в боте (WalletController.MIN_WITHDRAWAL, WELCOME_BONUS_EXC)
 const FIRST_WITHDRAWAL_EXC = 5000;
 const WELCOME_BONUS_EXC = 200;
@@ -220,7 +221,7 @@ export default async function Home() {
       )}
 
       {/* ── Отзывы ── */}
-      <Reviews />
+      <Reviews channelUrl={REVIEWS_URL} />
 
       {/* ── Рейтинг ── */}
       <section className="hm-section reveal" style={{ position: 'relative', overflow: 'hidden' }}>
