@@ -25,6 +25,7 @@ const METHOD: Record<string, { icon: string; label: string }> = {
   sbp: { icon: '💳', label: 'СБП' },
   stars: { icon: '⭐', label: 'Telegram Stars' },
   ton: { icon: '💎', label: 'GRAM' },
+  reward: { icon: '🎁', label: 'Награда магазина' },
 };
 
 function ago(m: number): string {

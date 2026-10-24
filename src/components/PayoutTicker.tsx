@@ -10,7 +10,7 @@ interface FeedItem {
   name: string;
 }
 
-const METHOD: Record<string, string> = { stars: 'Telegram Stars', ton: 'крипто', sbp: 'СБП' };
+const METHOD: Record<string, string> = { stars: 'Telegram Stars', ton: 'крипто', sbp: 'СБП', reward: 'награда' };
 
 function ago(m: number): string {
   if (m < 0) return '';
