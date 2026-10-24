@@ -18,8 +18,12 @@ interface ProofStats {
   rejectedManualPercent: number | null;
   duplicates: number;
   duplicatePercent: number | null;
+  retention1Percent?: number | null;
+  retentionCohort1?: number;
   retention7Percent: number | null;
   retentionCohort7: number;
+  retention30Percent?: number | null;
+  retentionCohort30?: number;
 }
 
 type Lang = 'ru' | 'en';
@@ -48,7 +52,9 @@ interface Copy {
     auto: string;
     rejectedManual: string;
     duplicates: string;
+    retention1: string;
     retention7: string;
+    retention30: string;
   };
   sample: string;
   notEnough: (n: number) => string;
@@ -126,14 +132,16 @@ const COPY: Record<Lang, Copy> = {
       auto: 'Подтверждено без модератора (автопроверка: API, постбэк, проверка подписки)',
       rejectedManual: 'Отклонено модератором из проверенных вручную',
       duplicates: 'Повторные скриншоты среди проверенных вручную',
-      retention7: 'Новые игроки, активные через неделю',
+      retention1: 'Новые игроки, вернувшиеся на следующий день',
+      retention7: 'Новые игроки, вернувшиеся на 7-й день',
+      retention30: 'Новые игроки, вернувшиеся на 30-й день',
     },
     sample: 'выборка',
     notEnough: n => `мало данных (выборка ${n})`,
     playersSuffix: '+',
     dataOn: 'Данные на',
     retentionNote:
-      '«Активные через неделю» — доля игроков, зарегистрировавшихся 7–14 дней назад и заходивших в последние 7 дней. Это не точный возврат ровно на 7-й день.',
+      'Возврат на день N — доля новых игроков, которые были активны ровно на N-й день после регистрации (бот или мини-апп; сутки по Москве). Считаем по журналу активных дней, который ведётся с 16.10.2026; показываем только когорты от 30 игроков и наблюдения не старше 45 дней, поэтому строки с недостаточной выборкой скрыты и появятся, когда данных станет достаточно.',
     autoNote:
       '«Подтверждено без модератора» считается по типу квеста: у таких квестов результат проверяет автоматика, и заявка не попадает в очередь модерации.',
     loading: 'Загружаем цифры…',
@@ -212,14 +220,16 @@ const COPY: Record<Lang, Copy> = {
       auto: 'Confirmed without a moderator (auto-verified: game API, postback, subscription check)',
       rejectedManual: 'Rejected by a moderator among manually reviewed',
       duplicates: 'Repeated screenshots among manually reviewed',
-      retention7: 'New players still active after a week',
+      retention1: 'New players who came back the next day',
+      retention7: 'New players who came back on day 7',
+      retention30: 'New players who came back on day 30',
     },
     sample: 'sample',
     notEnough: n => `not enough data (sample ${n})`,
     playersSuffix: '+',
     dataOn: 'Data as of',
     retentionNote:
-      '"Still active after a week" is the share of players who registered 7–14 days ago and were active during the last 7 days. It is not an exact day-7 return.',
+      'Day-N return is the share of new players who were active exactly on day N after registration (bot or mini app; days in Moscow time). It is based on an activity log kept since 16 Oct 2026; we show only cohorts of 30+ players and observations no older than 45 days, so rows with too small a sample are hidden and will appear as data accumulates.',
     autoNote:
       '"Confirmed without a moderator" is calculated by quest type: for these quests automation checks the result and the submission does not enter the moderation queue.',
     loading: 'Loading numbers…',
@@ -364,10 +374,24 @@ export default function ProofContent({ lang = 'ru' }: { lang?: Lang }) {
                       <td>{t.rows.duplicates}</td>
                       <td>{pct(stats.duplicatePercent, stats.manualDecided)}</td>
                     </tr>
-                    <tr>
-                      <td>{t.rows.retention7}</td>
-                      <td>{pct(stats.retention7Percent, stats.retentionCohort7)}</td>
-                    </tr>
+                    {stats.retention1Percent != null && (
+                      <tr>
+                        <td>{t.rows.retention1}</td>
+                        <td>{pct(stats.retention1Percent, stats.retentionCohort1 ?? 0)}</td>
+                      </tr>
+                    )}
+                    {stats.retention7Percent != null && (
+                      <tr>
+                        <td>{t.rows.retention7}</td>
+                        <td>{pct(stats.retention7Percent, stats.retentionCohort7)}</td>
+                      </tr>
+                    )}
+                    {stats.retention30Percent != null && (
+                      <tr>
+                        <td>{t.rows.retention30}</td>
+                        <td>{pct(stats.retention30Percent, stats.retentionCohort30 ?? 0)}</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
