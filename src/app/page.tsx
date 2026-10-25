@@ -14,12 +14,12 @@ const FIRST_WITHDRAWAL_EXC = 5000;
 const WELCOME_BONUS_EXC = 200;
 
 const FEATURES = [
-  { icon: '🎯', title: 'Квесты по играм', text: 'Brawl Stars, Clash Royale, Clash of Clans, PUBG и другие. Награда в EXC видна до старта, а для многих квестов прогресс считается сам.', href: '/quests', cta: 'Каталог квестов' },
-  { icon: '🛒', title: 'Магазин наград', text: 'Тратить EXC можно на донат в играх, подарочные карты и бусты, а не только выводить деньгами.', href: '/shop', cta: 'Открыть магазин' },
-  { icon: '🎰', title: 'Колесо фортуны', text: 'Крути колесо и забирай призы: EXC, буст опыта, рамку профиля. Попытки даёт активность в клубе.', href: '/wheel', cta: 'Крутить колесо' },
-  { icon: '🛡️', title: 'Отряды', text: 'Собери команду из друзей: в отряде играть веселее, а за состав из 3–5 человек клуб даёт бонус.', href: BOT_URL, cta: 'Создать отряд в боте', external: true },
-  { icon: '🏆', title: 'Турниры и рейтинг', text: 'Соревнуйся с другими игроками: недельный и общий рейтинг, турниры с призами и повышение уровня за опыт.', href: BOT_URL, cta: 'Смотреть в боте', external: true },
-  { icon: '👑', title: 'EGC Pass', text: 'Подписка с перками для тех, кто играет много: больше возможностей и приятные бонусы к награде.', href: BOT_URL, cta: 'Подробнее в боте', external: true },
+  { title: 'Квесты по играм', text: 'Brawl Stars, Clash Royale, Clash of Clans, PUBG и другие. Награда в EXC видна до старта, а для многих квестов прогресс считается сам.', href: '/quests', cta: 'Каталог квестов' },
+  { title: 'Магазин наград', text: 'Тратить EXC можно на донат в играх, подарочные карты и бусты, а не только выводить деньгами.', href: '/shop', cta: 'Открыть магазин' },
+  { title: 'Колесо фортуны', text: 'Крути колесо и забирай призы: EXC, буст опыта, рамку профиля. Попытки даёт активность в клубе.', href: '/wheel', cta: 'Крутить колесо' },
+  { title: 'Отряды', text: 'Собери команду из друзей: в отряде играть веселее, а за состав из 3–5 человек клуб даёт бонус.', href: BOT_URL, cta: 'Создать отряд в боте', external: true },
+  { title: 'Турниры и рейтинг', text: 'Соревнуйся с другими игроками: недельный и общий рейтинг, турниры с призами и повышение уровня за опыт.', href: BOT_URL, cta: 'Смотреть в боте', external: true },
+  { title: 'EGC Pass', text: 'Подписка с перками для тех, кто играет много: больше возможностей и приятные бонусы к награде.', href: BOT_URL, cta: 'Подробнее в боте', external: true },
 ];
 
 const FAQ = [
@@ -33,9 +33,9 @@ const FAQ = [
 ];
 
 const STEPS = [
-  { icon: '🎯', title: 'Выбери квест', text: 'Игры, которые ты любишь: Brawl Stars, Clash Royale, Clash of Clans, PUBG и другие. Награда видна до старта.' },
-  { icon: '⚔️', title: 'Играй и выполняй', text: 'Для многих квестов прогресс считается сам по твоему игровому тегу, остальные подтверждаются скриншотом.' },
-  { icon: '💸', title: 'Получай EXC и выводи', text: 'EXC тратятся в магазине или выводятся на карту, по СБП, в Telegram Stars или GRAM.' },
+  { title: 'Выбери квест', text: 'Игры, которые ты любишь: Brawl Stars, Clash Royale, Clash of Clans, PUBG и другие. Награда видна до старта.' },
+  { title: 'Играй и выполняй', text: 'Для многих квестов прогресс считается сам по твоему игровому тегу, остальные подтверждаются скриншотом.' },
+  { title: 'Получай EXC и выводи', text: 'EXC тратятся в магазине или выводятся на карту, по СБП, в Telegram Stars или GRAM.' },
 ];
 
 /** До 6 квестов: по одному лучшему (по награде) на игру, чтобы блок не состоял из одной игры. Спонсорские, партнёрские (внешние офферы, часто с покупкой), закрытые и «только для совета» не берём. */
@@ -86,14 +86,14 @@ export default async function Home() {
           </p>
           <div className="hm-cta-row">
             <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">
-              🚀 Открыть EGC
+              Открыть EGC
             </a>
             <Link href="/quests" className="hm-btn hm-btn-ghost">Смотреть квесты</Link>
           </div>
           <ul className="hm-perks">
-            <li>🎁 {WELCOME_BONUS_EXC} EXC за регистрацию</li>
-            <li>🆓 Вступление бесплатно</li>
-            <li>💸 Вывод: СБП · Stars · GRAM</li>
+            <li>{WELCOME_BONUS_EXC} EXC за регистрацию</li>
+            <li>Вступление бесплатно</li>
+            <li>Вывод: СБП · Stars · GRAM</li>
           </ul>
         </div>
       </section>
@@ -101,11 +101,11 @@ export default async function Home() {
       {/* ── Клуб в цифрах ── */}
       {stats && (
         <section className="hm-stats reveal" aria-label="Клуб в цифрах">
-          <div className="hm-stat"><div className="hm-stat-icon">👥</div><div className="hm-stat-num"><CountUp value={stats.totalPlayers} /></div><div className="hm-stat-label">игроков в клубе</div></div>
-          <div className="hm-stat"><div className="hm-stat-icon">✅</div><div className="hm-stat-num"><CountUp value={stats.totalQuestsCompleted} /></div><div className="hm-stat-label">квестов выполнено</div></div>
-          <div className="hm-stat"><div className="hm-stat-icon">🪙</div><div className="hm-stat-num gold"><CountUp value={stats.totalExcIssued} /></div><div className="hm-stat-label">EXC выдано</div></div>
-          <div className="hm-stat"><div className="hm-stat-icon">🎮</div><div className="hm-stat-num">{stats.topGame || '—'}</div><div className="hm-stat-label">топ игра</div></div>
-          <div className="hm-stat"><div className="hm-stat-icon">📈</div><div className="hm-stat-num green">{stats.healthRatioPercent}%</div><div className="hm-stat-label">здоровье фонда</div></div>
+          <div className="hm-stat"><div className="hm-stat-num"><CountUp value={stats.totalPlayers} /></div><div className="hm-stat-label">игроков в клубе</div></div>
+          <div className="hm-stat"><div className="hm-stat-num"><CountUp value={stats.totalQuestsCompleted} /></div><div className="hm-stat-label">квестов выполнено</div></div>
+          <div className="hm-stat"><div className="hm-stat-num gold"><CountUp value={stats.totalExcIssued} /></div><div className="hm-stat-label">EXC выдано</div></div>
+          <div className="hm-stat"><div className="hm-stat-num">{stats.topGame || '—'}</div><div className="hm-stat-label">топ игра</div></div>
+          <div className="hm-stat"><div className="hm-stat-num green">{stats.healthRatioPercent}%</div><div className="hm-stat-label">здоровье фонда</div></div>
         </section>
       )}
 
@@ -124,7 +124,6 @@ export default async function Home() {
           {STEPS.map((s, i) => (
             <div key={s.title} className="hm-step how-step">
               <span className="hm-step-num">0{i + 1}</span>
-              <div className="hm-step-icon">{s.icon}</div>
               <h3>{s.title}</h3>
               <p>{s.text}</p>
             </div>
@@ -138,8 +137,8 @@ export default async function Home() {
             </div>
             <div className="hm-path-bar" aria-hidden="true"><i /></div>
             <div className="hm-path-scale">
-              <span>🎁 {WELCOME_BONUS_EXC} EXC в подарок</span>
-              <span>🎯 {FIRST_WITHDRAWAL_EXC.toLocaleString('ru')} EXC — можно выводить</span>
+              <span>{WELCOME_BONUS_EXC} EXC в подарок</span>
+              <span>{FIRST_WITHDRAWAL_EXC.toLocaleString('ru')} EXC — можно выводить</span>
             </div>
             <p>Расчёт по типичной награде за квест сейчас. Реальный путь зависит от выбранных квестов и твоей активности.</p>
           </div>
@@ -158,7 +157,6 @@ export default async function Home() {
           {FEATURES.map(f => {
             const inner = (
               <>
-                <div className="hm-step-icon">{f.icon}</div>
                 <h3>{f.title}</h3>
                 <p>{f.text}</p>
                 <span className="hm-feature-cta">{f.cta} →</span>
@@ -188,14 +186,14 @@ export default async function Home() {
               <Link key={q.id} href="/quests" className="hm-quest">
                 <div className="hm-quest-top">
                   <span className="hm-chip">{q.gameName}</span>
-                  {q.brawlAutoVerify && <span className="hm-chip auto">⚡ автопроверка</span>}
+                  {q.brawlAutoVerify && <span className="hm-chip auto">автопроверка</span>}
                   {q.highlightNew && <span className="hm-chip new">NEW</span>}
                 </div>
                 <h3>{q.title}</h3>
                 <p>{q.description}</p>
                 <div className="hm-reward">
                   <b>+{q.rewardCoins.toLocaleString('ru')} EXC</b>
-                  <span>+{q.rewardXp} XP{q.ticketReward ? ` · 🎟 ${q.ticketReward}` : ''}{q.durationDays ? ` · ${q.durationDays} дн.` : ''}</span>
+                  <span>+{q.rewardXp} XP{q.ticketReward ? ` · ${q.ticketReward} бил.` : ''}{q.durationDays ? ` · ${q.durationDays} дн.` : ''}</span>
                 </div>
               </Link>
             ))}
@@ -271,7 +269,7 @@ export default async function Home() {
       <section className="hm-final reveal">
         <h2 className="font-heading">Готов начать?</h2>
         <p>Открой бота в Telegram, привяжи игровой тег и забери первый квест: награда видна до старта.</p>
-        <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">🚀 Открыть EGC в Telegram</a>
+        <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">Открыть EGC в Telegram</a>
       </section>
 
       <p className="hm-disclaimer">

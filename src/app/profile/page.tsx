@@ -29,7 +29,7 @@ export default function ProfilePage() {
           <TelegramLoginButton botUsername="invitetogamebot" onAuth={login} />
           {error && (
             <div className="text-xs rounded-lg px-3 py-2 text-left break-all" style={{ background: '#ef444422', color: '#ef4444', border: '1px solid #ef444444' }}>
-              ❌ {error}
+              {error}
             </div>
           )}
         </div>
@@ -82,13 +82,12 @@ export default function ProfilePage() {
       {/* Карточки статистики */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Квестов', value: user.completedQuests, icon: '✅' },
-          { label: 'Дней подряд', value: user.streakDays, icon: '🔥' },
-          { label: 'Лимит/мес', value: `${(user.monthlyWithdrawalLimit / 1000).toFixed(0)}к EXC`, icon: '📤' },
-          { label: 'Доступно', value: `${(user.remainingWithdrawalLimit / 1000).toFixed(0)}к EXC`, icon: '💸' },
+          { label: 'Квестов', value: user.completedQuests },
+          { label: 'Дней подряд', value: user.streakDays },
+          { label: 'Лимит/мес', value: `${(user.monthlyWithdrawalLimit / 1000).toFixed(0)}к EXC` },
+          { label: 'Доступно', value: `${(user.remainingWithdrawalLimit / 1000).toFixed(0)}к EXC` },
         ].map(s => (
           <div key={s.label} className="hm-mini">
-            <div className="text-lg">{s.icon}</div>
             <b>{s.value}</b>
             <span>{s.label}</span>
           </div>
@@ -98,11 +97,11 @@ export default function ProfilePage() {
       {/* Платформы и интересы */}
       <div className="hm-row space-y-2">
         <div className="flex gap-2 text-sm flex-wrap">
-          <span style={{ color: 'var(--muted)' }}>🖥 Платформы:</span>
+          <span style={{ color: 'var(--muted)' }}>Платформы:</span>
           <span className="text-white">{user.platformsCsv || '—'}</span>
         </div>
         <div className="flex gap-2 text-sm flex-wrap">
-          <span style={{ color: 'var(--muted)' }}>🎯 Интересы:</span>
+          <span style={{ color: 'var(--muted)' }}>Интересы:</span>
           <span className="text-white">{user.interestsCsv || '—'}</span>
         </div>
       </div>

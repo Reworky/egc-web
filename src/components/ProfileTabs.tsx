@@ -51,7 +51,7 @@ function SubmissionsList() {
           )}
           {s.moderatorComment && (
             <p className="text-xs rounded-lg px-3 py-2" style={{ background: 'var(--bg3)', color: 'var(--muted)' }}>
-              💬 {s.moderatorComment}
+              Комментарий модератора: {s.moderatorComment}
             </p>
           )}
           <p className="text-xs" style={{ color: 'var(--muted)' }}>{s.createdAt}</p>
@@ -88,7 +88,7 @@ function RewardsList() {
           </div>
           {r.adminComment && (
             <p className="text-xs rounded-lg px-3 py-2" style={{ background: 'var(--bg3)', color: 'var(--muted)' }}>
-              💬 {r.adminComment}
+              Комментарий администратора: {r.adminComment}
             </p>
           )}
         </div>
@@ -110,8 +110,8 @@ function Empty({ text }: { text: string }) {
 }
 
 const TABS = [
-  { id: 'quests', label: '📋 Квесты' },
-  { id: 'rewards', label: '🎁 Заявки' },
+  { id: 'quests', label: 'Квесты' },
+  { id: 'rewards', label: 'Заявки' },
 ] as const;
 
 export default function ProfileTabs() {

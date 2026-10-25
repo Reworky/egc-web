@@ -35,7 +35,7 @@ interface Copy {
   lead: string;
   methodsTag: string;
   methodsTitle: string;
-  methods: { icon: string; title: string; desc: string }[];
+  methods: { title: string; desc: string }[];
   protectionTag: string;
   protectionTitle: string;
   protectionSub: string;
@@ -93,17 +93,14 @@ const COPY: Record<Lang, Copy> = {
     methodsTitle: 'Три способа подтвердить результат',
     methods: [
       {
-        icon: '🎮',
         title: 'Данные игры по API',
         desc: 'Игрок привязывает свой игровой тег, а мы сверяем прогресс с официальным API игры: победы, трофеи, ачивки и т. п. Считается прирост с момента, когда игрок взял квест. Ответ приходит автоматически, награда выдаётся после выполнения условия. Сейчас так работают квесты по Brawl Stars, Clash Royale и Clash of Clans.',
       },
       {
-        icon: '🤝',
         title: 'Подтверждение от студии',
         desc: 'Если у игры нет открытого API, подтверждение даёт студия: файл подтверждённых игроков, уникальные промокоды или ваш постбэк. Для пробного квеста достаточно файла. Универсальной интеграции пока нет: каждую связку мы настраиваем под студию по договорённости. Игрок получает награду только после подтверждения.',
       },
       {
-        icon: '📸',
         title: 'Скриншот и модерация',
         desc: 'Игрок присылает скриншот, модератор одобряет, отклоняет с причиной или запрашивает уточнение. Это самый слабый способ, поэтому для результатов, за которые платит студия, мы предлагаем первые два.',
       },
@@ -181,17 +178,14 @@ const COPY: Record<Lang, Copy> = {
     methodsTitle: 'Three ways to confirm a result',
     methods: [
       {
-        icon: '🎮',
         title: 'Game data via official API',
         desc: "The player links their in-game tag and we compare progress with the game's official API: wins, trophies, achievements and so on. Only progress made after the player took the quest counts. The answer comes automatically and the reward is paid once the condition is met. Today this covers Brawl Stars, Clash Royale and Clash of Clans quests.",
       },
       {
-        icon: '🤝',
         title: 'Confirmation from the studio',
         desc: 'If a game has no open API, confirmation comes from the studio: a file of confirmed players, unique promo codes, or your postback. For a trial quest a file is enough. There is no universal integration yet: each setup is configured for the studio by agreement. The player is rewarded only after confirmation.',
       },
       {
-        icon: '📸',
         title: 'Screenshot and moderation',
         desc: 'The player sends a screenshot and a moderator approves it, rejects it with a reason, or asks for more details. This is the weakest method, so for results a studio pays for we recommend the first two.',
       },
@@ -310,7 +304,6 @@ export default function ProofContent({ lang = 'ru' }: { lang?: Lang }) {
           <div className="collab-grid">
             {t.methods.map(m => (
               <div key={m.title} className="collab-item">
-                <div className="collab-icon">{m.icon}</div>
                 <div className="collab-body">
                   <div className="collab-title">{m.title}</div>
                   <div className="collab-desc">{m.desc}</div>

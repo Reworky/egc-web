@@ -8,8 +8,8 @@ type Sort = 'reward' | 'short' | 'default';
 
 const SORTS: { id: Sort; label: string }[] = [
   { id: 'default', label: 'По порядку' },
-  { id: 'reward', label: '💰 Больше награда' },
-  { id: 'short', label: '⏱ Короче срок' },
+  { id: 'reward', label: 'Больше награда' },
+  { id: 'short', label: 'Короче срок' },
 ];
 
 const STATIC_GAMES = ['Brawl Stars', 'Clash Royale', 'Clash of Clans', 'PUBG Mobile', 'PUBG PC', 'CS2', 'Dota 2'];
@@ -46,7 +46,6 @@ export default function QuestFilter({ quests, games: apiGames }: { quests: Quest
     <div className="space-y-6">
       {/* Поиск */}
       <div className="relative">
-        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm pointer-events-none" aria-hidden="true">🔍</span>
         <input
           type="text"
           placeholder="Поиск по названию квеста..."
@@ -73,7 +72,7 @@ export default function QuestFilter({ quests, games: apiGames }: { quests: Quest
             <div className="hm-filter-label">Проверка</div>
             <div className="flex gap-2">
               <button onClick={() => setAutoOnly(false)} className={`hm-pill${!autoOnly ? ' on' : ''}`}>Все</button>
-              <button onClick={() => setAutoOnly(true)} className={`hm-pill${autoOnly ? ' on' : ''}`}>⚡ Автопроверка</button>
+              <button onClick={() => setAutoOnly(true)} className={`hm-pill${autoOnly ? ' on' : ''}`}>Автопроверка</button>
             </div>
           </div>
           <div className="space-y-2">
@@ -105,7 +104,6 @@ export default function QuestFilter({ quests, games: apiGames }: { quests: Quest
 
       {filtered.length === 0 && (
         <div className="hm-empty">
-          <div className="text-4xl">🔍</div>
           <b>Ничего не найдено</b>
           <p>Попробуй изменить фильтры или поисковый запрос</p>
         </div>

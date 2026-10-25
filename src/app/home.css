@@ -171,7 +171,7 @@
 .pg-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
 
 /* Поиск и фильтры */
-.hm-search { width: 100%; padding: 14px 16px 14px 44px; border-radius: 14px; font-size: 15px; color: #fff; outline: none; background: rgba(15,15,34,.8); border: 1px solid rgba(168,85,247,.25); transition: border-color .2s, box-shadow .2s; }
+.hm-search { width: 100%; padding: 14px 16px; border-radius: 14px; font-size: 15px; color: #fff; outline: none; background: rgba(15,15,34,.8); border: 1px solid rgba(168,85,247,.25); transition: border-color .2s, box-shadow .2s; }
 .hm-search:focus { border-color: rgba(192,132,252,.8); box-shadow: 0 0 0 3px rgba(124,58,237,.2); }
 .hm-filter-label { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #a78bfa; }
 .hm-pill { padding: 9px 16px; border-radius: 12px; font-weight: 700; font-size: 13px; color: #e9d5ff; cursor: pointer; background: rgba(124,58,237,.12); border: 1px solid rgba(168,85,247,.25); transition: transform .15s, background .15s, border-color .15s; }

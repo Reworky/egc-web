@@ -21,11 +21,11 @@ interface Feed {
   reviewsUrl?: string;
 }
 
-const METHOD: Record<string, { icon: string; label: string }> = {
-  sbp: { icon: '💳', label: 'СБП' },
-  stars: { icon: '⭐', label: 'Telegram Stars' },
-  ton: { icon: '💎', label: 'GRAM' },
-  reward: { icon: '🎁', label: 'Награда магазина' },
+const METHOD: Record<string, { label: string }> = {
+  sbp: { label: 'СБП' },
+  stars: { label: 'Telegram Stars' },
+  ton: { label: 'GRAM' },
+  reward: { label: 'Награда магазина' },
 };
 
 function ago(m: number): string {
@@ -85,11 +85,11 @@ export default function PayoutFeed() {
       <div className="hm-pay-grid">
         {feed
           ? feed.items.map((it, i) => {
-              const m = METHOD[it.method] ?? { icon: '💸', label: it.method };
+              const m = METHOD[it.method] ?? { label: it.method };
               return (
                 <div key={i} className="hm-pay">
                   <div className="hm-pay-amount">{it.amountText ?? rub(it.rub)}</div>
-                  <div className="hm-pay-method"><span>{m.icon}</span>{m.label}</div>
+                  <div className="hm-pay-method">{m.label}</div>
                   <div className="hm-pay-meta">
                     <span>{it.name}</span>
                     <em>{ago(it.minutesAgo)}</em>

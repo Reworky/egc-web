@@ -1,6 +1,5 @@
 import { LeaderboardEntry } from '@/lib/api';
 
-const RANK_ICON: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' };
 const RANK_CLASS: Record<number, string> = { 1: 'rank-1', 2: 'rank-2', 3: 'rank-3' };
 
 function Avatar({ name }: { name: string }) {
@@ -48,9 +47,7 @@ export default function LeaderboardTable({ entries }: { entries: LeaderboardEntr
             >
               <td className="px-4 py-3 w-12">
                 <span className="text-base font-black">
-                  {RANK_ICON[e.rank] ?? (
-                    <span style={{ color: 'var(--muted)' }}>{e.rank}</span>
-                  )}
+                  <span style={{ color: 'var(--muted)' }}>{e.rank}</span>
                 </span>
               </td>
               <td className="px-4 py-3">

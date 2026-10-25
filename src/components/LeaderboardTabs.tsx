@@ -28,7 +28,7 @@ export default function LeaderboardTabs({ initial, limit }: { initial: Leaderboa
             onClick={() => setTab(t)}
             className={`px-5 py-2 rounded-xl text-sm font-semibold transition-all ${tab === t ? 'tab-active' : 'tab-inactive'}`}
           >
-            {t === 'overall' ? '🏆 Всё время' : '⚡ Эта неделя'}
+            {t === 'overall' ? 'Всё время' : 'Эта неделя'}
           </button>
         ))}
       </div>

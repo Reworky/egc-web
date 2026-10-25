@@ -13,7 +13,7 @@ const SECTORS = [
   { label: '1 000 EXC',    color: '#db2777', textColor: '#fce7f3' },
   { label: '2 000 EXC',    color: '#e11d48', textColor: '#ffe4e6' },
   { label: 'XP-буст 24ч', color: '#0891b2', textColor: '#e0f2fe' },
-  { label: 'Рамка 👑',     color: '#b45309', textColor: '#fef3c7' },
+  { label: 'Рамка',     color: '#b45309', textColor: '#fef3c7' },
 ];
 
 const N = SECTORS.length;
@@ -79,7 +79,6 @@ function drawWheel(canvas: HTMLCanvasElement, rotation: number) {
   ctx.font = '22px serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('🎰', cx, cy);
 }
 
 function drawArrow(canvas: HTMLCanvasElement) {
@@ -200,14 +199,14 @@ export default function WheelPage() {
   const canSpin = user && !spinning && (tickets ?? 0) > 0 && spinsToday < 10;
 
   const prizes = [
-    { label: '🥉 50 EXC',      prob: '30%' },
-    { label: '🥉 100 EXC',     prob: '25%' },
-    { label: '🥈 300 EXC',     prob: '20%' },
-    { label: '🥈 500 EXC',     prob: '12%' },
-    { label: '🥇 1 000 EXC',   prob: '8%'  },
-    { label: '🥇 2 000 EXC',   prob: '3%'  },
-    { label: '💎 XP-буст 24ч', prob: '1.5%' },
-    { label: '👑 Рамка аватара', prob: '0.5%' },
+    { label: '50 EXC',      prob: '30%' },
+    { label: '100 EXC',     prob: '25%' },
+    { label: '300 EXC',     prob: '20%' },
+    { label: '500 EXC',     prob: '12%' },
+    { label: '1 000 EXC',   prob: '8%'  },
+    { label: '2 000 EXC',   prob: '3%'  },
+    { label: 'XP-буст 24ч', prob: '1.5%' },
+    { label: 'Рамка аватара', prob: '0.5%' },
   ];
 
   return (
@@ -218,8 +217,8 @@ export default function WheelPage() {
         title="Колесо фортуны"
         text="Крути колесо и выигрывай EXC, XP-буст или рамку аватара. Билеты дают квесты и серия дней подряд."
         chips={<>
-          <span className="pg-chip gold">🎟 Билетов: <b>{user ? (tickets ?? '…') : '—'}</b></span>
-          <span className="pg-chip">🔄 Сегодня: <b>{user ? `${spinsToday} / 10` : '—'}</b></span>
+          <span className="pg-chip gold">Билетов: <b>{user ? (tickets ?? '…') : '—'}</b></span>
+          <span className="pg-chip">Сегодня: <b>{user ? `${spinsToday} / 10` : '—'}</b></span>
         </>}
       />
 
@@ -252,7 +251,7 @@ export default function WheelPage() {
             className={canSpin ? 'hm-btn hm-btn-main' : 'hm-btn hm-btn-off'}
             style={{ fontSize: 18, padding: '16px 40px' }}
           >
-            {spinning ? '⏳ Крутится...' : canSpin ? '🎰 Крутить (−1 🎟)' : tickets === 0 ? '🎟 Нет билетов' : '🚫 Лимит исчерпан'}
+            {spinning ? 'Крутится...' : canSpin ? 'Крутить (−1 билет)' : tickets === 0 ? 'Нет билетов' : 'Лимит исчерпан'}
           </button>
         )}
 
@@ -262,15 +261,15 @@ export default function WheelPage() {
             className="w-full rounded-2xl p-5 text-center space-y-2"
             style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.2), rgba(236,72,153,0.1))', border: '1px solid rgba(168,85,247,0.4)' }}
           >
-            <div className="text-2xl font-black text-white">🎊 {result.label}</div>
+            <div className="text-2xl font-black text-white">{result.label}</div>
             {result.type === 'EXC' && (
               <div style={{ color: '#fbbf24' }}>+{result.excAmount.toLocaleString('ru')} EXC зачислено</div>
             )}
             {result.type === 'BOOST_24H' && (
-              <div style={{ color: '#38bdf8' }}>⚡ XP-буст активирован на 24 часа</div>
+              <div style={{ color: '#38bdf8' }}>XP-буст активирован на 24 часа</div>
             )}
             {result.type === 'AVATAR_FRAME' && (
-              <div style={{ color: '#fbbf24' }}>✨ Рамка применена к профилю</div>
+              <div style={{ color: '#fbbf24' }}>Рамка применена к профилю</div>
             )}
           </div>
         )}
@@ -279,7 +278,7 @@ export default function WheelPage() {
         {error && (
           <div className="w-full rounded-2xl p-4 text-center"
             style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#fca5a5' }}>
-            ⚠️ {error}
+            {error}
           </div>
         )}
       </div>
@@ -289,19 +288,18 @@ export default function WheelPage() {
         <div className="hm-head" style={{ marginBottom: 0 }}>
           <div>
             <div className="hm-kicker">Как играть</div>
-            <h2 className="section-title">Как получить билеты 🎟</h2>
+            <h2 className="section-title">Как получить билеты</h2>
           </div>
         </div>
         <div className="grid sm:grid-cols-3 gap-3">
           {[
-            { icon: '🎯', title: 'Выполнить квест', desc: 'от +1 билета: число указано на карточке квеста (🎟)' },
-            { icon: '📅', title: 'Задания и сундук дня', desc: 'билеты в награду за ежедневные задания' },
-            { icon: '🔥', title: '3 дня подряд', desc: '+1 билет' },
-            { icon: '💥', title: '7 дней подряд', desc: '+2 билета' },
-            { icon: '⭐', title: '14 дней подряд', desc: '+3 билета' },
+            { title: 'Выполнить квест', desc: 'от +1 билета: число указано на карточке квеста' },
+            { title: 'Задания и сундук дня', desc: 'билеты в награду за ежедневные задания' },
+            { title: '3 дня подряд', desc: '+1 билет' },
+            { title: '7 дней подряд', desc: '+2 билета' },
+            { title: '14 дней подряд', desc: '+3 билета' },
           ].map((item, i) => (
             <div key={i} className="hm-item" style={{ padding: 16, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-              <div className="text-2xl">{item.icon}</div>
               <div>
                 <div className="font-bold text-white text-sm">{item.title}</div>
                 <div className="text-xs" style={{ color: 'var(--muted)' }}>{item.desc}</div>

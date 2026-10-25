@@ -24,11 +24,11 @@ export default async function ShopPage() {
         title="Магазин"
         text="Трать EXC на донат в играх, подарочные карты и бусты или выводи деньгами. Заявки оформляются в боте."
         chips={<>
-          <span className="pg-chip gold">💱 100 EXC = <b>1 ₽</b></span>
-          {stats && <span className="pg-chip green">📈 Здоровье фонда: <b>{stats.healthRatioPercent}%</b></span>}
-          <span className="pg-chip">🛍 <b>{items.length}</b> позиций</span>
+          <span className="pg-chip gold">100 EXC = <b>1 ₽</b></span>
+          {stats && <span className="pg-chip green">Здоровье фонда: <b>{stats.healthRatioPercent}%</b></span>}
+          <span className="pg-chip"><b>{items.length}</b> позиций</span>
         </>}
-        actions={<a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">🚀 Открыть магазин в боте</a>}
+        actions={<a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">Открыть магазин в боте</a>}
       />
 
       {Object.entries(byCategory).map(([category, catItems]) => (
@@ -56,7 +56,6 @@ export default async function ShopPage() {
 
       {items.length === 0 && (
         <div className="hm-empty">
-          <div className="text-4xl">🛒</div>
           <b>Товары не найдены</b>
           <p>Загляни чуть позже: ассортимент обновляется.</p>
         </div>
@@ -65,7 +64,7 @@ export default async function ShopPage() {
       <section className="hm-final reveal">
         <h2 className="font-heading">Хочешь забрать награду?</h2>
         <p>Заказать награду и вывести EXC можно в боте: на карту по СБП, в Telegram Stars или в GRAM.</p>
-        <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">🚀 Открыть EGC в Telegram</a>
+        <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">Открыть EGC в Telegram</a>
       </section>
     </div>
   );

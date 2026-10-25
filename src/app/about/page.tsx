@@ -116,7 +116,6 @@ export default function AboutPage() {
               <div style={{ position: 'absolute', top: -30, right: -30, width: 120, height: 120, background: 'radial-gradient(circle,rgba(124,58,237,0.18) 0%,transparent 70%)', pointerEvents: 'none' }} />
               <div className="step-left">
                 <div className="step-num">01</div>
-                <div className="step-icon">🎮</div>
               </div>
               <div className="step-content">
                 <h3>Регистрация в боте</h3>
@@ -127,7 +126,6 @@ export default function AboutPage() {
               <div style={{ position: 'absolute', top: -30, right: -30, width: 120, height: 120, background: 'radial-gradient(circle,rgba(58,100,237,0.18) 0%,transparent 70%)', pointerEvents: 'none' }} />
               <div className="step-left">
                 <div className="step-num">02</div>
-                <div className="step-icon">🎯</div>
               </div>
               <div className="step-content">
                 <h3>Выбери квест</h3>
@@ -138,7 +136,6 @@ export default function AboutPage() {
               <div style={{ position: 'absolute', top: -30, right: -30, width: 120, height: 120, background: 'radial-gradient(circle,rgba(168,58,237,0.18) 0%,transparent 70%)', pointerEvents: 'none' }} />
               <div className="step-left">
                 <div className="step-num">03</div>
-                <div className="step-icon">📸</div>
               </div>
               <div className="step-content">
                 <h3>Выполни и отправь доказательство</h3>
@@ -149,7 +146,6 @@ export default function AboutPage() {
               <div style={{ position: 'absolute', top: -30, right: -30, width: 120, height: 120, background: 'radial-gradient(circle,rgba(124,58,237,0.25) 0%,transparent 70%)', pointerEvents: 'none' }} />
               <div className="step-left">
                 <div className="step-num">04</div>
-                <div className="step-icon">💸</div>
               </div>
               <div className="step-content">
                 <h3>Получи EXC и выводи</h3>
@@ -178,23 +174,23 @@ export default function AboutPage() {
 
           <div className="games-grid">
             {[
-              { img: '/logos/pubg.png', name: 'PUBG PC', platform: 'PC', quests: '6 квестов', fallback: '🔫' },
-              { img: '/logos/pubg.png', name: 'PUBG Mobile', platform: 'iOS · Android', quests: '12 квестов', fallback: '🔫' },
-              { img: '/logos/cs2.png', name: 'CS2', platform: 'PC', quests: '20 квестов', fallback: '💣' },
-              { img: '/logos/brawlstars.png', name: 'Brawl Stars', platform: 'iOS · Android', quests: '27 квестов', fallback: '⭐' },
-              { img: '/logos/coc.png', name: 'Clash of Clans', platform: 'iOS · Android', quests: '9 квестов', fallback: '🏰' },
-              { img: '/logos/clashroyale.png', name: 'Clash Royale', platform: 'iOS · Android', quests: '9 квестов', fallback: '💎' },
-              { img: '/logos/mlbb.png', name: 'Mobile Legends', platform: 'iOS · Android', quests: '10 квестов', fallback: '⚔️' },
-              { img: '/logos/eafc25.png', name: 'EA FC 26', platform: 'PC · PS · Xbox', quests: '10 квестов', fallback: '⚽' },
-              { img: null, name: 'Dota 2', platform: 'PC', quests: '12 квестов', fallback: '🛡️' },
-              { img: '/logos/grimsoul.png', name: 'Grim Soul', platform: 'iOS · Android', quests: '10 квестов', fallback: '💀' },
-              { img: null, name: 'GTA V Online', platform: 'PC · PS4/5 · Xbox', quests: '4 квеста', fallback: '🚗' },
+              { img: '/logos/pubg.png', name: 'PUBG PC', platform: 'PC', quests: '6 квестов' },
+              { img: '/logos/pubg.png', name: 'PUBG Mobile', platform: 'iOS · Android', quests: '12 квестов' },
+              { img: '/logos/cs2.png', name: 'CS2', platform: 'PC', quests: '20 квестов' },
+              { img: '/logos/brawlstars.png', name: 'Brawl Stars', platform: 'iOS · Android', quests: '27 квестов' },
+              { img: '/logos/coc.png', name: 'Clash of Clans', platform: 'iOS · Android', quests: '9 квестов' },
+              { img: '/logos/clashroyale.png', name: 'Clash Royale', platform: 'iOS · Android', quests: '9 квестов' },
+              { img: '/logos/mlbb.png', name: 'Mobile Legends', platform: 'iOS · Android', quests: '10 квестов' },
+              { img: '/logos/eafc25.png', name: 'EA FC 26', platform: 'PC · PS · Xbox', quests: '10 квестов' },
+              { img: null, name: 'Dota 2', platform: 'PC', quests: '12 квестов' },
+              { img: '/logos/grimsoul.png', name: 'Grim Soul', platform: 'iOS · Android', quests: '10 квестов' },
+              { img: null, name: 'GTA V Online', platform: 'PC · PS4/5 · Xbox', quests: '4 квеста' },
             ].map(game => (
               <div className="game-card" key={game.name}>
                 <div className="game-emoji">
                   {game.img
-                    ? <img src={game.img} alt={game.name} onError={e => { (e.currentTarget.parentElement as HTMLElement).innerText = game.fallback; }} />
-                    : game.fallback
+                    ? <img src={game.img} alt={game.name} onError={e => { (e.currentTarget.parentElement as HTMLElement).innerText = game.name.split(' ').map(w => w[0]).join('').slice(0, 3); }} />
+                      : game.name.split(' ').map(w => w[0]).join('').slice(0, 3)
                   }
                 </div>
                 <div className="game-name">{game.name}</div>
@@ -217,36 +213,31 @@ export default function AboutPage() {
 
           <div className="economy-grid">
             <div className="exc-card">
-              <div className="exc-icon">🪙</div>
               <h3>Что такое EXC?</h3>
               <p>EXC — внутренняя валюта клуба, которую ты зарабатываешь за выполнение квестов. Это не баллы и не очки — это реальная стоимость, которую можно вывести по СБП, в Telegram Stars или GRAM.</p>
-              <div className="exc-rate">💱 &nbsp;Базовый курс: 100 EXC = 1 ₽</div>
+              <div className="exc-rate">Базовый курс: 100 EXC = 1 ₽</div>
             </div>
 
             <div className="economy-features">
               <div className="eco-feature">
-                <div className="eco-feature-icon">📊</div>
                 <div>
                   <h4>Health Ratio</h4>
                   <p>Курс вывода зависит от состояния фонда клуба — полностью честно и открыто. При 100% фонде курс максимальный.</p>
                 </div>
               </div>
               <div className="eco-feature">
-                <div className="eco-feature-icon">📤</div>
                 <div>
                   <h4>Лимит вывода растёт с уровнем</h4>
                   <p>Новичок выводит до 10 000 EXC в месяц, а на высоких уровнях лимит растёт до 150 000 EXC. Чем активнее играешь, тем выше уровень и больше лимит. Минимальная сумма вывода — 5 000 EXC.</p>
                 </div>
               </div>
               <div className="eco-feature">
-                <div className="eco-feature-icon">🎁</div>
                 <div>
                   <h4>Магазин наград</h4>
                   <p>Трать EXC на донат в играх (Brawl Stars, Clash Royale, Clash of Clans, PUBG) и рамки профиля — не только выводи деньгами.</p>
                 </div>
               </div>
               <div className="eco-feature">
-                <div className="eco-feature-icon">⚡</div>
                 <div>
                   <h4>Бусты и предметы клуба</h4>
                   <p>Покупай бусты на XP и EXC, дополнительные слоты квестов и другие игровые улучшения.</p>
@@ -292,17 +283,16 @@ export default function AboutPage() {
 
           <div className="shop-cards">
             {[
-              { icon: '💸', title: 'Вывод по СБП', text: 'Отправь заявку в боте — после проверки администратор переведёт деньги на карту по СБП. Минимум 5 000 EXC.' },
-              { icon: '💎', title: 'Вывод в GRAM (TON)', text: 'Получай выплаты в GRAM через Telegram Wallet. Курс: 100 EXC = 1 ₽ → GRAM по рыночному курсу. Кошелёк уже есть в Telegram.' },
-              { icon: '⭐', title: 'Вывод в Telegram Stars', text: 'Получай выплату звёздами Telegram: удобно, если хочешь тратить их внутри Telegram. Размер выплаты виден в боте перед заявкой.' },
-              { icon: '🎁', title: 'Донат в играх', text: 'Кристаллы Brawl Stars, Clash Royale и Clash of Clans, UC для PUBG Mobile и G-Coin для PUBG PC — обменяй EXC на пополнение аккаунта.' },
-              { icon: '⚡', title: 'Бусты XP и EXC', text: '+20% к XP или EXC на 24 или 72 часа — прокачивайся быстрее и зарабатывай больше с каждого квеста.' },
-              { icon: '👑', title: 'Рамки аватара', text: 'Огонь, лёд, фиолет, золото — эксклюзивные рамки для профиля в Mini App. Покупаются за EXC, без лимитов.' },
-              { icon: '🎲', title: 'Управление квестами', text: 'Переброс квеста, страховка от провала, дополнительный слот или снятие кулдауна — управляй квестами гибко.' },
+              { title: 'Вывод по СБП', text: 'Отправь заявку в боте — после проверки администратор переведёт деньги на карту по СБП. Минимум 5 000 EXC.' },
+              { title: 'Вывод в GRAM (TON)', text: 'Получай выплаты в GRAM через Telegram Wallet. Курс: 100 EXC = 1 ₽ → GRAM по рыночному курсу. Кошелёк уже есть в Telegram.' },
+              { title: 'Вывод в Telegram Stars', text: 'Получай выплату звёздами Telegram: удобно, если хочешь тратить их внутри Telegram. Размер выплаты виден в боте перед заявкой.' },
+              { title: 'Донат в играх', text: 'Кристаллы Brawl Stars, Clash Royale и Clash of Clans, UC для PUBG Mobile и G-Coin для PUBG PC — обменяй EXC на пополнение аккаунта.' },
+              { title: 'Бусты XP и EXC', text: '+20% к XP или EXC на 24 или 72 часа — прокачивайся быстрее и зарабатывай больше с каждого квеста.' },
+              { title: 'Рамки аватара', text: 'Огонь, лёд, фиолет, золото — эксклюзивные рамки для профиля в Mini App. Покупаются за EXC, без лимитов.' },
+              { title: 'Управление квестами', text: 'Переброс квеста, страховка от провала, дополнительный слот или снятие кулдауна — управляй квестами гибко.' },
             ].map(card => (
               <div className="shop-card" key={card.title}>
                 <div className="shop-card-top">
-                  <div className="shop-card-icon">{card.icon}</div>
                   <div><h3>{card.title}</h3></div>
                 </div>
                 <p>{card.text}</p>
@@ -323,13 +313,12 @@ export default function AboutPage() {
           <div className="miniapp-grid">
             <div className="miniapp-features">
               {[
-                { icon: '🎯', title: 'Квесты и отчёты', text: 'Бери квесты, загружай скриншоты и отправляй отчёты прямо из Mini App — без переключения в бота.' },
-                { icon: '👤', title: 'Профиль и рейтинг', text: 'Смотри свой уровень, XP, баланс EXC, рамку аватара и место в рейтинге клуба.' },
-                { icon: '🛍️', title: 'Магазин и вывод', text: 'Покупай товары и подавай заявки на вывод — всё в одном месте.' },
-                { icon: '🤝', title: 'Рефералы', text: 'Копируй реферальную ссылку и отслеживай бонусы за приглашённых друзей.' },
+                { title: 'Квесты и отчёты', text: 'Бери квесты, загружай скриншоты и отправляй отчёты прямо из Mini App — без переключения в бота.' },
+                { title: 'Профиль и рейтинг', text: 'Смотри свой уровень, XP, баланс EXC, рамку аватара и место в рейтинге клуба.' },
+                { title: 'Магазин и вывод', text: 'Покупай товары и подавай заявки на вывод — всё в одном месте.' },
+                { title: 'Рефералы', text: 'Копируй реферальную ссылку и отслеживай бонусы за приглашённых друзей.' },
               ].map(f => (
                 <div className="eco-feature" key={f.title}>
-                  <div className="eco-feature-icon">{f.icon}</div>
                   <div>
                     <h4>{f.title}</h4>
                     <p>{f.text}</p>
@@ -339,10 +328,9 @@ export default function AboutPage() {
             </div>
 
             <div className="miniapp-cta-card">
-              <div style={{ fontSize: 64, marginBottom: 24 }}>📱</div>
               <h3 style={{ fontSize: 22, fontWeight: 700, color: '#fff', marginBottom: 12 }}>Открой Mini App</h3>
               <p style={{ fontSize: 15, color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 28 }}>
-                Доступен прямо внутри Telegram — нажми кнопку «🌐 Открыть Mini App» в боте после регистрации.
+                Доступен прямо внутри Telegram — нажми кнопку «Открыть Mini App» в боте после регистрации.
               </p>
               <a href="https://t.me/invitetogamebot" target="_blank" rel="noopener" className="btn-primary" style={{ display: 'inline-flex' }}>
                 <svg width="14" height="14" viewBox="0 0 12 12" fill="currentColor" style={{ flexShrink: 0 }}>

@@ -6,7 +6,7 @@ export default function QuestCard({ quest }: { quest: Quest }) {
     <div className="hm-quest">
       <div className="hm-quest-top">
         {quest.category && <span className="hm-chip">{quest.category}</span>}
-        {quest.brawlAutoVerify && <span className="hm-chip auto">⚡ автопроверка</span>}
+        {quest.brawlAutoVerify && <span className="hm-chip auto">автопроверка</span>}
         {quest.highlightNew && <span className="hm-chip new">NEW</span>}
       </div>
       <h3>{quest.title}</h3>
@@ -14,7 +14,7 @@ export default function QuestCard({ quest }: { quest: Quest }) {
       <div className="hm-reward">
         <b>+{quest.rewardCoins.toLocaleString('ru')} EXC</b>
         <span>
-          +{quest.rewardXp} XP{quest.ticketReward ? ` · 🎟 ${quest.ticketReward}` : ''}
+          +{quest.rewardXp} XP{quest.ticketReward ? ` · ${quest.ticketReward} бил.` : ''}
           {quest.durationDays ? ` · ${quest.durationDays} дн.` : ''}
           {quest.platform ? ` · ${quest.platform}` : ''}
         </span>
