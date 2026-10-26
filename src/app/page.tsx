@@ -89,11 +89,6 @@ export default async function Home() {
             </a>
             <Link href="/quests" className="hm-btn hm-btn-ghost">Смотреть квесты</Link>
           </div>
-          <ul className="hm-perks">
-            <li>{WELCOME_BONUS_EXC} EXC за регистрацию</li>
-            <li>Вступление бесплатно</li>
-            <li>Вывод: СБП · Stars · GRAM</li>
-          </ul>
         </div>
       </section>
 
