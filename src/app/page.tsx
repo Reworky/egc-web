@@ -78,7 +78,7 @@ export default async function Home() {
         <div className="relative space-y-5">
           <span className="hm-eyebrow"><i />Experience Gaming Club · реальные выплаты</span>
           <h1 className="font-gaming">
-            Играй <em>как обычно</em>.<br />Получай <em>реальные деньги</em>.
+            Занимайтесь <em>любимым делом</em>.<br />Мы вас за это <em>вознаградим</em>.
           </h1>
           <p className="text-lg sm:text-xl max-w-xl mx-auto" style={{ color: 'var(--muted)' }}>
             Получай реальные деньги за игры, в которые уже играешь. Выполняй квесты, зарабатывай <strong className="gradient-text-gold">EXC</strong> и выводи деньги. Бесплатно
