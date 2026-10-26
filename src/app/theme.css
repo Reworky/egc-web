@@ -1,0 +1,156 @@
+/*
+ * Тема сайта (26.10.2026): плоская тёмная, спокойный фон без свечения, объёмные «плиточные» кнопки, шрифт Poppins.
+ * Подключается ПОСЛЕ globals.css и home.css и переопределяет их; исходные файлы не тронуты, чтобы тему можно было откатить удалением импорта.
+ */
+
+:root {
+  --bg: #141523;
+  --bg2: #1c1d31;
+  --bg3: #2a2b42;
+  --accent: #8b5cf6;
+  --accent2: #a78bfa;
+  --accent3: #c4b5fd;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-bright: rgba(167, 139, 250, 0.55);
+  --text: #e8e8f4;
+  --muted: #a3a3c2;
+  --btn-edge: #5b34c9;     /* нижняя грань главной кнопки */
+  --btn-grey: #3b3c57;     /* вторичная кнопка */
+  --btn-grey-edge: #23243a;
+}
+
+body {
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  line-height: 1.55;
+}
+
+/* Заголовки: Poppins, без капса, плотные */
+h1, h2, h3,
+.font-gaming, .font-heading {
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+  text-transform: none;
+  letter-spacing: -0.02em;
+}
+h1, h2, .font-gaming { font-weight: 800; }
+.font-gaming { letter-spacing: -0.03em; }
+
+/* Фон: никакого свечения и частиц */
+.bg-orbs, .hm-hero-glow, .section-glow-blob { display: none !important; }
+.pg-head::before { display: none; }
+
+/* ── Кнопки-плитки: нижняя грань, нажатие вдавливает ── */
+.hm-btn, .btn-primary, .btn-secondary, .hm-ghost-btn {
+  border-radius: 10px;
+  font-weight: 700;
+  border: none;
+  backdrop-filter: none;
+  transition: transform .12s ease, box-shadow .12s ease, filter .15s ease, background .15s ease;
+}
+.hm-btn { padding: 14px 28px; font-size: 16px; }
+.hm-btn-main, .btn-primary {
+  color: #fff;
+  background: var(--accent);
+  box-shadow: 0 4px 0 var(--btn-edge);
+}
+.hm-btn-main:hover, .btn-primary:hover {
+  background: var(--accent);
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 0 var(--btn-edge);
+  opacity: 1;
+}
+.hm-btn-main:active, .btn-primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--btn-edge);
+}
+.hm-btn-ghost, .btn-secondary, .hm-ghost-btn {
+  color: #fff;
+  background: var(--btn-grey);
+  box-shadow: 0 4px 0 var(--btn-grey-edge);
+}
+.hm-btn-ghost:hover, .btn-secondary:hover, .hm-ghost-btn:hover {
+  background: #45466a;
+  filter: none;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 0 var(--btn-grey-edge);
+}
+.hm-btn-ghost:active, .btn-secondary:active, .hm-ghost-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--btn-grey-edge);
+}
+.hm-btn-off { background: var(--bg3); box-shadow: none; color: var(--muted); }
+
+/* ── Карточки: плоские, без свечения ── */
+.card, .hm-stat, .hm-step, .hm-quest, .hm-feature, .hm-faq-item, .hm-review, .hm-pay, .hm-item,
+.hm-mini, .hm-row, .hm-panel, .hm-table, .hm-partner, .hm-final, .hm-path, .hm-wheel-panel,
+.hm-pay-total, .hm-empty {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: none;
+}
+.hm-quest { clip-path: none; }
+.card:hover, .hm-step:hover, .hm-quest:hover, .hm-feature:hover, .hm-pay:hover, .hm-item:hover {
+  border-color: var(--border-bright);
+  box-shadow: none;
+  transform: translateY(-2px);
+}
+.hm-faq-item[open] { border-color: var(--border-bright); }
+.hm-final, .hm-partner { background: linear-gradient(135deg, #25214a, var(--bg2)); border-color: rgba(167, 139, 250, 0.35); }
+.hm-pay-total-main { background: var(--bg2); border-color: rgba(245, 158, 11, 0.4); }
+
+/* ── Типографика блоков ── */
+.hm-step h3, .hm-feature h3, .hm-path-top b {
+  font-family: 'Poppins', sans-serif;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+.hm-faq-item summary { font-family: 'Poppins', sans-serif; font-weight: 600; }
+.hm-step-num { font-family: 'Poppins', sans-serif; color: rgba(167, 139, 250, 0.28); }
+.hm-kicker, .hm-filter-label { letter-spacing: .12em; color: var(--accent2); }
+.hm-eyebrow { text-transform: none; letter-spacing: .02em; font-size: 13px; background: rgba(139, 92, 246, 0.14); border-color: rgba(167, 139, 250, 0.3); }
+.hm-pay-amount, .hm-mini b, .hm-reward b, .hm-pay-total b, .hm-stat-num { font-family: 'Poppins', sans-serif; }
+
+/* Цифры: плотный цвет вместо градиентной заливки */
+.hm-stat-num { background: none; -webkit-text-fill-color: #fff; color: #fff; }
+.hm-stat-num.gold { -webkit-text-fill-color: #fbbf24; color: #fbbf24; }
+.hm-stat-num.green { -webkit-text-fill-color: #4ade80; color: #4ade80; }
+.hm-reward b, .hm-pay-total b { background: none; -webkit-text-fill-color: #fbbf24; color: #fbbf24; }
+.hm-shimmer, .gradient-text { background: none; -webkit-text-fill-color: var(--accent2); color: var(--accent2); animation: none; }
+.gradient-text-gold { background: none; -webkit-text-fill-color: #fbbf24; color: #fbbf24; }
+
+/* Заголовок героя: ключевые слова цветом, как акцент */
+.hm-hero { padding: 64px 0 8px; }
+.hm-hero h1 { font-size: clamp(2.3rem, 7vw, 4.6rem); line-height: 1.05; letter-spacing: -0.035em; color: #fff; }
+.hm-hero h1 em { font-style: normal; color: var(--accent2); }
+
+/* Полоса прогресса, фильтры, поля */
+.hm-path-bar i { background: linear-gradient(90deg, var(--accent), #f59e0b); }
+.hm-xp i { background: var(--accent); }
+.hm-pill { border-radius: 10px; background: var(--bg2); border: 1px solid var(--border); color: var(--text); }
+.hm-pill.on { background: var(--accent); box-shadow: 0 3px 0 var(--btn-edge); color: #fff; border-color: transparent; }
+.hm-search { background: var(--bg3); border: 1px solid transparent; border-radius: 10px; }
+.hm-search:focus { border-color: var(--border-bright); box-shadow: none; }
+.hm-game { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; color: var(--text); }
+.hm-game:hover { background: var(--bg3); border-color: var(--border-bright); transform: none; }
+.hm-perks li, .pg-chip { background: var(--bg2); border: 1px solid var(--border); color: #ddd6fe; }
+.section-title::after { background: var(--border); }
+.tab-active { background: var(--accent) !important; box-shadow: 0 3px 0 var(--btn-edge); }
+.skeleton { background: linear-gradient(90deg, var(--bg2) 25%, var(--bg3) 50%, var(--bg2) 75%); background-size: 1200px 100%; }
+
+/* ── Блок «Честно»: три шага на вертикальной линии ── */
+.hm-honest { position: relative; display: grid; gap: 18px; max-width: 760px; margin: 0 auto; }
+.hm-honest::before { content: ''; position: absolute; left: 21px; top: 22px; bottom: 22px; border-left: 2px dashed rgba(167, 139, 250, 0.35); }
+.hm-honest-item { position: relative; display: flex; gap: 18px; align-items: flex-start; }
+.hm-honest-num { flex: 0 0 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 15px; color: #fff; background: var(--accent); box-shadow: 0 3px 0 var(--btn-edge); z-index: 1; }
+.hm-honest-body { flex: 1; padding: 18px 20px; border-radius: 16px; background: var(--bg2); border: 1px solid var(--border); }
+.hm-honest-body h3 { font-size: 17px; font-weight: 700; color: #fff; }
+.hm-honest-body h3 em { font-style: normal; color: var(--accent2); }
+.hm-honest-body p { margin-top: 6px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* Поддержка prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .hm-btn, .btn-primary, .btn-secondary { transition: none; }
+}

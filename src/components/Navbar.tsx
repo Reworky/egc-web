@@ -30,22 +30,25 @@ export default function Navbar() {
   }, [open]);
 
   const activeStyle = {
-    background: 'linear-gradient(135deg, rgba(124,58,237,0.35), rgba(168,85,247,0.2))',
-    border: '1px solid rgba(168,85,247,0.4)',
-    color: '#c084fc',
-    boxShadow: '0 0 12px rgba(124,58,237,0.25)',
+    background: 'rgba(139,92,246,0.18)',
+    border: '1px solid transparent',
+    color: '#ddd6fe',
   };
   const idleStyle = { color: 'var(--muted)', border: '1px solid transparent' };
 
   return (
     <>
       <nav
-        className="sticky top-0 z-50 page-content"
+        className="site-nav"
         style={{
-          background: 'rgba(5,5,15,0.85)',
-          borderBottom: '1px solid rgba(124,58,237,0.2)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
+          // Закреплена всегда: раньше класс page-content (position: relative) перебивал sticky, и шапка уезжала вверх при прокрутке.
+          position: 'sticky',
+          top: 0,
+          zIndex: 50,
+          background: 'rgba(20,21,35,0.94)',
+          borderBottom: '1px solid rgba(255,255,255,0.07)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
         }}
       >
         <div
@@ -126,8 +129,8 @@ export default function Navbar() {
               className="flex flex-col justify-center items-center rounded-lg gap-1.5"
               style={{
                 width: 36, height: 36, flexShrink: 0,
-                border: '1px solid rgba(124,58,237,0.3)',
-                background: 'rgba(124,58,237,0.1)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                background: 'rgba(255,255,255,0.05)',
               }}
             >
               <span
@@ -169,7 +172,7 @@ export default function Navbar() {
           className="md:hidden fixed inset-0 z-40 flex flex-col"
           style={{
             top: 56,
-            background: 'rgba(5,5,15,0.97)',
+            background: 'rgba(20,21,35,0.98)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
             borderTop: '1px solid rgba(124,58,237,0.15)',

@@ -76,10 +76,9 @@ export default async function Home() {
       <section className="hm-hero">
         <div className="hm-hero-glow" />
         <div className="relative space-y-5">
-          <span className="hm-eyebrow"><i />Квесты · EXC · реальные выплаты</span>
-          <h1 className="font-gaming leading-none" style={{ fontSize: 'clamp(2.6rem, 8vw, 5.6rem)' }}>
-            <span className="text-white" style={{ display: 'block', letterSpacing: '0.06em' }}>EXPERIENCE</span>
-            <span className="hm-shimmer" style={{ display: 'block', letterSpacing: '0.18em', fontSize: '0.55em' }}>— GAMING CLUB —</span>
+          <span className="hm-eyebrow"><i />Experience Gaming Club · реальные выплаты</span>
+          <h1 className="font-gaming">
+            Играй <em>как обычно</em>.<br />Получай <em>реальные деньги</em>.
           </h1>
           <p className="text-lg sm:text-xl max-w-xl mx-auto" style={{ color: 'var(--muted)' }}>
             Получай реальные деньги за игры, в которые уже играешь. Выполняй квесты, зарабатывай <strong className="gradient-text-gold">EXC</strong> и выводи деньги. Бесплатно
@@ -143,6 +142,39 @@ export default async function Home() {
             <p>Расчёт по типичной награде за квест сейчас. Реальный путь зависит от выбранных квестов и твоей активности.</p>
           </div>
         )}
+      </section>
+
+      {/* ── Честно: откуда берутся деньги ── */}
+      <section className="hm-section reveal">
+        <div className="hm-head" style={{ justifyContent: 'center', textAlign: 'center' }}>
+          <div>
+            <div className="hm-kicker">Без сюрпризов</div>
+            <h2 className="section-title" style={{ justifyContent: 'center' }}>В чём подвох? Честно</h2>
+          </div>
+        </div>
+        <div className="hm-honest">
+          <div className="hm-honest-item">
+            <span className="hm-honest-num">01</span>
+            <div className="hm-honest-body">
+              <h3>Спонсоры платят за <em>внимание игроков</em></h3>
+              <p>Игры, сервисы и бренды вкладывают деньги в рекламу. В клубе они платят за подписки, задания и просмотры настоящим людям, а не только за показы.</p>
+            </div>
+          </div>
+          <div className="hm-honest-item">
+            <span className="hm-honest-num">02</span>
+            <div className="hm-honest-body">
+              <h3>Эти деньги идут в <em>фонд выплат</em></h3>
+              <p>Из него клуб платит вам за квесты. Чем больше фонд, тем выше курс вывода. Состояние фонда видно в боте и на этой странице.</p>
+            </div>
+          </div>
+          <div className="hm-honest-item">
+            <span className="hm-honest-num">03</span>
+            <div className="hm-honest-body">
+              <h3>Это <em>бонус к играм</em>, а не зарплата</h3>
+              <p>Ты играешь в то, во что играл бы и так, а клуб добавляет к этому реальные выплаты. Быстро разбогатеть не получится, и мы этого не обещаем.</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ── Что внутри клуба ── */}
