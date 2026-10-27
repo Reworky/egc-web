@@ -67,13 +67,13 @@ export default function QuestFilter({ quests, games: apiGames }: { quests: Quest
       <div className="space-y-4">
         <div className="space-y-2">
           <div className="hm-filter-label">Игра</div>
-          <div className="flex gap-2 flex-wrap">
-            <button onClick={() => setGame('Все')} className={`hm-pill${game === 'Все' ? ' on' : ''}`}>Все игры</button>
-          </div>
           <div className="gm-grid">
             {games.map(g => (
               <GameBanner key={g} name={g} active={game === g} onClick={() => setGame(game === g ? 'Все' : g)} />
             ))}
+            <button type="button" onClick={() => setGame('Все')} className={`gm-banner no-img${game === 'Все' ? ' on' : ''}`} aria-pressed={game === 'Все'}>
+              <span className="gm-name">Все игры</span>
+            </button>
           </div>
         </div>
 
