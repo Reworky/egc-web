@@ -5,6 +5,7 @@ import CountUp from '@/components/CountUp';
 import PayoutFeed from '@/components/PayoutFeed';
 import Reviews from '@/components/Reviews';
 import HomeSwitch from '@/components/HomeSwitch';
+import GameBanner from '@/components/GameBanner';
 
 export const revalidate = 60;
 
@@ -268,9 +269,9 @@ export default async function Home() {
               <h2 className="section-title">Игры клуба</h2>
             </div>
           </div>
-          <div className="hm-games">
+          <div className="gm-grid">
             {games.map(g => (
-              <Link key={g} href={`/quests?game=${encodeURIComponent(g)}`} className="hm-game">{g}</Link>
+              <GameBanner key={g} name={g} href={`/quests?game=${encodeURIComponent(g)}`} />
             ))}
           </div>
         </section>

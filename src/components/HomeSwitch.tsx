@@ -25,7 +25,6 @@ export default function HomeSwitch({ guest, member }: { guest: ReactNode; member
         actions={<>
           <Link href="/quests" className="hm-btn hm-btn-main">Квесты</Link>
           <Link href="/shop" className="hm-btn hm-btn-ghost">Магазин</Link>
-          <Link href="/wheel" className="hm-btn hm-btn-ghost">Колесо</Link>
           <Link href="/profile" className="hm-btn hm-btn-ghost">Профиль</Link>
         </>}
       />

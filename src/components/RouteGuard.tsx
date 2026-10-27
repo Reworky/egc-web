@@ -29,7 +29,7 @@ export default function RouteGuard({ children }: { children: ReactNode }) {
       <PageHead
         kicker="Только для игроков"
         title="Войди, чтобы продолжить"
-        text="Квесты, магазин и колесо фортуны доступны после входа через Telegram. Если ты ещё не в клубе, сначала открой бота и пройди регистрацию."
+        text="Квесты и магазин доступны после входа через Telegram. Если ты ещё не в клубе, сначала открой бота и пройди регистрацию."
       />
       <div className="hm-panel space-y-4 text-center">
         <TelegramLoginButton botUsername="invitetogamebot" onAuth={login} />

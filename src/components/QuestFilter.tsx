@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Quest } from '@/lib/api';
 import QuestCard from './QuestCard';
+import GameBanner from './GameBanner';
 
 type Sort = 'reward' | 'short' | 'default';
 
@@ -20,6 +21,12 @@ export default function QuestFilter({ quests, games: apiGames }: { quests: Quest
   const [game, setGame] = useState('Все');
   const [autoOnly, setAutoOnly] = useState(false);
   const [sort, setSort] = useState<Sort>('default');
+
+  // Переход с главной: /quests?game=Название сразу открывает нужную игру
+  useEffect(() => {
+    const g = new URLSearchParams(window.location.search).get('game');
+    if (g && games.includes(g)) setGame(g);
+  }, [games]);
 
   const filtered = useMemo(() => {
     const list = quests.filter(q => {
@@ -61,8 +68,11 @@ export default function QuestFilter({ quests, games: apiGames }: { quests: Quest
         <div className="space-y-2">
           <div className="hm-filter-label">Игра</div>
           <div className="flex gap-2 flex-wrap">
-            {['Все', ...games].map(g => (
-              <button key={g} onClick={() => setGame(g)} className={`hm-pill${game === g ? ' on' : ''}`}>{g}</button>
+            <button onClick={() => setGame('Все')} className={`hm-pill${game === 'Все' ? ' on' : ''}`}>Все игры</button>
+          </div>
+          <div className="gm-grid">
+            {games.map(g => (
+              <GameBanner key={g} name={g} active={game === g} onClick={() => setGame(game === g ? 'Все' : g)} />
             ))}
           </div>
         </div>

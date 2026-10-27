@@ -16,6 +16,9 @@ async function get<T>(path: string, auth = false): Promise<T> {
   return res.json();
 }
 
+/** Обложка игры (баннер): грузится админом через бота, отдаётся бэкендом без авторизации; 404, если у игры её нет. */
+export const gamePhotoUrl = (name: string) => `${BASE}/api/quests/games/${encodeURIComponent(name)}/photo`;
+
 export const api = {
   stats: () => get<ClubStats>('/api/stats'),
   leaderboard: (type: 'overall' | 'weekly' = 'overall') =>

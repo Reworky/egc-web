@@ -233,3 +233,17 @@
 .pt-col.bad li::before { content: '✕'; color: #f87171; }
 .pt-col.good li { color: #e2e8f0; }
 .pt-col.good li::before { content: '✓'; color: #4ade80; }
+
+/* ── Баннеры игр (кнопки) ── */
+.gm-grid { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 720px) { .gm-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1000px) { .gm-grid { grid-template-columns: repeat(4, 1fr); } }
+.gm-banner { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; padding: 0; cursor: pointer; border-radius: 16px; color: #fff; text-decoration: none; background: linear-gradient(135deg, rgba(124,58,237,.45), rgba(236,72,153,.25)); border: 1px solid rgba(168,85,247,.3); transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.gm-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.gm-banner:not(.no-img) .gm-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } /* название уже есть на самой картинке, остаётся для скринридеров */
+.gm-name { position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 1; text-align: left; font-family: 'Exo 2', sans-serif; font-weight: 800; font-size: 15px; text-transform: uppercase; letter-spacing: .03em; text-shadow: 0 2px 8px rgba(0,0,0,.7); }
+.gm-banner.no-img .gm-name { top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 17px; }
+.gm-banner:hover { transform: translateY(-3px); border-color: rgba(192,132,252,.8); box-shadow: 0 12px 30px rgba(124,58,237,.3); }
+.gm-banner.on { border-color: #c084fc; box-shadow: 0 0 0 2px rgba(192,132,252,.7), 0 12px 30px rgba(124,58,237,.35); }
+.gm-banner:focus-visible { outline: 2px solid #c4b5fd; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .gm-banner { transition: none; } }

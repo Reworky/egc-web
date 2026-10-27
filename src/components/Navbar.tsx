@@ -14,7 +14,6 @@ const memberLinks = [
   { href: '/',         label: 'Главная'     },
   { href: '/quests',   label: 'Квесты'      },
   { href: '/shop',     label: 'Магазин'     },
-  { href: '/wheel',    label: 'Колесо'      },
   { href: '/profile',  label: 'Профиль'     },
 ];
 

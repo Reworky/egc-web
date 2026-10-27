@@ -6,10 +6,12 @@ export const revalidate = 60;
 const BOT_URL = 'https://t.me/invitetogamebot';
 
 export default async function ShopPage() {
-  const [items, stats] = await Promise.all([
+  const [allItems, stats] = await Promise.all([
     api.shopItems().catch(() => []),
     api.stats().catch(() => null),
   ]);
+  // Рамки и титулы живут в «Предметах клуба» в боте, в магазин на сайте не выводим
+  const items = allItems.filter(i => i.category !== 'Кастомизация');
 
   const byCategory = items.reduce<Record<string, (typeof items)[number][]>>((acc, item) => {
     const cat = item.category ?? 'Другое';
