@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import CountUp from '@/components/CountUp';
 
 const COLLAB_ITEMS = [
   {
@@ -60,31 +61,19 @@ const MAIL_URL = 'mailto:allexperiencetrade@gmail.com';
 
 /** Страница для студий и рекламодателей в стиле главной (hm-* из home.css). */
 export default function PartnersPage() {
-  const [stats, setStats] = useState({ total: 511, newWeek: 0 });
+  const [stats, setStats] = useState<{ total: number; newWeek: number } | null>(null);
   // Цифры проверки результата с сервера (/api/public/proof); null - мало данных или сервер недоступен, такой блок не показываем
   const [proof, setProof] = useState<{ activeWeek: number; autoApprovedPercent: number | null; retention7Percent: number | null } | null>(null);
+  // Плитки показываем разом, когда оба запроса отработали: иначе цифры подменялись бы на глазах, а плитки выскакивали по одной и сдвигали страницу
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    fetch('/api/stats')
-      .then(r => r.ok ? r.json() : null)
-      .then(data => {
-        if (data) {
-          setStats({
-            total: data.totalPlayers ?? 511,
-            newWeek: data.newUsersWeek ?? 0,
-          });
-        }
-      })
-      .catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    fetch('/api/public/proof')
-      .then(r => (r.ok ? r.json() : null))
-      .then(d => {
-        if (d) setProof({ activeWeek: d.activeWeek, autoApprovedPercent: d.autoApprovedPercent, retention7Percent: d.retention7Percent });
-      })
-      .catch(() => {});
+    const load = (url: string) => fetch(url).then(r => (r.ok ? r.json() : null)).catch(() => null);
+    Promise.all([load('/api/stats'), load('/api/public/proof')]).then(([st, pr]) => {
+      if (st && st.totalPlayers != null) setStats({ total: st.totalPlayers, newWeek: st.newUsersWeek ?? 0 });
+      if (pr) setProof({ activeWeek: pr.activeWeek, autoApprovedPercent: pr.autoApprovedPercent, retention7Percent: pr.retention7Percent });
+      setReady(true);
+    });
   }, []);
 
   return (
@@ -109,21 +98,27 @@ export default function PartnersPage() {
       </section>
 
       {/* ── Цифры ── */}
-      <section className="hm-stats pt-stats reveal" aria-label="Аудитория в цифрах">
-        <div className="hm-stat"><div className="hm-stat-num">{stats.total}<span>+</span></div><div className="hm-stat-label">игроков в базе</div></div>
-        {stats.newWeek > 0 && (
-          <div className="hm-stat"><div className="hm-stat-num">{stats.newWeek}<span>+</span></div><div className="hm-stat-label">новых за неделю</div></div>
+      <div className="pt-stats-wrap">
+        {ready && (stats || proof) && (
+          <section className="hm-stats pt-stats reveal" aria-label="Аудитория в цифрах">
+            {stats && (
+              <div className="hm-stat"><div className="hm-stat-num"><CountUp value={stats.total} />+</div><div className="hm-stat-label">игроков в базе</div></div>
+            )}
+            {stats && stats.newWeek > 0 && (
+              <div className="hm-stat"><div className="hm-stat-num"><CountUp value={stats.newWeek} />+</div><div className="hm-stat-label">новых за неделю</div></div>
+            )}
+            {proof && (
+              <div className="hm-stat"><div className="hm-stat-num"><CountUp value={proof.activeWeek} /></div><div className="hm-stat-label">активных за неделю</div></div>
+            )}
+            {proof?.autoApprovedPercent != null && (
+              <div className="hm-stat"><div className="hm-stat-num green"><CountUp value={proof.autoApprovedPercent} />%</div><div className="hm-stat-label">результатов подтверждает автоматика</div></div>
+            )}
+            {proof?.retention7Percent != null && (
+              <div className="hm-stat"><div className="hm-stat-num green"><CountUp value={proof.retention7Percent} />%</div><div className="hm-stat-label">новых активны через неделю</div></div>
+            )}
+          </section>
         )}
-        {proof && (
-          <div className="hm-stat"><div className="hm-stat-num">{proof.activeWeek}</div><div className="hm-stat-label">активных за неделю</div></div>
-        )}
-        {proof?.autoApprovedPercent != null && (
-          <div className="hm-stat"><div className="hm-stat-num green">{proof.autoApprovedPercent}%</div><div className="hm-stat-label">результатов подтверждает автоматика</div></div>
-        )}
-        {proof?.retention7Percent != null && (
-          <div className="hm-stat"><div className="hm-stat-num green">{proof.retention7Percent}%</div><div className="hm-stat-label">новых активны через неделю</div></div>
-        )}
-      </section>
+      </div>
 
       {/* ── Форматы ── */}
       <section className="hm-section reveal">

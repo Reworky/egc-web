@@ -218,6 +218,7 @@
 }
 
 /* ── Страница «Партнёрам» ── */
+.pt-stats-wrap { min-height: 150px; }
 .hm-stats.pt-stats { display: flex; flex-wrap: wrap; justify-content: center; }
 .hm-stats.pt-stats .hm-stat { flex: 1 1 150px; max-width: 220px; }
 @media (min-width: 1000px) { .hm-steps.four { grid-template-columns: repeat(4, 1fr); } }
