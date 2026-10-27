@@ -5,13 +5,17 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/useAuth';
 
-const links = [
+// Гостю: презентация клуба. Игроку: рабочие разделы кабинета.
+const guestLinks = [
+  { href: '/',         label: 'Главная'     },
+  { href: '/about',    label: 'О платформе' },
+  { href: '/partners', label: 'Партнёрам'   },
+];
+const memberLinks = [
   { href: '/',         label: 'Главная'     },
   { href: '/quests',   label: 'Квесты'      },
   { href: '/shop',     label: 'Магазин'     },
-  { href: '/wheel',    label: 'Колесо'   },
-  { href: '/about',    label: 'О платформе' },
-  { href: '/partners', label: 'Партнёрам'   },
+  { href: '/wheel',    label: 'Колесо'      },
   { href: '/profile',  label: 'Профиль'     },
 ];
 
@@ -19,6 +23,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const links = user ? memberLinks : guestLinks;
 
   // Закрываем меню при смене страницы
   useEffect(() => { setOpen(false); }, [pathname]);

@@ -7,6 +7,8 @@ import Navbar from '@/components/Navbar';
 import ScrollRevealInit from '@/components/ScrollRevealInit';
 import YandexAd from '@/components/YandexAd';
 import SocialLinks from '@/components/SocialLinks';
+import RouteGuard from '@/components/RouteGuard';
+import { AuthProvider } from '@/lib/useAuth';
 
 export const metadata: Metadata = {
   title: 'EXPERIENCE GAMING CLUB',
@@ -38,9 +40,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Script src="https://yandex.ru/ads/system/context.js" strategy="afterInteractive" async />
       </head>
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        <ScrollRevealInit />
-        <main className="flex-1 page-content">{children}</main>
+        <AuthProvider>
+          <Navbar />
+          <ScrollRevealInit />
+          <main className="flex-1 page-content"><RouteGuard>{children}</RouteGuard></main>
+        </AuthProvider>
         <footer className="page-content border-t py-8 text-center text-sm" style={{ borderColor: 'var(--border)', color: 'var(--muted)' }}>
           <div className="max-w-6xl mx-auto px-4 mb-6">
             <YandexAd blockId="R-A-19801285-1" />

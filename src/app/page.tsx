@@ -4,6 +4,7 @@ import LeaderboardTabs from '@/components/LeaderboardTabs';
 import CountUp from '@/components/CountUp';
 import PayoutFeed from '@/components/PayoutFeed';
 import Reviews from '@/components/Reviews';
+import HomeSwitch from '@/components/HomeSwitch';
 
 export const revalidate = 60;
 
@@ -14,12 +15,12 @@ const FIRST_WITHDRAWAL_EXC = 5000;
 const WELCOME_BONUS_EXC = 200;
 
 const FEATURES = [
-  { title: 'Квесты по играм', text: 'Brawl Stars, Clash Royale, Clash of Clans, PUBG и другие. Награда в EXC видна до старта, а для многих квестов прогресс считается сам.', href: '/quests', cta: 'Каталог квестов' },
-  { title: 'Магазин наград', text: 'Тратить EXC можно на донат в играх, подарочные карты и бусты, а не только выводить деньгами.', href: '/shop', cta: 'Открыть магазин' },
-  { title: 'Колесо фортуны', text: 'Крути колесо и забирай призы: EXC, буст опыта, рамку профиля. Попытки даёт активность в клубе.', href: '/wheel', cta: 'Крутить колесо' },
-  { title: 'Отряды', text: 'Собери команду из друзей: в отряде играть веселее, а за состав из 3–5 человек клуб даёт бонус.', href: BOT_URL, cta: 'Создать отряд в боте', external: true },
-  { title: 'Турниры и рейтинг', text: 'Соревнуйся с другими игроками: недельный и общий рейтинг, турниры с призами и повышение уровня за опыт.', href: BOT_URL, cta: 'Смотреть в боте', external: true },
-  { title: 'EGC Pass', text: 'Подписка с перками для тех, кто играет много: больше возможностей и приятные бонусы к награде.', href: BOT_URL, cta: 'Подробнее в боте', external: true },
+  { title: 'Квесты по играм', text: 'Brawl Stars, Clash Royale, Clash of Clans, PUBG и другие. Награда в EXC видна до старта, а для многих квестов прогресс считается сам.' },
+  { title: 'Магазин наград', text: 'Тратить EXC можно на донат в играх, подарочные карты и бусты, а не только выводить деньгами.' },
+  { title: 'Колесо фортуны', text: 'Крути колесо и забирай призы: EXC, буст опыта, рамку профиля. Попытки даёт активность в клубе.' },
+  { title: 'Отряды', text: 'Собери команду из друзей: в отряде играть веселее, а за состав из 3–5 человек клуб даёт бонус.' },
+  { title: 'Турниры и рейтинг', text: 'Соревнуйся с другими игроками: недельный и общий рейтинг, турниры с призами и повышение уровня за опыт.' },
+  { title: 'EGC Pass', text: 'Подписка с перками для тех, кто играет много: больше возможностей и приятные бонусы к награде.' },
 ];
 
 const FAQ = [
@@ -69,7 +70,7 @@ export default async function Home() {
   const typical = typicalReward(quests);
   const questsToFirst = typical > 0 ? Math.ceil((FIRST_WITHDRAWAL_EXC - WELCOME_BONUS_EXC) / typical) : 0;
 
-  return (
+  const guest = (
     <div className="max-w-6xl mx-auto px-4 py-10">
 
       {/* ── Hero ── */}
@@ -84,13 +85,12 @@ export default async function Home() {
             Получай реальные деньги за игры, в которые уже играешь. Выполняй квесты, зарабатывай <strong className="gradient-text-gold">EXC</strong> и выводи деньги. Бесплатно
           </p>
           <div className="hm-cta-row">
-            <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">
-              Открыть EGC
-            </a>
-            <Link href="/quests" className="hm-btn hm-btn-ghost">Смотреть квесты</Link>
+            <Link href="/profile" className="hm-btn hm-btn-main">Войти через Telegram</Link>
+            <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-ghost">Открыть бота</a>
           </div>
         </div>
       </section>
+
 
       {/* ── Клуб в цифрах ── */}
       {stats && (
@@ -103,8 +103,10 @@ export default async function Home() {
         </section>
       )}
 
+
       {/* ── Последние выплаты ── */}
       <PayoutFeed />
+
 
       {/* ── Как это работает ── */}
       <section className="hm-section reveal">
@@ -139,38 +141,6 @@ export default async function Home() {
         )}
       </section>
 
-      {/* ── Честно: откуда берутся деньги ── */}
-      <section className="hm-section reveal">
-        <div className="hm-head" style={{ justifyContent: 'center', textAlign: 'center' }}>
-          <div>
-            <div className="hm-kicker">Без сюрпризов</div>
-            <h2 className="section-title" style={{ justifyContent: 'center' }}>В чём подвох? Честно</h2>
-          </div>
-        </div>
-        <div className="hm-honest">
-          <div className="hm-honest-item">
-            <span className="hm-honest-num">01</span>
-            <div className="hm-honest-body">
-              <h3>Спонсоры платят за <em>внимание игроков</em></h3>
-              <p>Игры, сервисы и бренды вкладывают деньги в рекламу. В клубе они платят за подписки, задания и просмотры настоящим людям, а не только за показы.</p>
-            </div>
-          </div>
-          <div className="hm-honest-item">
-            <span className="hm-honest-num">02</span>
-            <div className="hm-honest-body">
-              <h3>Эти деньги идут в <em>фонд выплат</em></h3>
-              <p>Из него клуб платит вам за квесты. Чем больше фонд, тем выше курс вывода. Состояние фонда видно в боте и на этой странице.</p>
-            </div>
-          </div>
-          <div className="hm-honest-item">
-            <span className="hm-honest-num">03</span>
-            <div className="hm-honest-body">
-              <h3>Это <em>бонус к играм</em>, а не зарплата</h3>
-              <p>Ты играешь в то, во что играл бы и так, а клуб добавляет к этому реальные выплаты. Быстро разбогатеть не получится, и мы этого не обещаем.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── Что внутри клуба ── */}
       <section className="hm-section reveal">
@@ -181,22 +151,75 @@ export default async function Home() {
           </div>
         </div>
         <div className="hm-features">
-          {FEATURES.map(f => {
-            const inner = (
-              <>
-                <h3>{f.title}</h3>
-                <p>{f.text}</p>
-                <span className="hm-feature-cta">{f.cta} →</span>
-              </>
-            );
-            return f.external ? (
-              <a key={f.title} href={f.href} target="_blank" rel="noopener noreferrer" className="hm-feature">{inner}</a>
-            ) : (
-              <Link key={f.title} href={f.href} className="hm-feature">{inner}</Link>
-            );
-          })}
+          {FEATURES.map(f => (
+            <div key={f.title} className="hm-feature">
+              <h3>{f.title}</h3>
+              <p>{f.text}</p>
+            </div>
+          ))}
         </div>
       </section>
+
+
+      {/* ── Отзывы ── */}
+      <Reviews channelUrl={REVIEWS_URL} />
+
+
+      {/* ── Партнёрам ── */}
+      <section className="hm-section reveal">
+        <div className="hm-partner">
+          <div>
+            <div className="hm-kicker">Для игровых студий</div>
+            <h2 className="section-title">Живые игроки и проверенный результат</h2>
+            <p>Размещаем квесты на установку и достижение уровней в вашей игре. Каждое выполнение проверяется, а цифры проверки открыты: смотрите сами.</p>
+          </div>
+          <div className="hm-partner-btns">
+            <Link href="/partners" className="hm-btn hm-btn-main">Стать партнёром</Link>
+            <Link href="/partners/proof" className="hm-btn hm-btn-ghost">Как мы проверяем</Link>
+          </div>
+        </div>
+      </section>
+
+
+      {/* ── Вопросы ── */}
+      <section className="hm-section reveal">
+        <div className="hm-head">
+          <div>
+            <div className="hm-kicker">Коротко о главном</div>
+            <h2 className="section-title">Частые вопросы</h2>
+          </div>
+        </div>
+        <div className="hm-faq">
+          {FAQ.map(f => (
+            <details key={f.q} className="hm-faq-item">
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+
+      {/* ── Финальный призыв ── */}
+      <section className="hm-final reveal">
+        <h2 className="font-heading">Готов начать?</h2>
+        <p>Войди через Telegram и забери первый квест: награда видна до старта. Если ты ещё не в клубе, сначала открой бота и пройди регистрацию.</p>
+        <Link href="/profile" className="hm-btn hm-btn-main">Войти через Telegram</Link>
+      </section>
+
+
+      <p className="hm-disclaimer">
+        Награды и выплаты зависят от выполнения квестов и проверки результата, они не гарантируются. Суммы в рублях ориентировочные: курс вывода зависит от состояния фонда клуба. Цифры на странице обновляются автоматически.
+      </p>
+
+    </div>
+  );
+
+  const member = (
+    <>
+      {/* ── Последние выплаты ── */}
+      <PayoutFeed />
+
 
       {/* ── Горячие квесты ── */}
       {featured.length > 0 && (
@@ -228,6 +251,7 @@ export default async function Home() {
         </section>
       )}
 
+
       {/* ── Игры ── */}
       {games.length > 0 && (
         <section className="hm-section reveal">
@@ -245,8 +269,6 @@ export default async function Home() {
         </section>
       )}
 
-      {/* ── Отзывы ── */}
-      <Reviews channelUrl={REVIEWS_URL} />
 
       {/* ── Рейтинг ── */}
       <section className="hm-section reveal" style={{ position: 'relative', overflow: 'hidden' }}>
@@ -259,49 +281,9 @@ export default async function Home() {
         <LeaderboardTabs initial={leaderboard.entries} limit={10} />
       </section>
 
-      {/* ── Партнёрам ── */}
-      <section className="hm-section reveal">
-        <div className="hm-partner">
-          <div>
-            <div className="hm-kicker">Для игровых студий</div>
-            <h2 className="section-title">Живые игроки и проверенный результат</h2>
-            <p>Размещаем квесты на установку и достижение уровней в вашей игре. Каждое выполнение проверяется, а цифры проверки открыты: смотрите сами.</p>
-          </div>
-          <div className="hm-partner-btns">
-            <Link href="/partners" className="hm-btn hm-btn-main">Стать партнёром</Link>
-            <Link href="/partners/proof" className="hm-btn hm-btn-ghost">Как мы проверяем</Link>
-          </div>
-        </div>
-      </section>
 
-      {/* ── Вопросы ── */}
-      <section className="hm-section reveal">
-        <div className="hm-head">
-          <div>
-            <div className="hm-kicker">Коротко о главном</div>
-            <h2 className="section-title">Частые вопросы</h2>
-          </div>
-        </div>
-        <div className="hm-faq">
-          {FAQ.map(f => (
-            <details key={f.q} className="hm-faq-item">
-              <summary>{f.q}</summary>
-              <p>{f.a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Финальный призыв ── */}
-      <section className="hm-final reveal">
-        <h2 className="font-heading">Готов начать?</h2>
-        <p>Открой бота в Telegram, привяжи игровой тег и забери первый квест: награда видна до старта.</p>
-        <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">Открыть EGC в Telegram</a>
-      </section>
-
-      <p className="hm-disclaimer">
-        Награды и выплаты зависят от выполнения квестов и проверки результата, они не гарантируются. Суммы в рублях ориентировочные: курс вывода зависит от состояния фонда клуба. Цифры на странице обновляются автоматически.
-      </p>
-    </div>
+    </>
   );
+
+  return <HomeSwitch guest={guest} member={member} />;
 }

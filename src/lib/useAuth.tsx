@@ -1,9 +1,20 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import { api, UserProfile } from './api';
 
-export function useAuth() {
+interface AuthState {
+  user: UserProfile | null;
+  loading: boolean;
+  login: (tgData: Record<string, unknown>) => Promise<void>;
+  logout: () => void;
+  error: string | null;
+}
+
+const AuthContext = createContext<AuthState | null>(null);
+
+/** Одно состояние входа на весь сайт: меню, главная и закрытые разделы видят одного и того же игрока. */
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,5 +46,15 @@ export function useAuth() {
     setUser(null);
   }, []);
 
-  return { user, loading, login, logout, error };
+  return (
+    <AuthContext.Provider value={{ user, loading, login, logout, error }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth(): AuthState {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error('useAuth нужно вызывать внутри AuthProvider');
+  return ctx;
 }
