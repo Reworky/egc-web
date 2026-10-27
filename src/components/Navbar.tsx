@@ -8,7 +8,6 @@ import { useAuth } from '@/lib/useAuth';
 // Гостю: презентация клуба. Игроку: рабочие разделы кабинета.
 const guestLinks = [
   { href: '/',         label: 'Главная'     },
-  { href: '/about',    label: 'О платформе' },
   { href: '/partners', label: 'Партнёрам'   },
 ];
 const memberLinks = [
