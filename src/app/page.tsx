@@ -9,6 +9,8 @@ import HomeSwitch from '@/components/HomeSwitch';
 export const revalidate = 60;
 
 const BOT_URL = 'https://t.me/invitetogamebot';
+// Метки источника трафика: бот (handleStart) считает клики и регистрации по src_<код>, коды заводятся в «📈 Трафик»
+const botLink = (src: string) => `${BOT_URL}?start=src_${src}`;
 const REVIEWS_URL = 'https://t.me/egc_payouts';
 // Цель первого вывода и стартовый бонус: те же числа, что в боте (WalletController.MIN_WITHDRAWAL, WELCOME_BONUS_EXC)
 const FIRST_WITHDRAWAL_EXC = 5000;
@@ -88,7 +90,7 @@ export default async function Home() {
           </p>
           <div className="hm-cta-row">
             <Link href="/profile" className="hm-btn hm-btn-main">Войти через Telegram</Link>
-            <a href={BOT_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-ghost">Открыть бота</a>
+            <a href={botLink('site_hero')} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-ghost">Открыть бота</a>
           </div>
         </div>
       </section>
@@ -206,7 +208,10 @@ export default async function Home() {
       <section className="hm-final reveal">
         <h2 className="font-heading">Готов начать?</h2>
         <p>Войди через Telegram и забери первый квест: награда видна до старта. Если ты ещё не в клубе, сначала открой бота и пройди регистрацию.</p>
-        <Link href="/profile" className="hm-btn hm-btn-main">Войти через Telegram</Link>
+        <div className="hm-cta-row">
+          <Link href="/profile" className="hm-btn hm-btn-main">Войти через Telegram</Link>
+          <a href={botLink('site_final')} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-ghost">Открыть бота</a>
+        </div>
       </section>
 
 

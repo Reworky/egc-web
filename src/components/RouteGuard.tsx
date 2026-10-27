@@ -33,7 +33,7 @@ export default function RouteGuard({ children }: { children: ReactNode }) {
       />
       <div className="hm-panel space-y-4 text-center">
         <TelegramLoginButton botUsername="invitetogamebot" onAuth={login} />
-        <a href="https://t.me/invitetogamebot" target="_blank" rel="noopener noreferrer" className="hm-ghost-btn inline-block">
+        <a href="https://t.me/invitetogamebot?start=src_site_login" target="_blank" rel="noopener noreferrer" className="hm-ghost-btn inline-block">
           Открыть бота
         </a>
         {error && (
