@@ -216,3 +216,20 @@
   .hm-hero-glow::before, .hm-hero-glow::after, .hm-shimmer, .hm-eyebrow i, .hm-live i, 
   .hm-btn, .hm-step, .hm-quest, .hm-game, .hm-pill, .hm-item { transition: none; }
 }
+
+/* ── Страница «Партнёрам» ── */
+.hm-stats.pt-stats { display: flex; flex-wrap: wrap; justify-content: center; }
+.hm-stats.pt-stats .hm-stat { flex: 1 1 150px; max-width: 220px; }
+@media (min-width: 1000px) { .hm-steps.four { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 720px) and (max-width: 999px) { .hm-steps.four { grid-template-columns: repeat(2, 1fr); } }
+.pt-compare { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .pt-compare { grid-template-columns: 1fr 1fr; } }
+.pt-col { padding: 24px 22px; border-radius: 18px; background: rgba(15,15,34,.75); border: 1px solid rgba(255,255,255,.1); }
+.pt-col.good { background: linear-gradient(165deg, rgba(31,20,66,.7), rgba(10,10,26,.85)); border-color: rgba(74,222,128,.4); }
+.pt-col h3 { font-family: 'Exo 2', sans-serif; font-weight: 800; font-size: 20px; text-transform: uppercase; letter-spacing: .03em; color: #fff; margin-bottom: 12px; }
+.pt-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.pt-col li { position: relative; padding-left: 26px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.pt-col li::before { position: absolute; left: 0; top: 0; font-weight: 800; }
+.pt-col.bad li::before { content: '✕'; color: #f87171; }
+.pt-col.good li { color: #e2e8f0; }
+.pt-col.good li::before { content: '✓'; color: #4ade80; }

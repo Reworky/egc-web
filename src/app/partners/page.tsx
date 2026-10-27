@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import './partners.css';
 
 const COLLAB_ITEMS = [
   {
@@ -56,6 +55,10 @@ const AUDIENCE_CARDS = [
   { title: 'Игровой бизнес', desc: 'Периферия, игровые кресла, подписки, стриминг-сервисы — ваша целевая аудитория уже здесь.' },
 ];
 
+const TG_URL = 'https://t.me/GressToEx';
+const MAIL_URL = 'mailto:allexperiencetrade@gmail.com';
+
+/** Страница для студий и рекламодателей в стиле главной (hm-* из home.css). */
 export default function PartnersPage() {
   const [stats, setStats] = useState({ total: 511, newWeek: 0 });
   // Цифры проверки результата с сервера (/api/public/proof); null - мало данных или сервер недоступен, такой блок не показываем
@@ -84,208 +87,146 @@ export default function PartnersPage() {
       .catch(() => {});
   }, []);
 
-  useEffect(() => {
-    const items = document.querySelectorAll<HTMLElement>('.partners-page .reveal-item');
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
-    );
-    items.forEach((el, i) => {
-      (el as HTMLElement).style.transitionDelay = Math.min(i * 60, 360) + 'ms';
-      observer.observe(el);
-    });
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <main className="partners-page">
-      {/* Hero */}
-      <section className="hero">
-        <div className="hero-badge">Партнёрам</div>
-        <h1>
-          Работаем с теми, кому нужна<br />
-          <span className="accent">игровая аудитория</span>
-        </h1>
-        <p>
-          Размещайте квесты на нашей платформе — получайте целевых пользователей, реальные действия и измеримый результат.
-        </p>
-        <div className="stats-row">
-          <div className="stat-item">
-            <div className="stat-num">{stats.total}<span>+</span></div>
-            <div className="stat-label">игроков<br />в базе</div>
-          </div>
-          {stats.newWeek > 0 && (
-            <div className="stat-item">
-              <div className="stat-num">{stats.newWeek}<span>+</span></div>
-              <div className="stat-label">новых<br />за неделю</div>
-            </div>
-          )}
-          {proof && (
-            <div className="stat-item">
-              <div className="stat-num">{proof.activeWeek}</div>
-              <div className="stat-label">активных<br />за неделю</div>
-            </div>
-          )}
-          {proof?.autoApprovedPercent != null && (
-            <div className="stat-item">
-              <div className="stat-num">{proof.autoApprovedPercent}<span>%</span></div>
-              <div className="stat-label">результатов подтверждает<br />автоматика</div>
-            </div>
-          )}
-          {proof?.retention7Percent != null && (
-            <div className="stat-item">
-              <div className="stat-num">{proof.retention7Percent}<span>%</span></div>
-              <div className="stat-label">новых активны<br />через неделю</div>
-            </div>
-          )}
-        </div>
-        <p style={{ marginTop: 20 }}>
-          <Link href="/partners/proof" className="btn-secondary">Как мы проверяем результат →</Link>
-        </p>
-      </section>
+    <div className="max-w-6xl mx-auto px-4 py-10">
 
-      {/* Форматы сотрудничества */}
-      <section id="collab">
-        <div className="container">
-          <div className="section-tag">Форматы</div>
-          <h2 className="section-title">Как мы работаем с партнёрами</h2>
-          <p className="section-sub">
-            Три формата на любой бюджет и цель — от разового размещения до глубокой интеграции.
+      {/* ── Hero ── */}
+      <section className="hm-hero">
+        <div className="hm-hero-glow" />
+        <div className="relative space-y-5">
+          <span className="hm-eyebrow"><i />Партнёрам · игровая аудитория</span>
+          <h1 className="font-gaming">
+            Работаем с теми, кому нужна <em>игровая аудитория</em>
+          </h1>
+          <p className="text-lg sm:text-xl max-w-xl mx-auto" style={{ color: 'var(--muted)' }}>
+            Размещайте квесты на нашей платформе: получайте целевых пользователей, реальные действия и измеримый результат.
           </p>
-          <div className="collab-grid">
-            {COLLAB_ITEMS.map((item, i) => (
-              <div key={i} className="collab-item">
-                <div className="collab-body">
-                  <div className="collab-title">{item.title}</div>
-                  <div className="collab-desc">{item.desc}</div>
-                </div>
-              </div>
-            ))}
+          <div className="hm-cta-row">
+            <a href={TG_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">Написать в Telegram</a>
+            <Link href="/partners/proof" className="hm-btn hm-btn-ghost">Как мы проверяем результат</Link>
           </div>
         </div>
       </section>
 
-      {/* Как это работает */}
-      <section id="how">
-        <div className="container">
-          <div className="section-tag">Процесс</div>
-          <h2 className="section-title">Как запустить квест-рекламу</h2>
-          <p className="section-sub">
-            От первого контакта до живых пользователей — 4 шага.
-          </p>
-          <div className="steps-grid">
-            {STEPS.map((step, i) => (
-              <div key={i} className="step-card">
-                <div className="step-num">{step.num}</div>
-                <h3>{step.title}</h3>
-                <p>{step.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* ── Цифры ── */}
+      <section className="hm-stats pt-stats reveal" aria-label="Аудитория в цифрах">
+        <div className="hm-stat"><div className="hm-stat-num">{stats.total}<span>+</span></div><div className="hm-stat-label">игроков в базе</div></div>
+        {stats.newWeek > 0 && (
+          <div className="hm-stat"><div className="hm-stat-num">{stats.newWeek}<span>+</span></div><div className="hm-stat-label">новых за неделю</div></div>
+        )}
+        {proof && (
+          <div className="hm-stat"><div className="hm-stat-num">{proof.activeWeek}</div><div className="hm-stat-label">активных за неделю</div></div>
+        )}
+        {proof?.autoApprovedPercent != null && (
+          <div className="hm-stat"><div className="hm-stat-num green">{proof.autoApprovedPercent}%</div><div className="hm-stat-label">результатов подтверждает автоматика</div></div>
+        )}
+        {proof?.retention7Percent != null && (
+          <div className="hm-stat"><div className="hm-stat-num green">{proof.retention7Percent}%</div><div className="hm-stat-label">новых активны через неделю</div></div>
+        )}
       </section>
 
-      {/* Сравнение цен */}
-      <section id="pricing">
-        <div className="container">
-          <div className="section-tag">Сравнение</div>
-          <h2 className="section-title">Обычная реклама vs EGC</h2>
-          <p className="section-sub">
-            Традиционные форматы продвижения в играх давно не работают так, как раньше.
-          </p>
-          <div className="pricing-compare">
-            <div className="pricing-col pricing-col-bad">
-              <div className="pricing-col-head">Обычная реклама</div>
-              {PRICING_BAD.map((row, i) => (
-                <div key={i} className="pricing-row">
-                  <span>{row.text}</span>
-                </div>
-              ))}
+      {/* ── Форматы ── */}
+      <section className="hm-section reveal">
+        <div className="hm-head">
+          <div>
+            <div className="hm-kicker">Форматы</div>
+            <h2 className="section-title">Как мы работаем с партнёрами</h2>
+          </div>
+        </div>
+        <div className="hm-features">
+          {COLLAB_ITEMS.map(item => (
+            <div key={item.title} className="hm-feature">
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
             </div>
-            <div className="pricing-col pricing-col-good">
-              <div className="pricing-col-head">EGC квест-реклама</div>
-              {PRICING_GOOD.map((row, i) => (
-                <div key={i} className="pricing-row">
-                  <span>{row.text}</span>
-                </div>
-              ))}
-            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Процесс ── */}
+      <section className="hm-section reveal">
+        <div className="hm-head">
+          <div>
+            <div className="hm-kicker">Четыре шага</div>
+            <h2 className="section-title">Как запустить квест-рекламу</h2>
           </div>
-          <div className="pricing-callout">
-            <div className="pricing-callout-text">
-              <strong>Готовы обсудить ваш проект?</strong><br />
-              Напишите нам — расскажем форматы и назовём стоимость под вашу задачу.
+        </div>
+        <div className="hm-steps four">
+          {STEPS.map(step => (
+            <div key={step.num} className="hm-step how-step">
+              <span className="hm-step-num">{step.num}</span>
+              <h3>{step.title}</h3>
+              <p>{step.desc}</p>
             </div>
-            <a href="https://t.me/GressToEx" target="_blank" rel="noopener noreferrer" className="btn-pricing-cta">
-              Написать в Telegram
-            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Сравнение ── */}
+      <section className="hm-section reveal">
+        <div className="hm-head">
+          <div>
+            <div className="hm-kicker">Сравнение</div>
+            <h2 className="section-title">Обычная реклама и EGC</h2>
+          </div>
+        </div>
+        <div className="pt-compare">
+          <div className="pt-col bad">
+            <h3>Обычная реклама</h3>
+            <ul>{PRICING_BAD.map(r => <li key={r.text}>{r.text}</li>)}</ul>
+          </div>
+          <div className="pt-col good">
+            <h3>EGC квест-реклама</h3>
+            <ul>{PRICING_GOOD.map(r => <li key={r.text}>{r.text}</li>)}</ul>
           </div>
         </div>
       </section>
 
-      {/* Почему EGC */}
-      <section id="why">
-        <div className="container">
-          <div className="section-tag">Преимущества</div>
-          <h2 className="section-title">Почему выбирают EGC</h2>
-          <div className="why-grid">
-            {WHY_CARDS.map((card, i) => (
-              <div key={i} className="why-card">
-                <div>
-                  <h4>{card.title}</h4>
-                  <p>{card.desc}</p>
-                </div>
-              </div>
-            ))}
+      {/* ── Почему EGC ── */}
+      <section className="hm-section reveal">
+        <div className="hm-head">
+          <div>
+            <div className="hm-kicker">Преимущества</div>
+            <h2 className="section-title">Почему выбирают EGC</h2>
           </div>
         </div>
-      </section>
-
-      {/* Аудитория */}
-      <section id="audience">
-        <div className="container">
-          <div className="section-tag">Аудитория</div>
-          <h2 className="section-title">Кому подходит EGC</h2>
-          <p className="section-sub">
-            Наша платформа подойдёт любому бизнесу, чья аудитория — геймеры.
-          </p>
-          <div className="audience-grid">
-            {AUDIENCE_CARDS.map((card, i) => (
-              <div key={i} className="audience-card">
-                <h4>{card.title}</h4>
-                <p>{card.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section id="cta">
-        <div className="container">
-          <div className="cta-inner">
-            <h2>Готовы привлечь игровую аудиторию?</h2>
-            <p>
-              Напишите нам — обсудим формат, запустим квест и замерим результат вместе.
-            </p>
-            <div className="cta-buttons">
-              <a href="https://t.me/GressToEx" target="_blank" rel="noopener noreferrer" className="btn-primary">
-                Telegram @GressToEx
-              </a>
-              <a href="mailto:allexperiencetrade@gmail.com" className="btn-secondary">
-                Написать на почту
-              </a>
+        <div className="hm-features">
+          {WHY_CARDS.map(card => (
+            <div key={card.title} className="hm-feature">
+              <h3>{card.title}</h3>
+              <p>{card.desc}</p>
             </div>
-          </div>
+          ))}
         </div>
       </section>
-    </main>
+
+      {/* ── Аудитория ── */}
+      <section className="hm-section reveal">
+        <div className="hm-head">
+          <div>
+            <div className="hm-kicker">Кому подходит</div>
+            <h2 className="section-title">Бизнесу, чья аудитория — геймеры</h2>
+          </div>
+        </div>
+        <div className="hm-features">
+          {AUDIENCE_CARDS.map(card => (
+            <div key={card.title} className="hm-feature">
+              <h3>{card.title}</h3>
+              <p>{card.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Финальный призыв ── */}
+      <section className="hm-final reveal">
+        <h2 className="font-heading">Готовы привлечь игровую аудиторию?</h2>
+        <p>Напишите нам: обсудим формат, запустим квест и замерим результат вместе. Стоимость назовём под вашу задачу.</p>
+        <div className="hm-cta-row">
+          <a href={TG_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">Telegram @GressToEx</a>
+          <a href={MAIL_URL} className="hm-btn hm-btn-ghost">Написать на почту</a>
+        </div>
+      </section>
+    </div>
   );
 }
