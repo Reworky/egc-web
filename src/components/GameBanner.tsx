@@ -12,16 +12,21 @@ export default function GameBanner({ name, href, onClick, active }: {
   active?: boolean;
 }) {
   const [broken, setBroken] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const inner = (
     <>
       {!broken && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={gamePhotoUrl(name)} alt="" loading="lazy" onError={() => setBroken(true)} />
+        <img
+          ref={el => { if (el?.complete && el.naturalWidth > 0) setLoaded(true); }}
+          src={gamePhotoUrl(name)} alt="" loading="lazy" decoding="async"
+          onLoad={() => setLoaded(true)} onError={() => setBroken(true)}
+        />
       )}
       <span className="gm-name">{name}</span>
     </>
   );
-  const cls = `gm-banner${broken ? ' no-img' : ''}${active ? ' on' : ''}`;
+  const cls = `gm-banner${broken ? ' no-img' : ''}${loaded ? ' loaded' : ''}${active ? ' on' : ''}`;
 
   if (href) return <Link href={href} className={cls} aria-label={name}>{inner}</Link>;
   return <button type="button" onClick={onClick} className={cls} aria-pressed={active} aria-label={name}>{inner}</button>;
