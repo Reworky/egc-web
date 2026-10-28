@@ -356,3 +356,10 @@
 .home-guest > .hm-section .pf-row.fresh { background: rgba(139, 92, 246, .2); }
 .home-guest > .hm-section .pf-row, .home-guest > .hm-section .pf-tot { border-color: rgba(255, 255, 255, .08); }
 @media (max-width: 640px) { .home-guest > .hm-section { padding: 26px 16px 28px; } .home-guest > .hm-section::before { border-radius: 24px; filter: blur(12px); } }
+
+/* Блоки внутри полос и финальный блок: тоже без жёстких рамок */
+.home-guest > .hm-section .hm-partner { background: none; border: 0; padding: 0; }
+.home-guest > .hm-final { position: relative; isolation: isolate; margin-top: 30px; padding: 48px 36px; background: none; border: 0; border-radius: 0; }
+.home-guest > .hm-final::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 36px; background: #2a2152; filter: blur(18px); pointer-events: none; }
+@media (max-width: 640px) { .home-guest > .hm-final { padding: 32px 16px; } .home-guest > .hm-final::before { border-radius: 24px; filter: blur(12px); } }
+.home-guest > .hm-final { overflow: visible; }
