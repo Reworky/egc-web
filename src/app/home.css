@@ -324,3 +324,31 @@
   .pf-ic { grid-row: 1 / span 2; }
 }
 .pf .hm-pay-more { display: table; margin-top: 16px; }
+
+/* Магазин на главной: вкладки по играм */
+.sw-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.sw-tabs button { padding: 8px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer; background: var(--bg2); border: 1px solid var(--border); transition: background .15s, border-color .15s; }
+.sw-tabs button:hover { border-color: var(--border-bright); }
+.sw-tabs button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.sw-tabs button:focus-visible, .sw-case:focus-visible { outline: 2px solid var(--accent3); outline-offset: 2px; }
+.sw-panel { display: grid; grid-template-columns: minmax(200px, 280px) 1fr; gap: 24px; align-items: start; }
+@media (max-width: 640px) { .sw-panel { grid-template-columns: 1fr; } .sw-cover { max-width: 320px; } }
+.sw-packs { list-style: none; margin: 0; padding: 0; }
+.sw-packs li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 17px; font-weight: 600; color: #fff; }
+.sw-packs li:first-child { padding-top: 2px; }
+.sw em, .sw-case em { font-style: normal; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; color: #fde68a; background: rgba(245, 158, 11, .18); }
+.sw-cases { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .sw-cases { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1000px) { .sw-cases { grid-template-columns: repeat(6, 1fr); } }
+.sw-case { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 10px; text-align: center; cursor: pointer; border-radius: 12px; background: var(--bg2); border: 1px solid var(--border); color: #fff; font-size: 14px; font-weight: 600; transition: border-color .15s; }
+.sw-case:hover { border-color: var(--border-bright); }
+.sw-case img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; background: var(--bg3); }
+.sw-case em { position: absolute; top: 16px; right: 16px; }
+.sw-overlay { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px; background: rgba(5, 5, 15, .75); }
+.sw-modal { width: 100%; max-width: 460px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 16px; background: var(--bg2); border: 1px solid var(--border-bright); }
+.sw-modal img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; }
+.sw-modal h3 { margin-top: 14px; font-size: 20px; font-weight: 700; color: #fff; }
+.sw-modal p { margin-top: 10px; font-weight: 600; color: #fff; }
+.sw-modal ul { margin: 8px 0 0; padding-left: 20px; list-style: disc; color: #cbd5e1; font-size: 14px; line-height: 1.7; }
+.sw-modal small { display: block; margin-top: 10px; font-size: 12px; color: var(--muted); }
+.sw-modal .hm-btn { margin-top: 16px; width: 100%; justify-content: center; }

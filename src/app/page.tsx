@@ -1,11 +1,12 @@
 import Link from 'next/link';
-import { api, Quest, RewardItem } from '@/lib/api';
+import { api, Quest, RewardItem, Cs2Case } from '@/lib/api';
 import { CHANNEL_URL, PAYOUTS_URL } from '@/lib/contacts';
 import LeaderboardTabs from '@/components/LeaderboardTabs';
 import PayoutFeed from '@/components/PayoutFeed';
 import Reviews from '@/components/Reviews';
 import HomeSwitch from '@/components/HomeSwitch';
 import GameBanner from '@/components/GameBanner';
+import ShopShowcase from '@/components/ShopShowcase';
 import TrustStats from '@/components/TrustStats';
 import HeroArt from '@/components/HeroArt';
 
@@ -35,8 +36,6 @@ const FAQ = [
 ];
 
 const STEPS = ['Берёшь квест', 'Выполняешь в игре', 'Получаешь EXC', 'Тратишь или выводишь'];
-
-const SHOP_UNITS: Record<string, string> = { Gems: 'Гемы', UC: 'UC', 'G-Coin': 'G-Coin', 'Пополнение': 'Пополнение Steam' };
 
 /** До 6 квестов: по одному лучшему (по награде) на игру, чтобы блок не состоял из одной игры. Спонсорские, партнёрские (внешние офферы, часто с покупкой), закрытые и «только для совета» не берём. */
 function pickFeatured(quests: Quest[]): Quest[] {
@@ -72,38 +71,21 @@ function showcaseGames(quests: Quest[], games: string[]): GameShowcase[] {
     .map(g => ({ name: g }));
 }
 
-type ShopCard = { category: string; units: string; count: number; soon: boolean };
-
-/** Витрина магазина для гостя: по категории (игре) что можно получить; цены не показываем. «Кастомизация» на сайте не выводится. */
-function shopShowcase(items: RewardItem[]): ShopCard[] {
-  const map = new Map<string, { units: Set<string>; count: number; locked: number }>();
-  for (const it of items) {
-    if (!it.category || it.category === 'Кастомизация') continue;
-    const e = map.get(it.category) ?? { units: new Set<string>(), count: 0, locked: 0 };
-    const unit = it.title.split(' - ')[1]?.split(' ')[0];
-    if (unit) e.units.add(SHOP_UNITS[unit] ?? unit);
-    e.count += 1;
-    if ((it as RewardItem & { locked?: boolean }).locked) e.locked += 1;
-    map.set(it.category, e);
-  }
-  return [...map.entries()].map(([category, e]) => ({ category, units: [...e.units].join(', '), count: e.count, soon: e.locked === e.count }));
-}
-
 const plural = (n: number, one: string, few: string, many: string) =>
   n % 10 === 1 && n % 100 !== 11 ? one : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? few : many;
 
 export default async function Home() {
-  const [stats, leaderboard, quests, games, shopItems] = await Promise.all([
+  const [stats, leaderboard, quests, games, shopItems, cs2Cases] = await Promise.all([
     api.stats().catch(() => null),
     api.leaderboard('overall').catch(() => ({ entries: [], me: null })),
     api.quests().catch(() => [] as Quest[]),
     api.games().catch(() => [] as string[]),
     api.shopItems().catch(() => [] as RewardItem[]),
+    api.cs2Cases().catch(() => [] as Cs2Case[]),
   ]);
   const featured = pickFeatured(quests);
   const typical = typicalReward(quests);
   const showcase = showcaseGames(quests, games);
-  const shopCards = shopShowcase(shopItems);
   const questsToFirst = typical > 0 ? Math.ceil((FIRST_WITHDRAWAL_EXC - WELCOME_BONUS_EXC) / typical) : 0;
 
   const guest = (
@@ -196,7 +178,7 @@ export default async function Home() {
 
 
       {/* ── Магазин и награды ── */}
-      {shopCards.length > 0 && (
+      {(shopItems.length > 0 || cs2Cases.length > 0) && (
         <section className="hm-section reveal">
           <div className="hm-head">
             <div>
@@ -204,17 +186,7 @@ export default async function Home() {
               <h2 className="section-title">Магазин и награды</h2>
             </div>
           </div>
-          <div className="gm-grid">
-            {shopCards.map(c => (
-              <div key={c.category} className="gm-card">
-                <GameBanner name={c.category} />
-                <div className="gm-info">
-                  <b>{c.units || 'Награды'}</b>
-                  <span>{c.soon ? 'скоро' : `${c.count} ${plural(c.count, 'вариант', 'варианта', 'вариантов')}`}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ShopShowcase items={shopItems} cases={cs2Cases} />
         </section>
       )}
 

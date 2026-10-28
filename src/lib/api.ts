@@ -31,6 +31,7 @@ export const api = {
   },
   games: () => get<string[]>('/api/quests/games'),
   shopItems: () => get<RewardItem[]>('/api/shop/items'),
+  cs2Cases: () => get<Cs2Case[]>('/api/shop/cs2-cases'),
   profile: () => get<UserProfile>('/api/profile', true),
   submissions: () => get<Submission[]>('/api/profile/submissions', true),
   rewards: () => get<RewardRequest[]>('/api/profile/rewards', true),
@@ -104,6 +105,15 @@ export interface Quest {
   externalAutoApprove?: boolean;
 }
 
+export interface Cs2Case {
+  key: string;
+  name: string;
+  priceExc: number;
+  withKey: boolean;
+  skins: string[];
+  itemId: number | null;
+}
+
 export interface RewardItem {
   id: number;
   title: string;
@@ -111,6 +121,7 @@ export interface RewardItem {
   category: string;
   priceCoins: number;
   effectivePrice: number;
+  locked?: boolean;
 }
 
 export interface UserProfile {
