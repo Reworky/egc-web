@@ -272,3 +272,20 @@
 .hm-rules li { position: relative; padding-left: 26px; font-size: 14px; line-height: 1.55; color: #cbd5e1; }
 .hm-rules li::before { content: '✓'; position: absolute; left: 0; top: 0; font-weight: 800; color: #4ade80; }
 .hm-rules li b { color: #fff; }
+
+/* Текстовые документы (правила, политика) */
+.lg-doc { margin-top: 8px; display: grid; gap: 28px; }
+.lg-doc h2 { font-size: 1.15rem; font-weight: 700; color: #fff; }
+.lg-doc p { margin-top: 8px; color: #cbd5e1; font-size: 15px; line-height: 1.7; }
+.lg-doc ul { margin: 8px 0 0; padding-left: 20px; list-style: disc; color: #cbd5e1; font-size: 15px; line-height: 1.7; }
+.lg-doc li { margin-top: 4px; }
+.lg-doc a { color: var(--accent3); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Подвал: ссылки на разделы */
+.ft-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin-bottom: 18px; }
+.ft-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
+.ft-links a:hover { color: #fff; }
+
+/* Блок «Мы в Telegram» */
+.hm-community { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; padding: 24px 26px; }
+.hm-community p { margin-top: 6px; max-width: 520px; color: var(--muted); font-size: 14px; line-height: 1.6; }

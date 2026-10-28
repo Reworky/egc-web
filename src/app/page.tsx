@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { api, Quest, RewardItem } from '@/lib/api';
+import { CHANNEL_URL, PAYOUTS_URL } from '@/lib/contacts';
 import LeaderboardTabs from '@/components/LeaderboardTabs';
 import PayoutFeed from '@/components/PayoutFeed';
 import Reviews from '@/components/Reviews';
@@ -276,6 +277,21 @@ export default async function Home() {
 
       {/* ── Отзывы ── */}
       <Reviews channelUrl={REVIEWS_URL} />
+
+
+      {/* ── Сообщество ── */}
+      <section className="hm-section reveal">
+        <div className="hm-partner hm-community">
+          <div>
+            <h2 className="section-title">Мы в Telegram</h2>
+            <p>Новости и анонсы квестов в канале клуба, реальные выплаты и отзывы игроков в канале выплат.</p>
+          </div>
+          <div className="hm-partner-btns">
+            <a href={CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">Канал клуба</a>
+            <a href={PAYOUTS_URL} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-ghost">Канал выплат</a>
+          </div>
+        </div>
+      </section>
 
 
       {/* ── Партнёрам ── */}

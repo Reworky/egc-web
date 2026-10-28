@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import Link from 'next/link';
 import './globals.css';
 import './home.css';
 import './theme.css';
@@ -49,6 +50,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="max-w-6xl mx-auto px-4 mb-6">
             <YandexAd blockId="R-A-19801285-1" />
           </div>
+          <nav className="ft-links max-w-6xl mx-auto px-4" aria-label="Разделы и документы">
+            <Link href="/partners">Партнёрам</Link>
+            <Link href="/advertisers">Рекламодателям</Link>
+            <Link href="/contacts">Контакты</Link>
+            <Link href="/terms">Пользовательское соглашение</Link>
+            <Link href="/rules">Правила выплат</Link>
+            <Link href="/privacy">Политика конфиденциальности</Link>
+          </nav>
           <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
             <span className="font-semibold flex items-center gap-2" style={{ color: 'white' }}>
               <img src="/logo.png" alt="EGC" style={{ width: 28, height: 28, objectFit: 'contain', mixBlendMode: 'screen', flexShrink: 0 }} />

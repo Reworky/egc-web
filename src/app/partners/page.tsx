@@ -56,6 +56,12 @@ const AUDIENCE_CARDS = [
   { title: 'Игровой бизнес', desc: 'Периферия, игровые кресла, подписки, стриминг-сервисы — ваша целевая аудитория уже здесь.' },
 ];
 
+const PAY_MODELS = [
+  { title: 'CPI: оплата за установку', desc: 'Игрок устанавливает вашу игру по ссылке и подтверждает установку. Вы платите за каждого проверенного игрока.' },
+  { title: 'CPL: оплата за действие', desc: 'Регистрация, прохождение туториала, достижение уровня или другое целевое действие. Результат подтверждается автоматически или проверкой отчёта.' },
+  { title: 'Подписка на канал или сообщество', desc: 'Игрок подписывается, бот автоматически проверяет подписку, а удержание отслеживается неделю. Спонсор получает отчёт.' },
+];
+
 const TG_URL = 'https://t.me/GressToEx';
 const MAIL_URL = 'mailto:allexperiencetrade@gmail.com';
 
@@ -136,6 +142,25 @@ export default function PartnersPage() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* ── Модели оплаты ── */}
+      <section className="hm-section reveal">
+        <div className="hm-head">
+          <div>
+            <div className="hm-kicker">Оплата</div>
+            <h2 className="section-title">Модели оплаты</h2>
+          </div>
+        </div>
+        <div className="hm-features">
+          {PAY_MODELS.map(m => (
+            <div key={m.title} className="hm-feature">
+              <h3>{m.title}</h3>
+              <p>{m.desc}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-sm" style={{ color: 'var(--muted)' }}>Ставки обсуждаем под вашу игру и задачу. Платите только за действия, которые прошли проверку.</p>
       </section>
 
       {/* ── Процесс ── */}

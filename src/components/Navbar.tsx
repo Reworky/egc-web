@@ -9,6 +9,7 @@ import { useAuth } from '@/lib/useAuth';
 const guestLinks = [
   { href: '/',         label: 'Главная'     },
   { href: '/partners', label: 'Партнёрам'   },
+  { href: '/advertisers', label: 'Рекламодателям' },
 ];
 const memberLinks = [
   { href: '/',         label: 'Главная'     },
