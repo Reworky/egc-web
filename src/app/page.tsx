@@ -215,9 +215,6 @@ export default async function Home() {
               </div>
             ))}
           </div>
-          <p className="mt-4 text-sm" style={{ color: 'var(--muted)' }}>
-            Подписка EGC Pass даёт бонусы к награде и донат по закупочной цене. Цены в EXC и остаток лимита видны в магазине после входа.
-          </p>
         </section>
       )}
 
