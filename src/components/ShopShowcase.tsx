@@ -1,96 +1,68 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { useState } from 'react';
 import GameBanner from '@/components/GameBanner';
 import type { Cs2Case, RewardItem } from '@/lib/api';
 
-const CASES_TAB = 'Кейсы CS2';
-const UNIT: Record<string, string> = { Gems: 'гемов', UC: 'UC', 'G-Coin': 'G-Coin' };
+const UNIT: Record<string, string> = { Gems: 'Гемы', UC: 'UC', 'G-Coin': 'G-Coin', 'Пополнение': 'Пополнение Steam' };
 
-/** «Brawl Stars - Gems 30» → «30 гемов», «PUBG Mobile - UC 60» → «60 UC», «Steam - Пополнение 100» → «Пополнение Steam 100». */
-function packLabel(title: string): string {
-  const tail = title.split(' - ')[1] ?? title;
-  const m = tail.match(/^(\D+?)\s+(\d[\d\s]*)$/);
-  if (!m) return tail;
-  const unit = m[1].trim();
-  const amount = m[2].trim();
-  if (unit === 'Пополнение') return `Пополнение Steam ${amount}`;
-  return `${amount} ${UNIT[unit] ?? unit}`;
+interface Card {
+  name: string;
+  kinds: { label: string; soon: boolean }[];
 }
 
-/** Витрина магазина для гостя: вкладки по играм, под вкладкой обложка и наборы без цен; отдельная вкладка с кейсами CS2 (картинки, по нажатию состав). */
-export default function ShopShowcase({ items, cases }: { items: RewardItem[]; cases: Cs2Case[] }) {
-  const byGame = new Map<string, RewardItem[]>();
+/** Что есть в магазине по категории в общем виде: «Гемы», «UC», «Пополнение Steam», «Кейсы». Конкретные наборы и цены на сайте не показываем. */
+function buildCards(items: RewardItem[], cases: Cs2Case[]): Card[] {
+  const map = new Map<string, Map<string, boolean>>();
   for (const it of items) {
     if (!it.category || it.category === 'Кастомизация') continue;
-    byGame.set(it.category, [...(byGame.get(it.category) ?? []), it]);
+    const kinds = map.get(it.category) ?? new Map<string, boolean>();
+    const unit = it.title.split(' - ')[1]?.split(' ')[0];
+    const label = unit ? (UNIT[unit] ?? unit) : 'Награды';
+    kinds.set(label, (kinds.get(label) ?? true) && !!it.locked);
+    map.set(it.category, kinds);
   }
-  const tabs = [...byGame.keys(), ...(cases.length ? [CASES_TAB] : [])];
-  const [tab, setTab] = useState(tabs[0] ?? '');
-  const [open, setOpen] = useState<Cs2Case | null>(null);
+  if (cases.length) {
+    const kinds = map.get('CS2') ?? new Map<string, boolean>();
+    kinds.set('Кейсы', cases.every(c => c.itemId == null));
+    map.set('CS2', kinds);
+  }
+  return [...map.entries()].map(([name, kinds]) => ({
+    name,
+    kinds: [...kinds.entries()].map(([label, soon]) => ({ label, soon })),
+  }));
+}
 
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(null); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [open]);
-
-  if (!tabs.length) return null;
-  const current = tabs.includes(tab) ? tab : tabs[0];
-  const packs = byGame.get(current) ?? [];
+/** Витрина магазина для гостя: карточки игр общим списком. При наведении (на телефоне по нажатию) на карточке раскрывается, что доступно в этой категории. */
+export default function ShopShowcase({ items, cases }: { items: RewardItem[]; cases: Cs2Case[] }) {
+  const cards = buildCards(items, cases);
+  const [pinned, setPinned] = useState<string | null>(null);
+  if (!cards.length) return null;
 
   return (
-    <div className="sw">
-      <div className="sw-tabs" role="tablist" aria-label="Игры магазина">
-        {tabs.map(t => (
-          <button key={t} type="button" role="tab" aria-selected={t === current} className={t === current ? 'on' : ''} onClick={() => setTab(t)}>{t}</button>
-        ))}
-      </div>
-
-      {current === CASES_TAB ? (
-        <div className="sw-cases">
-          {cases.map(c => (
-            <button key={c.key} type="button" className="sw-case" onClick={() => setOpen(c)}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/cases/${c.key}.jpg`} alt="" loading="lazy" />
-              <span>{c.name}</span>
-              {c.itemId == null && <em>скоро</em>}
-            </button>
-          ))}
+    <div className="gm-grid sw-grid">
+      {cards.map(c => (
+        <div
+          key={c.name}
+          role="button"
+          tabIndex={0}
+          className={`sw-card${pinned === c.name ? ' open' : ''}`}
+          aria-expanded={pinned === c.name}
+          onClick={() => setPinned(p => (p === c.name ? null : c.name))}
+          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPinned(p => (p === c.name ? null : c.name)); } }}
+          onBlur={() => setPinned(p => (p === c.name ? null : p))}
+        >
+          <GameBanner name={c.name} />
+          <span className="sw-over">
+            <b>{c.name}</b>
+            <span className="sw-kinds">
+              {c.kinds.map(k => (
+                <span key={k.label}>{k.label}{k.soon && <em>скоро</em>}</span>
+              ))}
+            </span>
+          </span>
         </div>
-      ) : (
-        <div className="sw-panel">
-          <div className="sw-cover"><GameBanner name={packs[0]?.category ?? current} /></div>
-          <ul className="sw-packs">
-            {packs.map(p => (
-              <li key={p.id}>
-                <span>{packLabel(p.title)}</span>
-                {p.locked && <em>скоро</em>}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {open && createPortal(
-        <div className="sw-overlay" onClick={() => setOpen(null)}>
-          <div className="sw-modal" role="dialog" aria-modal="true" aria-label={`Кейс ${open.name}`} onClick={e => e.stopPropagation()}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/cases/${open.key}.jpg`} alt="" />
-            <h3>Кейс «{open.name}»</h3>
-            {open.skins.length > 0 && (
-              <>
-                <p>Что внутри ({open.skins.length}):</p>
-                <ul>{open.skins.map(s => <li key={s}>{s}</li>)}</ul>
-                <small>Редкие предметы (ножи, перчатки) в список не входят.</small>
-              </>
-            )}
-            <button type="button" className="hm-btn hm-btn-ghost" onClick={() => setOpen(null)}>Закрыть</button>
-          </div>
-        </div>
-      , document.body)}
+      ))}
     </div>
   );
 }

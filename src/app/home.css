@@ -325,30 +325,17 @@
 }
 .pf .hm-pay-more { display: table; margin-top: 16px; }
 
-/* Магазин на главной: вкладки по играм */
-.sw-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
-.sw-tabs button { padding: 8px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer; background: var(--bg2); border: 1px solid var(--border); transition: background .15s, border-color .15s; }
-.sw-tabs button:hover { border-color: var(--border-bright); }
-.sw-tabs button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
-.sw-tabs button:focus-visible, .sw-case:focus-visible { outline: 2px solid var(--accent3); outline-offset: 2px; }
-.sw-panel { display: grid; grid-template-columns: minmax(200px, 280px) 1fr; gap: 24px; align-items: start; }
-@media (max-width: 640px) { .sw-panel { grid-template-columns: 1fr; } .sw-cover { max-width: 320px; } }
-.sw-packs { list-style: none; margin: 0; padding: 0; }
-.sw-packs li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 17px; font-weight: 600; color: #fff; }
-.sw-packs li:first-child { padding-top: 2px; }
-.sw em, .sw-case em { font-style: normal; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; color: #fde68a; background: rgba(245, 158, 11, .18); }
-.sw-cases { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
-@media (min-width: 640px) { .sw-cases { grid-template-columns: repeat(4, 1fr); } }
-@media (min-width: 1000px) { .sw-cases { grid-template-columns: repeat(6, 1fr); } }
-.sw-case { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 10px; text-align: center; cursor: pointer; border-radius: 12px; background: var(--bg2); border: 1px solid var(--border); color: #fff; font-size: 14px; font-weight: 600; transition: border-color .15s; }
-.sw-case:hover { border-color: var(--border-bright); }
-.sw-case img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; background: var(--bg3); }
-.sw-case em { position: absolute; top: 16px; right: 16px; }
-.sw-overlay { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px; background: rgba(5, 5, 15, .75); }
-.sw-modal { width: 100%; max-width: 460px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 16px; background: var(--bg2); border: 1px solid var(--border-bright); }
-.sw-modal img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; }
-.sw-modal h3 { margin-top: 14px; font-size: 20px; font-weight: 700; color: #fff; }
-.sw-modal p { margin-top: 10px; font-weight: 600; color: #fff; }
-.sw-modal ul { margin: 8px 0 0; padding-left: 20px; list-style: disc; color: #cbd5e1; font-size: 14px; line-height: 1.7; }
-.sw-modal small { display: block; margin-top: 10px; font-size: 12px; color: var(--muted); }
-.sw-modal .hm-btn { margin-top: 16px; width: 100%; justify-content: center; }
+/* Магазин на главной: карточки игр, при наведении раскрывается список доступного */
+.sw-grid { margin-top: 0; }
+@media (min-width: 720px) { .sw-grid { grid-template-columns: repeat(3, 1fr); } }
+.sw-grid .sw-over > b { font-size: 18px; }
+.sw-card { position: relative; display: block; width: 100%; padding: 0; text-align: left; cursor: pointer; border-radius: 16px; }
+.sw-card .gm-banner.static, .sw-card .gm-banner.static:hover { transform: none; box-shadow: none; }
+.sw-over { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; padding: 14px; border-radius: 16px; background: rgba(13, 13, 28, .88); border: 1px solid var(--border-bright); opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+.sw-over > b { font-size: 16px; font-weight: 700; color: #fff; }
+.sw-kinds { display: flex; flex-wrap: wrap; gap: 6px; }
+.sw-kinds > span { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #ddd6fe; background: rgba(139, 92, 246, .22); }
+.sw-kinds em { font-style: normal; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 5px; color: #fde68a; background: rgba(245, 158, 11, .2); }
+.sw-card:hover .sw-over, .sw-card:focus-visible .sw-over, .sw-card.open .sw-over { opacity: 1; transform: none; }
+.sw-card:focus-visible { outline: 2px solid var(--accent3); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .sw-over { transition: none; } }
