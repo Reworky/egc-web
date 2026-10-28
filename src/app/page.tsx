@@ -204,9 +204,6 @@ export default async function Home() {
               <h2 className="section-title">Магазин и награды</h2>
             </div>
           </div>
-          <p className="mb-5 max-w-2xl" style={{ color: 'var(--muted)' }}>
-            EXC не обязательно выводить: их можно сразу обменять на донат в играх и пополнение Steam, а также на бусты и предметы в боте.
-          </p>
           <div className="gm-grid">
             {shopCards.map(c => (
               <div key={c.category} className="gm-card">
