@@ -6,16 +6,20 @@ import CountUp from '@/components/CountUp';
 
 const COLLAB_ITEMS = [
   {
-    title: 'Привлечение игроков',
-    desc: 'Размещаем квест с вашей задачей — игроки выполняют и получают EXC-токены. Только целевая аудитория, только реальные действия.',
+    title: 'Квест под вашу задачу',
+    desc: 'Установка, регистрация, уровень в игре или подписка: игроки выполняют задание и получают EXC. Только целевая аудитория, только реальные действия, оплата за проверенный результат.',
   },
   {
-    title: 'Охват аудитории',
-    desc: 'Анонс вашего продукта в нашем Telegram-боте. Нативная интеграция без баннерной слепоты, реальные цифры аудитории — на странице «Как мы проверяем результат».',
+    title: 'Пост в канале клуба',
+    desc: 'Размещение в канале EGC в контент-плане клуба. Аудитория: игроки Brawl Stars, Clash Royale, CS2, Dota 2 и других игр.',
   },
   {
-    title: 'Вход в проект',
-    desc: 'Становитесь партнёром EGC: co-branding, совместные турниры, интеграция вашей экономики с нашей токен-системой.',
+    title: 'Рассылка игрокам',
+    desc: 'Сообщение в боте активным игрокам с кнопкой-ссылкой. Нативная интеграция без баннерной слепоты, показываем тем, кто заходил недавно.',
+  },
+  {
+    title: 'Партнёрство',
+    desc: 'Co-branding, совместные турниры, интеграция вашей экономики с нашей токен-системой.',
   },
 ];
 
@@ -89,7 +93,7 @@ export default function PartnersPage() {
       <section className="hm-hero">
         <div className="hm-hero-glow" />
         <div className="relative space-y-5">
-          <span className="hm-eyebrow"><i />Партнёрам · игровая аудитория</span>
+          <span className="hm-eyebrow"><i />Студиям, издателям и рекламодателям</span>
           <h1 className="font-gaming">
             Работаем с теми, кому нужна <em>игровая аудитория</em>
           </h1>
@@ -130,8 +134,8 @@ export default function PartnersPage() {
       <section className="hm-section reveal">
         <div className="hm-head">
           <div>
-            <div className="hm-kicker">Форматы</div>
-            <h2 className="section-title">Как мы работаем с партнёрами</h2>
+            <div className="hm-kicker">Что можно разместить</div>
+            <h2 className="section-title">Форматы сотрудничества</h2>
           </div>
         </div>
         <div className="hm-features">

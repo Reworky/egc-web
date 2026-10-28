@@ -51,8 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <YandexAd blockId="R-A-19801285-1" />
           </div>
           <nav className="ft-links max-w-6xl mx-auto px-4" aria-label="Разделы и документы">
-            <Link href="/partners">Партнёрам</Link>
-            <Link href="/advertisers">Рекламодателям</Link>
+            <Link href="/partners">Сотрудничество</Link>
             <Link href="/contacts">Контакты</Link>
             <Link href="/terms">Пользовательское соглашение</Link>
             <Link href="/rules">Правила выплат</Link>
