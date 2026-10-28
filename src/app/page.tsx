@@ -34,12 +34,7 @@ const FAQ = [
   { q: 'Как проверяются квесты?', a: 'Часть квестов проверяется автоматически по игровому тегу, остальные подтверждаются скриншотом, который смотрит модератор.' },
 ];
 
-const STEPS = [
-  { icon: '🎯', title: 'Берёшь квест', text: 'Выбираешь игру и квест. Награда в EXC видна до старта.' },
-  { icon: '🎮', title: 'Выполняешь в игре', text: 'Прогресс многих квестов считается сам по игровому тегу, остальные подтверждаются скриншотом.' },
-  { icon: '🪙', title: 'Получаешь EXC', text: 'Квест засчитан: EXC сразу на твоём балансе.' },
-  { icon: '🛍️', title: 'Тратишь или выводишь', text: 'Обмениваешь на донат и награды в магазине или выводишь деньгами.' },
-];
+const STEPS = ['Берёшь квест', 'Выполняешь в игре', 'Получаешь EXC', 'Тратишь или выводишь'];
 
 const PAYOUT_METHODS = [
   { title: 'Рубли', text: 'На карту или по СБП: реквизиты банка вводишь в боте, перед заявкой видишь итоговую сумму.' },
@@ -167,12 +162,10 @@ export default async function Home() {
           </div>
         </div>
         <div className="hm-steps four">
-          {STEPS.map((s, i) => (
-            <div key={s.title} className="hm-step how-step">
+          {STEPS.map((title, i) => (
+            <div key={title} className="hm-step how-step">
               <span className="hm-step-num">0{i + 1}</span>
-              <div className="hm-step-icon" aria-hidden="true">{s.icon}</div>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
+              <h3>{title}</h3>
             </div>
           ))}
         </div>
