@@ -358,3 +358,7 @@
 
 /* Блоки «Мы в Telegram» и «Для игровых студий» лежат прямо на полосе, без второй рамки */
 .home-guest > .hm-section .hm-partner { background: none; border: 0; padding: 0; }
+
+/* Шаги на главной: номер над заголовком, не поверх него */
+.home-guest .hm-step { padding: 20px 22px; }
+.home-guest .hm-step-num { position: static; display: block; margin-bottom: 10px; font-size: 14px; font-weight: 700; letter-spacing: .08em; color: var(--accent2); }
