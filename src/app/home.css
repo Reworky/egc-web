@@ -339,3 +339,19 @@
 .sw-card:hover .sw-over, .sw-card:focus-visible .sw-over, .sw-card.open .sw-over { opacity: 1; transform: none; }
 .sw-card:focus-visible { outline: 2px solid var(--accent3); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .sw-over { transition: none; } }
+
+/* Гостевая главная: разделы выделены полосами разного тона */
+.home-guest > .hm-section { margin-top: 18px; padding: 28px 28px 30px; border-radius: 20px; border: 1px solid var(--border); }
+.home-guest > .hm-section:nth-of-type(odd) { background: #1b1c2f; }
+.home-guest > .hm-section:nth-of-type(even) { background: #211d3a; }
+.home-guest > .hm-stats, .home-guest > .pt-stats-wrap { margin-bottom: 18px; }
+.home-guest > .hm-section .hm-step,
+.home-guest > .hm-section .hm-path,
+.home-guest > .hm-section .hm-pay-total,
+.home-guest > .hm-section .hm-review,
+.home-guest > .hm-section .hm-faq-item,
+.home-guest > .hm-section .hm-partner,
+.home-guest > .hm-section .pf-chips button { background: var(--bg); }
+.home-guest > .hm-section .pf-row.fresh { background: rgba(139, 92, 246, .2); }
+.home-guest > .hm-section .pf-row, .home-guest > .hm-section .pf-tot { border-color: rgba(255, 255, 255, .08); }
+@media (max-width: 640px) { .home-guest > .hm-section { padding: 20px 16px 22px; border-radius: 16px; } }

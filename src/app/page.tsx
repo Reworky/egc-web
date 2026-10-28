@@ -89,7 +89,7 @@ export default async function Home() {
   const questsToFirst = typical > 0 ? Math.ceil((FIRST_WITHDRAWAL_EXC - WELCOME_BONUS_EXC) / typical) : 0;
 
   const guest = (
-    <div className="max-w-6xl mx-auto px-4 py-10">
+    <div className="home-guest max-w-6xl mx-auto px-4 py-10">
 
       {/* ── Первый экран ── */}
       <section className="hm-hero">
