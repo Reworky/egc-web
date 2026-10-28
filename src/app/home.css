@@ -341,10 +341,10 @@
 @media (prefers-reduced-motion: reduce) { .sw-over { transition: none; } }
 
 /* Гостевая главная: разделы выделены полосами разного тона с мягкими размытыми краями */
-.home-guest > .hm-section { position: relative; isolation: isolate; margin-top: 30px; padding: 40px 36px 42px; }
-.home-guest > .hm-section::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 36px; filter: blur(18px); pointer-events: none; }
-.home-guest > .hm-section:nth-of-type(odd)::before { background: #1d1e33; }
-.home-guest > .hm-section:nth-of-type(even)::before { background: #251f42; }
+.home-guest > .hm-section { position: relative; isolation: isolate; margin-top: 36px; padding: 44px 40px 46px; }
+.home-guest > .hm-section::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 40px; filter: blur(16px); pointer-events: none; }
+.home-guest > .hm-section:nth-of-type(odd)::before { background: #26294a; }
+.home-guest > .hm-section:nth-of-type(even)::before { background: #2b2058; }
 .home-guest > .hm-stats, .home-guest > .pt-stats-wrap { margin-bottom: 18px; }
 .home-guest > .hm-section .hm-step,
 .home-guest > .hm-section .hm-path,
