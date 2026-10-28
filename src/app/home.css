@@ -355,3 +355,6 @@
 .home-guest > .hm-section .pf-row.fresh { background: rgba(139, 92, 246, .2); }
 .home-guest > .hm-section .pf-row, .home-guest > .hm-section .pf-tot { border-color: rgba(255, 255, 255, .08); }
 @media (max-width: 640px) { .home-guest > .hm-section { padding: 20px 16px 22px; border-radius: 16px; } }
+
+/* Блоки «Мы в Telegram» и «Для игровых студий» лежат прямо на полосе, без второй рамки */
+.home-guest > .hm-section .hm-partner { background: none; border: 0; padding: 0; }
