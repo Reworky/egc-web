@@ -340,10 +340,11 @@
 .sw-card:focus-visible { outline: 2px solid var(--accent3); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .sw-over { transition: none; } }
 
-/* Гостевая главная: разделы выделены полосами разного тона */
-.home-guest > .hm-section { margin-top: 18px; padding: 28px 28px 30px; border-radius: 20px; border: 1px solid var(--border); }
-.home-guest > .hm-section:nth-of-type(odd) { background: #1b1c2f; }
-.home-guest > .hm-section:nth-of-type(even) { background: #211d3a; }
+/* Гостевая главная: разделы выделены полосами разного тона с мягкими размытыми краями */
+.home-guest > .hm-section { position: relative; isolation: isolate; margin-top: 30px; padding: 40px 36px 42px; }
+.home-guest > .hm-section::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 36px; filter: blur(18px); pointer-events: none; }
+.home-guest > .hm-section:nth-of-type(odd)::before { background: #1d1e33; }
+.home-guest > .hm-section:nth-of-type(even)::before { background: #251f42; }
 .home-guest > .hm-stats, .home-guest > .pt-stats-wrap { margin-bottom: 18px; }
 .home-guest > .hm-section .hm-step,
 .home-guest > .hm-section .hm-path,
@@ -354,4 +355,4 @@
 .home-guest > .hm-section .pf-chips button { background: var(--bg); }
 .home-guest > .hm-section .pf-row.fresh { background: rgba(139, 92, 246, .2); }
 .home-guest > .hm-section .pf-row, .home-guest > .hm-section .pf-tot { border-color: rgba(255, 255, 255, .08); }
-@media (max-width: 640px) { .home-guest > .hm-section { padding: 20px 16px 22px; border-radius: 16px; } }
+@media (max-width: 640px) { .home-guest > .hm-section { padding: 26px 16px 28px; } .home-guest > .hm-section::before { border-radius: 24px; filter: blur(12px); } }
