@@ -74,7 +74,7 @@ function typicalReward(quests: Quest[]): number {
   return r.length ? r[Math.floor(r.length / 2)] : 0;
 }
 
-type GameShowcase = { name: string; count: number; min: number; max: number; example: string };
+type GameShowcase = { name: string };
 
 /** Витрина игр для гостя: по каждой игре число квестов, вилка наград и пример. Спонсорские, партнёрские, закрытые, «только для совета» и UGC не берём. */
 function showcaseGames(quests: Quest[], games: string[]): GameShowcase[] {
@@ -85,12 +85,7 @@ function showcaseGames(quests: Quest[], games: string[]): GameShowcase[] {
   }
   return games
     .filter(g => byGame.has(g))
-    .map(g => {
-      const list = byGame.get(g)!;
-      const rewards = list.map(q => q.rewardCoins);
-      const top = list.reduce((a, b) => (b.rewardCoins > a.rewardCoins ? b : a));
-      return { name: g, count: list.length, min: Math.min(...rewards), max: Math.max(...rewards), example: top.title };
-    });
+    .map(g => ({ name: g }));
 }
 
 type ShopCard = { category: string; units: string; count: number; soon: boolean };
@@ -200,9 +195,7 @@ export default async function Home() {
               <div key={g.name} className="gm-card">
                 <GameBanner name={g.name} />
                 <div className="gm-info">
-                  <b>{g.min === g.max ? `${g.min.toLocaleString('ru')} EXC` : `${g.min.toLocaleString('ru')}–${g.max.toLocaleString('ru')} EXC`}</b>
-                  <span>{g.count} {plural(g.count, 'квест', 'квеста', 'квестов')}</span>
-                  <p>Например: {g.example}</p>
+                  <b>{g.name}</b>
                 </div>
               </div>
             ))}
