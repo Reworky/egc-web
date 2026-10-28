@@ -289,3 +289,38 @@
 /* Блок «Мы в Telegram» */
 .hm-community { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; padding: 24px 26px; }
 .hm-community p { margin-top: 6px; max-width: 520px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* Лента выплат списком */
+.pf-tot { display: flex; flex-wrap: wrap; gap: 8px 36px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.pf-tot b { display: block; font-size: clamp(22px, 3.6vw, 30px); font-weight: 700; line-height: 1.15; color: #fff; }
+.pf-tot .gold b { color: #fbbf24; font-size: clamp(26px, 4.6vw, 38px); }
+.pf-tot span { display: block; margin-top: 2px; font-size: 13px; color: var(--muted); }
+.pf-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.pf-chips button { padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; background: var(--bg2); border: 1px solid var(--border); transition: background .15s, border-color .15s; }
+.pf-chips button:hover { border-color: var(--border-bright); }
+.pf-chips button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pf-chips button:focus-visible, .pf-more:focus-visible { outline: 2px solid var(--accent3); outline-offset: 2px; }
+.pf-list { margin-top: 8px; }
+.pf-row { display: grid; grid-template-columns: 32px minmax(110px, 150px) 1fr auto; align-items: center; gap: 14px; padding: 12px 10px; margin: 0 -10px; border-bottom: 1px solid var(--border); border-radius: 10px; }
+.pf-row.fresh { background: rgba(139, 92, 246, .14); border-bottom-color: transparent; }
+.pf-ic { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 9px; }
+.pf-ic.green { color: #4ade80; background: rgba(74, 222, 128, .14); }
+.pf-ic.gold { color: #fbbf24; background: rgba(251, 191, 36, .14); }
+.pf-ic.blue { color: #60a5fa; background: rgba(96, 165, 250, .14); }
+.pf-ic.violet { color: #c4b5fd; background: rgba(167, 139, 250, .16); }
+.pf-amt { font-size: 18px; font-weight: 700; color: #fff; white-space: nowrap; }
+.pf-who { font-size: 14px; color: #cfcfe6; }
+.pf-who small { display: block; margin-top: 1px; font-size: 12px; color: var(--muted); }
+.pf-ago { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+.pf-ago em { font-style: normal; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; color: #ddd6fe; background: rgba(139, 92, 246, .3); }
+.pf-row.hm-pay-skel { min-height: 56px; border-radius: 10px; }
+.pf-more { margin-top: 14px; padding: 10px 18px; border-radius: 10px; font-size: 14px; font-weight: 600; color: #fff; cursor: pointer; background: var(--btn-grey); border: 0; box-shadow: 0 3px 0 var(--btn-grey-edge); }
+.pf-more:hover { background: #45466a; }
+@media (max-width: 600px) {
+  .pf-row { grid-template-columns: 32px 1fr auto; gap: 10px; }
+  .pf-amt { grid-column: 2; grid-row: 1; font-size: 17px; }
+  .pf-who { grid-column: 2; grid-row: 2; }
+  .pf-ago { grid-column: 3; grid-row: 1 / span 2; }
+  .pf-ic { grid-row: 1 / span 2; }
+}
+.pf .hm-pay-more { display: table; margin-top: 16px; }
