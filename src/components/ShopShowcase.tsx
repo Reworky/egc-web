@@ -12,6 +12,17 @@ const BANNERS: Record<string, string> = {
   'Clash of Clans|Гемы': '/shop/coc-gems.jpg',
   'Clash Royale|Гемы': '/shop/cr-gems.jpg',
   'CS2|Пополнение Steam': '/shop/steam-balance.jpg',
+  'CS2|Кейсы': '/shop/cs2-cases.jpg',
+  'Brawl Stars|Brawl Pass': '/shop/brawl-pass.jpg',
+  'Clash Royale|Пропуски': '/shop/cr-pass.jpg',
+  'Clash of Clans|Gold Pass': '/shop/coc-gold.jpg',
+};
+
+/** Что продаётся в боте сверх позиций из публичного списка наград (пропуски приходят не оттуда). */
+const EXTRA_KINDS: Record<string, string[]> = {
+  'Brawl Stars': ['Brawl Pass'],
+  'Clash Royale': ['Пропуски'],
+  'Clash of Clans': ['Gold Pass'],
 };
 
 interface Card {
@@ -34,6 +45,11 @@ function buildCards(items: RewardItem[], cases: Cs2Case[]): Card[] {
     const kinds = map.get('CS2') ?? new Map<string, boolean>();
     kinds.set('Кейсы', false);
     map.set('CS2', kinds);
+  }
+  for (const [name, extra] of Object.entries(EXTRA_KINDS)) {
+    const kinds = map.get(name);
+    if (!kinds) continue;
+    for (const label of extra) if (!kinds.has(label)) kinds.set(label, false);
   }
   return [...map.entries()].map(([name, kinds]) => ({
     name,
