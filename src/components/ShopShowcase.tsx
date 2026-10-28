@@ -6,9 +6,17 @@ import type { Cs2Case, RewardItem } from '@/lib/api';
 
 const UNIT: Record<string, string> = { Gems: 'Гемы', UC: 'UC', 'G-Coin': 'G-Coin', 'Пополнение': 'Пополнение Steam' };
 
+/** Баннеры товаров для раскрытия карточки: ключ «категория|вид». Нет файла - вид показывается плиткой с названием. */
+const BANNERS: Record<string, string> = {
+  'Brawl Stars|Гемы': '/shop/brawl-gems.jpg',
+  'Clash of Clans|Гемы': '/shop/coc-gems.jpg',
+  'Clash Royale|Гемы': '/shop/cr-gems.jpg',
+  'CS2|Пополнение Steam': '/shop/steam-balance.jpg',
+};
+
 interface Card {
   name: string;
-  kinds: { label: string; soon: boolean }[];
+  kinds: { label: string; soon: boolean; img?: string }[];
 }
 
 /** Что есть в магазине по категории в общем виде: «Гемы», «UC», «Пополнение Steam», «Кейсы». Конкретные наборы и цены на сайте не показываем. */
@@ -29,7 +37,7 @@ function buildCards(items: RewardItem[], cases: Cs2Case[]): Card[] {
   }
   return [...map.entries()].map(([name, kinds]) => ({
     name,
-    kinds: [...kinds.entries()].map(([label, soon]) => ({ label, soon })),
+    kinds: [...kinds.entries()].map(([label, soon]) => ({ label, soon, img: BANNERS[`${name}|${label}`] })),
   }));
 }
 
@@ -53,13 +61,16 @@ export default function ShopShowcase({ items, cases }: { items: RewardItem[]; ca
           onBlur={() => setPinned(p => (p === c.name ? null : p))}
         >
           <GameBanner name={c.name} />
-          <span className="sw-over">
-            <b>{c.name}</b>
-            <span className="sw-kinds">
-              {c.kinds.map(k => (
-                <span key={k.label}>{k.label}{k.soon && <em>скоро</em>}</span>
-              ))}
-            </span>
+          <span className={`sw-over n${c.kinds.length}`} aria-label={c.kinds.map(k => k.label).join(', ')}>
+            {c.kinds.map(k => (
+              <span key={k.label} className="sw-tile">
+                {k.img
+                  // eslint-disable-next-line @next/next/no-img-element
+                  ? <img src={k.img} alt="" loading="lazy" />
+                  : <b>{c.name}</b>}
+                <i>{k.label}{k.soon && <em>скоро</em>}</i>
+              </span>
+            ))}
           </span>
         </div>
       ))}

@@ -331,11 +331,14 @@
 .sw-grid .sw-over > b { font-size: 18px; }
 .sw-card { position: relative; display: block; width: 100%; padding: 0; text-align: left; cursor: pointer; border-radius: 16px; }
 .sw-card .gm-banner.static, .sw-card .gm-banner.static:hover { transform: none; box-shadow: none; }
-.sw-over { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; padding: 14px; border-radius: 16px; background: rgba(13, 13, 28, .88); border: 1px solid var(--border-bright); opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
-.sw-over > b { font-size: 16px; font-weight: 700; color: #fff; }
-.sw-kinds { display: flex; flex-wrap: wrap; gap: 6px; }
-.sw-kinds > span { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #ddd6fe; background: rgba(139, 92, 246, .22); }
-.sw-kinds em { font-style: normal; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 5px; color: #fde68a; background: rgba(245, 158, 11, .2); }
+.sw-over { position: absolute; inset: 0; z-index: 2; display: grid; gap: 6px; padding: 6px; border-radius: 16px; background: rgba(13, 13, 28, .92); border: 1px solid var(--border-bright); opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+.sw-over.n2 { grid-template-columns: 1fr 1fr; }
+.sw-over.n3 { grid-template-columns: repeat(3, 1fr); }
+.sw-tile { position: relative; display: flex; align-items: center; justify-content: center; min-height: 0; overflow: hidden; border-radius: 11px; background: var(--bg3); }
+.sw-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.sw-tile > b { font-size: 18px; font-weight: 700; color: #fff; text-align: center; padding: 8px; }
+.sw-tile > i { position: absolute; left: 8px; bottom: 8px; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-style: normal; font-size: 13px; font-weight: 600; color: #fff; background: rgba(13, 13, 28, .78); }
+.sw-tile em { font-style: normal; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 5px; color: #fde68a; background: rgba(245, 158, 11, .2); }
 .sw-card:hover .sw-over, .sw-card:focus-visible .sw-over, .sw-card.open .sw-over { opacity: 1; transform: none; }
 .sw-card:focus-visible { outline: 2px solid var(--accent3); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .sw-over { transition: none; } }
