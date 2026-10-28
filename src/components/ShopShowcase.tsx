@@ -24,7 +24,7 @@ function buildCards(items: RewardItem[], cases: Cs2Case[]): Card[] {
   }
   if (cases.length) {
     const kinds = map.get('CS2') ?? new Map<string, boolean>();
-    kinds.set('Кейсы', cases.every(c => c.itemId == null));
+    kinds.set('Кейсы', false);
     map.set('CS2', kinds);
   }
   return [...map.entries()].map(([name, kinds]) => ({
