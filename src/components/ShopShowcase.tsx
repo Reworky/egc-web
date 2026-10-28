@@ -11,6 +11,7 @@ const BANNERS: Record<string, string> = {
   'Brawl Stars|Гемы': '/shop/brawl-gems.jpg',
   'Clash of Clans|Гемы': '/shop/coc-gems.jpg',
   'Clash Royale|Гемы': '/shop/cr-gems.jpg',
+  'PUBG PC|G-Coin': '/shop/pubg-pc-gcoin.jpg',
   'CS2|Пополнение Steam': '/shop/steam-balance.jpg',
   'CS2|Кейсы': '/shop/cs2-cases.jpg',
   'Brawl Stars|Brawl Pass': '/shop/brawl-pass.jpg',
