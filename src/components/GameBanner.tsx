@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { gamePhotoUrl } from '@/lib/api';
 
-/** Баннер игры, который сам является кнопкой: ссылкой (href) или переключателем (onClick). Если у игры нет обложки, показывается заглушка с названием. */
+/** Баннер игры, который сам является кнопкой: ссылкой (href) или переключателем (onClick); без обоих - просто картинка (витрина для гостей). Если у игры нет обложки, показывается заглушка с названием. */
 export default function GameBanner({ name, href, onClick, active }: {
   name: string;
   href?: string;
@@ -29,5 +29,6 @@ export default function GameBanner({ name, href, onClick, active }: {
   const cls = `gm-banner${broken ? ' no-img' : ''}${loaded ? ' loaded' : ''}${active ? ' on' : ''}`;
 
   if (href) return <Link href={href} className={cls} aria-label={name}>{inner}</Link>;
+  if (!onClick) return <div className={`${cls} static`} role="img" aria-label={name}>{inner}</div>;
   return <button type="button" onClick={onClick} className={cls} aria-pressed={active} aria-label={name}>{inner}</button>;
 }

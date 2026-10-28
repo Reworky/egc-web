@@ -1,11 +1,12 @@
 import Link from 'next/link';
-import { api, Quest } from '@/lib/api';
+import { api, Quest, RewardItem } from '@/lib/api';
 import LeaderboardTabs from '@/components/LeaderboardTabs';
-import CountUp from '@/components/CountUp';
 import PayoutFeed from '@/components/PayoutFeed';
 import Reviews from '@/components/Reviews';
 import HomeSwitch from '@/components/HomeSwitch';
 import GameBanner from '@/components/GameBanner';
+import TrustStats from '@/components/TrustStats';
+import HeroArt from '@/components/HeroArt';
 
 export const revalidate = 60;
 
@@ -17,17 +18,9 @@ const REVIEWS_URL = 'https://t.me/egc_payouts';
 const FIRST_WITHDRAWAL_EXC = 5000;
 const WELCOME_BONUS_EXC = 200;
 
-const FEATURES = [
-  { title: 'Квесты по играм', text: 'Brawl Stars, Clash Royale, Clash of Clans, PUBG и другие. Награда в EXC видна до старта, а для многих квестов прогресс считается сам.' },
-  { title: 'Магазин наград', text: 'Тратить EXC можно на донат в играх, подарочные карты и бусты, а не только выводить деньгами.' },
-  { title: 'Колесо фортуны', text: 'Крути колесо и забирай призы: EXC, буст опыта, рамку профиля. Попытки даёт активность в клубе.' },
-  { title: 'Отряды', text: 'Собери команду из друзей: в отряде играть веселее, а за состав из 3–5 человек клуб даёт бонус.' },
-  { title: 'Турниры и рейтинг', text: 'Соревнуйся с другими игроками: недельный и общий рейтинг, турниры с призами и повышение уровня за опыт.' },
-  { title: 'EGC Pass', text: 'Подписка с перками для тех, кто играет много: больше возможностей и приятные бонусы к награде.' },
-];
-
 const FAQ = [
   { q: 'Это правда бесплатно?', a: 'Да. Вступить и играть в клубе бесплатно, регистрация проходит через Telegram. За регистрацию бот сразу начисляет 200 EXC стартового капитала.' },
+  { q: 'Что такое EXC?', a: 'Внутренняя валюта клуба. EXC начисляются за выполненные квесты сразу после засчёта. Их можно потратить в магазине на донат и награды или вывести деньгами: по номиналу 100 EXC = 1 ₽, итоговая сумма зависит от курса фонда, он виден в боте перед заявкой.' },
   { q: 'Как выводятся деньги?', a: 'EXC можно вывести на карту по СБП, в Telegram Stars или в GRAM. Актуальные лимиты и курс всегда показывает бот, а последние выплаты видны выше на этой странице.' },
   { q: 'Нужен ли пароль от игрового аккаунта?', a: 'Нет. Достаточно игрового тега или скриншота. Никому не передавай вход в аккаунт: ни клубу, ни «помощникам».' },
   { q: 'Как быстро приходят деньги?', a: 'После заявки на вывод её проверяет администратор, затем выплата уходит выбранным способом. Статус заявки виден в боте, а готовые выплаты появляются в ленте выше.' },
@@ -35,14 +28,35 @@ const FAQ = [
   { q: 'Есть ли реферальная программа?', a: 'Да. Приглашай друзей по своей ссылке из раздела «Рефералы» в боте. Когда друг выполнит 3 квеста и проведёт 3 дня в клубе, ты получишь 2 500 EXC, а друг 3 000 EXC. Дальше ты получаешь 10% от EXC с его квестов, пока он активен (12% с EGC Pass).' },
   { q: 'Что такое мини-апп?', a: 'Это клуб внутри Telegram: квесты и отчёты, профиль и рейтинг, магазин, вывод и рефералы в одном окне. Открывается кнопкой в боте после регистрации.' },
   { q: 'Как связаться с поддержкой?', a: 'Напиши в раздел поддержки в боте: ответим там же. Если вопрос про сотрудничество, смотри страницу «Партнёрам».' },
+  { q: 'Квест не засчитался, что делать?', a: 'Подожди немного: автоматическая проверка идёт с небольшой задержкой, обычно несколько минут, а отчёты по скриншотам модератор смотрит до 24 часов. Если баланс не обновился дольше, напиши в поддержку в боте («Помощь» → «Поддержка») и укажи название квеста и время отправки.' },
+  { q: 'Почему аккаунт могут заблокировать?', a: 'Чаще всего за мультиаккаунты: один человек — один аккаунт в клубе, один игровой аккаунт — одна привязка. Такие аккаунты блокируются, а EXC на них конфискуются. Если считаешь, что блокировка ошибочна, напиши в поддержку в боте.' },
   { q: 'Как проверяются квесты?', a: 'Часть квестов проверяется автоматически по игровому тегу, остальные подтверждаются скриншотом, который смотрит модератор.' },
 ];
 
 const STEPS = [
-  { title: 'Выбери квест', text: 'Игры, которые ты любишь: Brawl Stars, Clash Royale, Clash of Clans, PUBG и другие. Награда видна до старта.' },
-  { title: 'Играй и выполняй', text: 'Для многих квестов прогресс считается сам по твоему игровому тегу, остальные подтверждаются скриншотом.' },
-  { title: 'Получай EXC и выводи', text: 'EXC тратятся в магазине или выводятся на карту, по СБП, в Telegram Stars или GRAM.' },
+  { icon: '🎯', title: 'Берёшь квест', text: 'Выбираешь игру и квест. Награда в EXC видна до старта.' },
+  { icon: '🎮', title: 'Выполняешь в игре', text: 'Прогресс многих квестов считается сам по игровому тегу, остальные подтверждаются скриншотом.' },
+  { icon: '🪙', title: 'Получаешь EXC', text: 'Квест засчитан: EXC сразу на твоём балансе.' },
+  { icon: '🛍️', title: 'Тратишь или выводишь', text: 'Обмениваешь на донат и награды в магазине или выводишь деньгами.' },
 ];
+
+const PAYOUT_METHODS = [
+  { title: 'Рубли', text: 'На карту или по СБП: реквизиты банка вводишь в боте, перед заявкой видишь итоговую сумму.' },
+  { title: 'Telegram Stars', text: 'Звёзды приходят на твой Telegram-аккаунт.' },
+  { title: 'GRAM (TON)', text: 'На кошелёк в сети TON. Комиссия сети (около 0,01 TON) вычитается из суммы.' },
+];
+
+const PAYOUT_RULES = [
+  <>Минимум для вывода: <b>5 000 EXC</b>.</>,
+  <>Заявку обрабатываем <b>до 24 часов</b>; у подписчиков EGC Pass она в приоритете.</>,
+  <>Одна заявка на вывод <b>в сутки</b>.</>,
+  <>Месячный лимит растёт с уровнем: от <b>10 000 EXC</b> у новичка до <b>150 000 EXC</b> у топ-игроков.</>,
+  <>Курс: 100 EXC = 1 ₽ с поправкой на курс фонда клуба. Сумма фиксируется в момент заявки и видна в боте до подтверждения.</>,
+  <>Перед первым выводом в профиле нужны страна, возраст и подтверждённый номер телефона.</>,
+  <>Мультиаккаунты запрещены: такие аккаунты блокируются, а EXC на них конфискуются.</>,
+];
+
+const SHOP_UNITS: Record<string, string> = { Gems: 'Гемы', UC: 'UC', 'G-Coin': 'G-Coin', 'Пополнение': 'Пополнение Steam' };
 
 /** До 6 квестов: по одному лучшему (по награде) на игру, чтобы блок не состоял из одной игры. Спонсорские, партнёрские (внешние офферы, часто с покупкой), закрытые и «только для совета» не берём. */
 function pickFeatured(quests: Quest[]): Quest[] {
@@ -64,21 +78,63 @@ function typicalReward(quests: Quest[]): number {
   return r.length ? r[Math.floor(r.length / 2)] : 0;
 }
 
+type GameShowcase = { name: string; count: number; min: number; max: number; example: string };
+
+/** Витрина игр для гостя: по каждой игре число квестов, вилка наград и пример. Спонсорские, партнёрские, закрытые, «только для совета» и UGC не берём. */
+function showcaseGames(quests: Quest[], games: string[]): GameShowcase[] {
+  const byGame = new Map<string, Quest[]>();
+  for (const q of quests) {
+    if (q.councilOnly || q.sponsored || q.externalAutoApprove || q.campaignClosed || !q.gameName || q.gameName.toUpperCase() === 'UGC') continue;
+    byGame.set(q.gameName, [...(byGame.get(q.gameName) ?? []), q]);
+  }
+  return games
+    .filter(g => byGame.has(g))
+    .map(g => {
+      const list = byGame.get(g)!;
+      const rewards = list.map(q => q.rewardCoins);
+      const top = list.reduce((a, b) => (b.rewardCoins > a.rewardCoins ? b : a));
+      return { name: g, count: list.length, min: Math.min(...rewards), max: Math.max(...rewards), example: top.title };
+    });
+}
+
+type ShopCard = { category: string; units: string; count: number; soon: boolean };
+
+/** Витрина магазина для гостя: по категории (игре) что можно получить; цены не показываем. «Кастомизация» на сайте не выводится. */
+function shopShowcase(items: RewardItem[]): ShopCard[] {
+  const map = new Map<string, { units: Set<string>; count: number; locked: number }>();
+  for (const it of items) {
+    if (!it.category || it.category === 'Кастомизация') continue;
+    const e = map.get(it.category) ?? { units: new Set<string>(), count: 0, locked: 0 };
+    const unit = it.title.split(' - ')[1]?.split(' ')[0];
+    if (unit) e.units.add(SHOP_UNITS[unit] ?? unit);
+    e.count += 1;
+    if ((it as RewardItem & { locked?: boolean }).locked) e.locked += 1;
+    map.set(it.category, e);
+  }
+  return [...map.entries()].map(([category, e]) => ({ category, units: [...e.units].join(', '), count: e.count, soon: e.locked === e.count }));
+}
+
+const plural = (n: number, one: string, few: string, many: string) =>
+  n % 10 === 1 && n % 100 !== 11 ? one : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? few : many;
+
 export default async function Home() {
-  const [stats, leaderboard, quests, games] = await Promise.all([
+  const [stats, leaderboard, quests, games, shopItems] = await Promise.all([
     api.stats().catch(() => null),
     api.leaderboard('overall').catch(() => ({ entries: [], me: null })),
     api.quests().catch(() => [] as Quest[]),
     api.games().catch(() => [] as string[]),
+    api.shopItems().catch(() => [] as RewardItem[]),
   ]);
   const featured = pickFeatured(quests);
   const typical = typicalReward(quests);
+  const showcase = showcaseGames(quests, games);
+  const shopCards = shopShowcase(shopItems);
   const questsToFirst = typical > 0 ? Math.ceil((FIRST_WITHDRAWAL_EXC - WELCOME_BONUS_EXC) / typical) : 0;
 
   const guest = (
     <div className="max-w-6xl mx-auto px-4 py-10">
 
-      {/* ── Hero ── */}
+      {/* ── Первый экран ── */}
       <section className="hm-hero">
         <div className="hm-hero-glow" />
         <div className="relative space-y-5">
@@ -87,44 +143,33 @@ export default async function Home() {
             Занимайтесь <em>любимым делом</em>.<br />Мы вас за это <em>вознаградим</em>.
           </h1>
           <p className="text-lg sm:text-xl max-w-xl mx-auto" style={{ color: 'var(--muted)' }}>
-            Получай реальные деньги за игры, в которые уже играешь. Выполняй квесты, зарабатывай <strong className="gradient-text-gold">EXC</strong> и выводи деньги. Бесплатно
+            Выполняй квесты в играх, получай <strong className="gradient-text-gold">EXC</strong>, трать в магазине или выводи деньгами. Бесплатно
           </p>
           <div className="hm-cta-row">
-            <Link href="/profile" className="hm-btn hm-btn-main">Войти через Telegram</Link>
-            <a href={botLink('site_hero')} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-ghost">Открыть бота</a>
+            <a href={botLink('site_hero')} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">Открыть в Telegram</a>
+            <Link href="/profile" className="hm-btn hm-btn-ghost">Войти на сайт</Link>
           </div>
+          <HeroArt />
         </div>
       </section>
 
-
-      {/* ── Клуб в цифрах ── */}
-      {stats && (
-        <section className="hm-stats reveal" aria-label="Клуб в цифрах">
-          <div className="hm-stat"><div className="hm-stat-num"><CountUp value={stats.totalPlayers} /></div><div className="hm-stat-label">игроков в клубе</div></div>
-          <div className="hm-stat"><div className="hm-stat-num"><CountUp value={stats.totalQuestsCompleted} /></div><div className="hm-stat-label">квестов выполнено</div></div>
-          <div className="hm-stat"><div className="hm-stat-num gold"><CountUp value={stats.totalExcIssued} /></div><div className="hm-stat-label">EXC выдано</div></div>
-          <div className="hm-stat"><div className="hm-stat-num">{stats.topGame || '—'}</div><div className="hm-stat-label">топ игра</div></div>
-          <div className="hm-stat"><div className="hm-stat-num green">{stats.healthRatioPercent}%</div><div className="hm-stat-label">здоровье фонда</div></div>
-        </section>
-      )}
-
-
-      {/* ── Последние выплаты ── */}
-      <PayoutFeed />
+      {/* ── Три цифры доверия ── */}
+      {stats && <TrustStats players={stats.totalPlayers} />}
 
 
       {/* ── Как это работает ── */}
       <section className="hm-section reveal">
         <div className="hm-head">
           <div>
-            <div className="hm-kicker">Три шага</div>
+            <div className="hm-kicker">Четыре шага</div>
             <h2 className="section-title">Как это работает</h2>
           </div>
         </div>
-        <div className="hm-steps">
+        <div className="hm-steps four">
           {STEPS.map((s, i) => (
             <div key={s.title} className="hm-step how-step">
               <span className="hm-step-num">0{i + 1}</span>
+              <div className="hm-step-icon" aria-hidden="true">{s.icon}</div>
               <h3>{s.title}</h3>
               <p>{s.text}</p>
             </div>
@@ -134,7 +179,7 @@ export default async function Home() {
           <div className="hm-path">
             <div className="hm-path-top">
               <b>Путь до первой выплаты</b>
-              <span>≈ {questsToFirst} {questsToFirst % 10 === 1 && questsToFirst % 100 !== 11 ? 'квест' : [2, 3, 4].includes(questsToFirst % 10) && ![12, 13, 14].includes(questsToFirst % 100) ? 'квеста' : 'квестов'} по {typical.toLocaleString('ru')} EXC</span>
+              <span>≈ {questsToFirst} {plural(questsToFirst, 'квест', 'квеста', 'квестов')} по {typical.toLocaleString('ru')} EXC</span>
             </div>
             <div className="hm-path-bar" aria-hidden="true"><i /></div>
             <div className="hm-path-scale">
@@ -147,23 +192,86 @@ export default async function Home() {
       </section>
 
 
-      {/* ── Что внутри клуба ── */}
+      {/* ── Игры и квесты ── */}
+      {showcase.length > 0 && (
+        <section className="hm-section reveal">
+          <div className="hm-head">
+            <div>
+              <div className="hm-kicker">Во что играем</div>
+              <h2 className="section-title">Игры и квесты</h2>
+            </div>
+          </div>
+          <div className="gm-grid">
+            {showcase.map(g => (
+              <div key={g.name} className="gm-card">
+                <GameBanner name={g.name} />
+                <div className="gm-info">
+                  <b>{g.min === g.max ? `${g.min.toLocaleString('ru')} EXC` : `${g.min.toLocaleString('ru')}–${g.max.toLocaleString('ru')} EXC`}</b>
+                  <span>{g.count} {plural(g.count, 'квест', 'квеста', 'квестов')}</span>
+                  <p>Например: {g.example}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="hm-section-cta">
+            <Link href="/quests" className="hm-btn hm-btn-ghost">Смотреть все квесты</Link>
+          </div>
+        </section>
+      )}
+
+
+      {/* ── Выплаты и прозрачность ── */}
       <section className="hm-section reveal">
         <div className="hm-head">
           <div>
-            <div className="hm-kicker">Не только квесты</div>
-            <h2 className="section-title">Что внутри клуба</h2>
+            <div className="hm-kicker">Деньги — не обещание</div>
+            <h2 className="section-title">Выплаты и прозрачность</h2>
           </div>
         </div>
         <div className="hm-features">
-          {FEATURES.map(f => (
-            <div key={f.title} className="hm-feature">
-              <h3>{f.title}</h3>
-              <p>{f.text}</p>
+          {PAYOUT_METHODS.map(m => (
+            <div key={m.title} className="hm-feature">
+              <h3>{m.title}</h3>
+              <p>{m.text}</p>
             </div>
           ))}
         </div>
+        <ul className="hm-rules">
+          {PAYOUT_RULES.map((r, i) => <li key={i}>{r}</li>)}
+        </ul>
       </section>
+
+      <PayoutFeed />
+
+
+      {/* ── Магазин и награды ── */}
+      {shopCards.length > 0 && (
+        <section className="hm-section reveal">
+          <div className="hm-head">
+            <div>
+              <div className="hm-kicker">Трать внутри клуба</div>
+              <h2 className="section-title">Магазин и награды</h2>
+            </div>
+          </div>
+          <p className="mb-5 max-w-2xl" style={{ color: 'var(--muted)' }}>
+            EXC не обязательно выводить: их можно сразу обменять на донат в играх и пополнение Steam, а также на бусты и предметы в боте.
+          </p>
+          <div className="gm-grid">
+            {shopCards.map(c => (
+              <div key={c.category} className="gm-card">
+                <GameBanner name={c.category} />
+                <div className="gm-info">
+                  <b>{c.units || 'Награды'}</b>
+                  <span>{c.soon ? 'скоро' : `${c.count} ${plural(c.count, 'вариант', 'варианта', 'вариантов')}`}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-sm" style={{ color: 'var(--muted)' }}>
+            Подписка EGC Pass даёт бонусы к награде и донат по закупочной цене. Цены в EXC и остаток лимита видны в магазине после входа.
+          </p>
+        </section>
+      )}
 
 
       {/* ── Отзывы ── */}
@@ -208,10 +316,10 @@ export default async function Home() {
       {/* ── Финальный призыв ── */}
       <section className="hm-final reveal">
         <h2 className="font-heading">Готов начать?</h2>
-        <p>Войди через Telegram и забери первый квест: награда видна до старта. Если ты ещё не в клубе, сначала открой бота и пройди регистрацию.</p>
+        <p>Открой бота, пройди регистрацию и забери первый квест: награда видна до старта. Если ты уже в клубе, войди на сайт через Telegram.</p>
         <div className="hm-cta-row">
-          <Link href="/profile" className="hm-btn hm-btn-main">Войти через Telegram</Link>
-          <a href={botLink('site_final')} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-ghost">Открыть бота</a>
+          <a href={botLink('site_final')} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">Открыть в Telegram</a>
+          <Link href="/profile" className="hm-btn hm-btn-ghost">Войти на сайт</Link>
         </div>
       </section>
 
