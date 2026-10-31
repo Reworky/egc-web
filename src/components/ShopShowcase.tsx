@@ -6,18 +6,19 @@ import type { Cs2Case, RewardItem } from '@/lib/api';
 
 const UNIT: Record<string, string> = { Gems: 'Гемы', UC: 'UC', 'G-Coin': 'G-Coin', 'Пополнение': 'Пополнение Steam' };
 
-/** Баннеры товаров для раскрытия карточки: ключ «категория|вид». Нет файла - вид показывается плиткой с названием. */
+/** Баннеры товаров для раскрытия карточки: ключ «категория|вид». Нет файла - вид показывается плиткой с названием.
+ *  У игр с двумя товарами плитки стоят рядом и выходят почти квадратными, поэтому их картинки 1:1 (1080×1080); одиночные (PUBG) - 16:9. ?v= - сброс кэша при замене файла. */
 const BANNERS: Record<string, string> = {
-  'Brawl Stars|Гемы': '/shop/brawl-gems.jpg',
-  'Clash of Clans|Гемы': '/shop/coc-gems.jpg',
-  'Clash Royale|Гемы': '/shop/cr-gems.jpg',
+  'Brawl Stars|Гемы': '/shop/brawl-gems.jpg?v=2',
+  'Clash of Clans|Гемы': '/shop/coc-gems.jpg?v=2',
+  'Clash Royale|Гемы': '/shop/cr-gems.jpg?v=2',
   'PUBG PC|G-Coin': '/shop/pubg-pc-gcoin.jpg',
   'PUBG Mobile|UC': '/shop/pubg-mobile-uc.jpg',
-  'CS2|Пополнение Steam': '/shop/steam-balance.jpg',
-  'CS2|Кейсы': '/shop/cs2-cases.jpg',
-  'Brawl Stars|Brawl Pass': '/shop/brawl-pass.jpg',
-  'Clash Royale|Пропуски': '/shop/cr-pass.jpg',
-  'Clash of Clans|Gold Pass': '/shop/coc-gold.jpg',
+  'CS2|Пополнение Steam': '/shop/steam-balance.jpg?v=2',
+  'CS2|Кейсы': '/shop/cs2-cases.jpg?v=2',
+  'Brawl Stars|Brawl Pass': '/shop/brawl-pass.jpg?v=2',
+  'Clash Royale|Пропуски': '/shop/cr-pass.jpg?v=2',
+  'Clash of Clans|Gold Pass': '/shop/coc-gold.jpg?v=2',
 };
 
 /** Что продаётся в боте сверх позиций из публичного списка наград (пропуски приходят не оттуда). */
