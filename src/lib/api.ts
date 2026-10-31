@@ -16,8 +16,19 @@ async function get<T>(path: string, auth = false): Promise<T> {
   return res.json();
 }
 
-/** Обложка игры (баннер): грузится админом через бота, отдаётся бэкендом без авторизации; 404, если у игры её нет. */
-export const gamePhotoUrl = (name: string) => `${BASE}/api/quests/games/${encodeURIComponent(name)}/photo`;
+/** Обложки 16:9 (1280×720), лежащие в самом сайте (public/games): ровно встают в карточки и не зависят от фото, загруженного в бота. */
+const LOCAL_GAME_COVERS: Record<string, string> = {
+  'Brawl Stars': '/games/brawl-stars.jpg',
+  'Clash of Clans': '/games/clash-of-clans.jpg',
+  'Clash Royale': '/games/clash-royale.jpg',
+  'CS2': '/games/cs2.jpg',
+  'PUBG Mobile': '/games/pubg-mobile.jpg',
+  'PUBG PC': '/games/pubg-pc.jpg',
+};
+
+/** Обложка игры (баннер): своя из public/games, если есть, иначе фото, загруженное админом через бота (бэкенд отдаёт без авторизации; 404, если у игры её нет). */
+export const gamePhotoUrl = (name: string) =>
+  LOCAL_GAME_COVERS[name] ?? `${BASE}/api/quests/games/${encodeURIComponent(name)}/photo`;
 
 export const api = {
   stats: () => get<ClubStats>('/api/stats'),
