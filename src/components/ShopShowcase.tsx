@@ -28,6 +28,9 @@ const EXTRA_KINDS: Record<string, string[]> = {
   'Clash of Clans': ['Gold Pass'],
 };
 
+/** Порядок карточек на витрине (три в ряд): сначала мобильные игры Supercell, ниже PUBG PC, CS2, PUBG Mobile. Категории вне списка идут после. */
+const CARD_ORDER = ['Brawl Stars', 'Clash Royale', 'Clash of Clans', 'PUBG PC', 'CS2', 'PUBG Mobile'];
+
 interface Card {
   name: string;
   kinds: { label: string; soon: boolean; img?: string }[];
@@ -54,10 +57,13 @@ function buildCards(items: RewardItem[], cases: Cs2Case[]): Card[] {
     if (!kinds) continue;
     for (const label of extra) if (!kinds.has(label)) kinds.set(label, false);
   }
-  return [...map.entries()].map(([name, kinds]) => ({
-    name,
-    kinds: [...kinds.entries()].map(([label, soon]) => ({ label, soon, img: BANNERS[`${name}|${label}`] })),
-  }));
+  const rank = (name: string) => { const i = CARD_ORDER.indexOf(name); return i < 0 ? CARD_ORDER.length : i; };
+  return [...map.entries()]
+    .sort(([a], [b]) => rank(a) - rank(b))
+    .map(([name, kinds]) => ({
+      name,
+      kinds: [...kinds.entries()].map(([label, soon]) => ({ label, soon, img: BANNERS[`${name}|${label}`] })),
+    }));
 }
 
 /** Витрина магазина для гостя: карточки игр общим списком. При наведении (на телефоне по нажатию) на карточке раскрывается, что доступно в этой категории. */
