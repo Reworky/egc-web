@@ -30,6 +30,21 @@ const LOCAL_GAME_COVERS: Record<string, string> = {
 export const gamePhotoUrl = (name: string) =>
   LOCAL_GAME_COVERS[name] ?? `${BASE}/api/quests/games/${encodeURIComponent(name)}/photo`;
 
+async function post<T>(path: string, body?: unknown): Promise<T> {
+  const res = await fetch(`${BASE}${path}`, {
+    method: 'POST',
+    headers: { ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}), ...authHeader() },
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  });
+  // 400 у покупки тоже несёт понятное сообщение в теле, поэтому тело читаем при любом статусе.
+  const text = await res.text();
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    throw new Error(`API error ${res.status}`);
+  }
+}
+
 export const api = {
   stats: () => get<ClubStats>('/api/stats'),
   leaderboard: (type: 'overall' | 'weekly' = 'overall') =>
@@ -51,6 +66,16 @@ export const api = {
     const r = await fetch(`${BASE}/api/profile/avatar`, { headers: authHeader() });
     return r.ok ? r.blob() : null;
   },
+  wallet: () => get<Wallet>('/api/wallet', true),
+  tonQuote: (amount: number) => get<TonQuote>(`/api/wallet/ton-quote?amount=${amount}`, true),
+  withdrawals: () => get<Withdrawal[]>('/api/wallet/withdrawals', true),
+  starsItems: () => get<StarsItem[]>('/api/shop/withdraw/stars', true),
+  withdrawRub: (amount: number, requisites: string) =>
+    post<ActionResponse>('/api/wallet/withdraw/rub', { amount, requisites }),
+  withdrawTon: (amount: number, walletAddress: string) =>
+    post<ActionResponse>('/api/wallet/withdraw/ton', { amount, walletAddress }),
+  withdrawStars: (itemId: number, username: string) =>
+    post<ActionResponse>(`/api/shop/items/${itemId}/purchase`, { userData: username }),
   wheelStatus: () => get<WheelStatus>('/api/wheel', true),
   wheelSpin: async (): Promise<SpinResponse> => {
     const r = await fetch(`${BASE}/api/wheel/spin`, {
@@ -207,4 +232,46 @@ export interface RewardRequest {
   status: string;
   adminComment: string | null;
   createdAt: string;
+}
+
+export interface Wallet {
+  coins: number;
+  healthRatioPercent: number;
+  monthlyWithdrawalLimit: number;
+  remainingWithdrawalLimit: number;
+  phoneConfirmed: boolean;
+  /** Сколько квестов и дней осталось до открытия вывода; 0/0 - условия выполнены. */
+  withdrawalQuestsLeft: number;
+  withdrawalDaysLeft: number;
+  withdrawalHoursLeft: number;
+}
+
+export interface TonQuote {
+  rubles: number;
+  tonAmount: string;
+  tonRate: string;
+  usingFallback: boolean;
+}
+
+export interface ActionResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface Withdrawal {
+  id: number;
+  displayId: number;
+  amountExc: number;
+  status: string;
+  adminComment: string | null;
+  createdAt: string | null;
+  method: string;
+  details: string | null;
+}
+
+export interface StarsItem {
+  id: number;
+  title: string;
+  effectivePrice: number;
+  locked?: boolean;
 }

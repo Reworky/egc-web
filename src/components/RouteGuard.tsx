@@ -7,7 +7,7 @@ import TelegramLoginButton from '@/components/TelegramLoginButton';
 import PageHead from '@/components/PageHead';
 
 /** Разделы, которые видны только после входа. Гость вместо них получает экран входа. */
-const MEMBER_ONLY = ['/quests', '/shop', '/wheel'];
+const MEMBER_ONLY = ['/quests', '/shop', '/wheel', '/cashout'];
 
 export default function RouteGuard({ children }: { children: ReactNode }) {
   const pathname = usePathname();

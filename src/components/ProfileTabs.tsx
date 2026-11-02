@@ -10,13 +10,14 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
   DRAFT:     { label: 'Черновик',    color: '#94a3b8' },
   NEEDS_INFO:{ label: 'Нужна инфо',  color: '#a855f7' },
   CANCELLED: { label: 'Отменено',    color: '#64748b' },
-  DELIVERED: { label: 'Выдано',      color: '#22c55e' },
+  IN_PROGRESS:{ label: 'В работе',   color: '#38bdf8' },
 };
 
 const PAGE_SIZE = 10;
 
-function StatusBadge({ status }: { status: string }) {
-  const s = STATUS_LABEL[status] ?? { label: status, color: '#94a3b8' };
+export function StatusBadge({ status, labels }: { status: string; labels?: Record<string, string> }) {
+  const base = STATUS_LABEL[status] ?? { label: status, color: '#94a3b8' };
+  const s = labels?.[status] ? { ...base, label: labels[status] } : base;
   return (
     <span className="text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap"
       style={{ background: s.color + '22', color: s.color }}>
@@ -33,7 +34,7 @@ function plural(n: number, one: string, few: string, many: string) {
 }
 
 /** «dd.MM.yyyy HH:mm» → «7 дней назад» (полная дата в подсказке). */
-function RelDate({ value }: { value: string | null }) {
+export function RelDate({ value }: { value: string | null }) {
   if (!value) return <span>—</span>;
   const m = value.match(/^(\d{2})\.(\d{2})\.(\d{4})(?: (\d{2}):(\d{2}))?/);
   if (!m) return <span>{value}</span>;
@@ -46,7 +47,7 @@ function RelDate({ value }: { value: string | null }) {
 type Col = { title: string; width: string };
 
 /** Таблица как в референсе: шапка + строки, на телефоне строки превращаются в карточки. */
-function DataTable<T>({ cols, rows, render, empty }: {
+export function DataTable<T>({ cols, rows, render, empty }: {
   cols: Col[];
   rows: T[] | null;
   render: (row: T) => ReactNode[];
