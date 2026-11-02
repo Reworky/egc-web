@@ -40,8 +40,8 @@ function MethodCard({ method, wallet, enabled, onOpen }: {
   const m = METHODS[method];
   const pct = Math.min(100, Math.round((wallet.coins * 100) / MIN_WITHDRAWAL));
   return (
-    <button type="button" onClick={onOpen} disabled={!enabled}
-      className="text-left rounded-2xl p-4 transition-transform enabled:hover:-translate-y-1 disabled:cursor-not-allowed"
+    <button type="button" onClick={onOpen}
+      className="text-left rounded-2xl p-4 transition-transform hover:-translate-y-1"
       style={{ background: 'var(--bg2)', border: '1px solid var(--border)', opacity: enabled ? 1 : 0.6, width: '100%' }}>
       <div className="text-center font-bold text-white mb-3">{m.title}</div>
       <div className="flex items-center justify-center rounded-xl overflow-hidden" style={{ height: 130, background: m.imgBg }}>
@@ -169,7 +169,7 @@ function WithdrawForm({ method, wallet, onDone }: { method: Method; wallet: Wall
   );
 }
 
-function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
+function Modal({ title, onClose, children, center }: { title: string; onClose: () => void; children: ReactNode; center?: boolean }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
@@ -180,7 +180,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
       style={{ background: 'rgba(8,8,18,0.75)' }} onClick={onClose}>
       <div className="hm-panel w-full max-w-lg max-h-[90vh] overflow-y-auto space-y-4" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between gap-4">
-          <h2 className="font-heading text-white" style={{ fontSize: '1.4rem', textTransform: 'none' }}>{title}</h2>
+          <h2 className={`font-heading text-white${center ? ' flex-1 text-center pl-8' : ''}`} style={{ fontSize: '1.4rem', textTransform: 'none' }}>{title}</h2>
           <button type="button" onClick={onClose} aria-label="Закрыть" className="text-2xl leading-none" style={{ color: 'var(--muted)' }}>×</button>
         </div>
         {children}
@@ -223,6 +223,7 @@ export default function CashoutPage() {
   const [wallet, setWallet] = useState<Wallet | null>(null);
   const [withdrawals, setWithdrawals] = useState<Withdrawal[] | null>(null);
   const [open, setOpen] = useState<Method | null>(null);
+  const [blocked, setBlocked] = useState(false);
 
   const reload = useCallback(() => {
     api.wallet().then(setWallet).catch(() => {});
@@ -238,6 +239,9 @@ export default function CashoutPage() {
   const rub = Math.round((wallet.coins * wallet.healthRatioPercent) / 10000);
   const waiting = wallet.withdrawalQuestsLeft > 0 || wallet.withdrawalDaysLeft > 0;
   const enabled = !waiting && wallet.phoneConfirmed && wallet.coins >= MIN_WITHDRAWAL;
+
+  // Закрыт ли вывод — решаем по клику на карточку: вместо красных плашек игрок видит окно с причиной.
+  const pick = (m: Method) => (enabled ? setOpen(m) : setBlocked(true));
 
   const waitParts: string[] = [];
   if (wallet.withdrawalQuestsLeft > 0) {
@@ -279,32 +283,56 @@ export default function CashoutPage() {
             </div>
           </div>
 
-          {waiting && (
-            <Notice ok={false}>
-              Вывод откроется после того, как пройдёт ещё: {waitParts.join(' и ')} (нужно 3 дня с регистрации и 3 одобренных квеста).
-            </Notice>
-          )}
-          {!waiting && !wallet.phoneConfirmed && (
-            <Notice ok={false}>
-              Для вывода нужно один раз подтвердить номер телефона в боте: открой «Вывод» и поделись контактом. После этого способы вывода станут доступны.
-            </Notice>
-          )}
-
           <section className="space-y-4">
             <h2 className="font-heading text-white" style={{ fontSize: '1.5rem', textTransform: 'none' }}>Популярные</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <MethodCard method="rub" wallet={wallet} enabled={enabled} onOpen={() => setOpen('rub')} />
-              <MethodCard method="stars" wallet={wallet} enabled={enabled} onOpen={() => setOpen('stars')} />
+              <MethodCard method="rub" wallet={wallet} enabled={enabled} onOpen={() => pick('rub')} />
+              <MethodCard method="stars" wallet={wallet} enabled={enabled} onOpen={() => pick('stars')} />
             </div>
           </section>
 
           <section className="space-y-4">
             <h2 className="font-heading text-white" style={{ fontSize: '1.5rem', textTransform: 'none' }}>Крипто</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <MethodCard method="ton" wallet={wallet} enabled={enabled} onOpen={() => setOpen('ton')} />
+              <MethodCard method="ton" wallet={wallet} enabled={enabled} onOpen={() => pick('ton')} />
             </div>
           </section>
         </>
+      )}
+
+      {blocked && (
+        <Modal title={wallet.coins < MIN_WITHDRAWAL ? 'Ты почти у цели!' : 'Вывод пока закрыт'} center onClose={() => setBlocked(false)}>
+          <div className="space-y-5 text-center">
+            {wallet.coins < MIN_WITHDRAWAL && (
+              <>
+                <p style={{ color: 'var(--muted)', fontSize: '1.05rem' }}>
+                  Продолжай зарабатывать, чтобы набрать минимальную сумму для вывода
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-baseline justify-between gap-3 text-left">
+                    <span className="text-white font-semibold">Твой прогресс</span>
+                    <span style={{ color: 'var(--muted)' }}>
+                      {wallet.coins.toLocaleString('ru')} / <b className="text-white">{MIN_WITHDRAWAL.toLocaleString('ru')} EXC</b>
+                    </span>
+                  </div>
+                  <div className="hm-xp"><i style={{ width: `${Math.max(2, Math.round((wallet.coins * 100) / MIN_WITHDRAWAL))}%` }} /></div>
+                </div>
+              </>
+            )}
+            {waiting && (
+              <p style={{ color: 'var(--muted)' }}>
+                Вывод откроется, когда пройдёт ещё: <b className="text-white">{waitParts.join(' и ')}</b>
+                <br />(нужно 3 дня с регистрации и 3 одобренных квеста).
+              </p>
+            )}
+            {!wallet.phoneConfirmed && (
+              <p style={{ color: 'var(--muted)' }}>
+                Один раз подтверди номер телефона в боте: открой «Вывод» и поделись контактом.
+              </p>
+            )}
+            <button type="button" className="hm-btn hm-btn-ghost" onClick={() => setBlocked(false)}>Понятно</button>
+          </div>
+        </Modal>
       )}
 
       {open && (
