@@ -46,6 +46,11 @@ export const api = {
   profile: () => get<UserProfile>('/api/profile', true),
   submissions: () => get<Submission[]>('/api/profile/submissions', true),
   rewards: () => get<RewardRequest[]>('/api/profile/rewards', true),
+  referralFriends: () => get<ReferralFriend[]>('/api/profile/referrals/list', true),
+  avatarBlob: async (): Promise<Blob | null> => {
+    const r = await fetch(`${BASE}/api/profile/avatar`, { headers: authHeader() });
+    return r.ok ? r.blob() : null;
+  },
   wheelStatus: () => get<WheelStatus>('/api/wheel', true),
   wheelSpin: async (): Promise<SpinResponse> => {
     const r = await fetch(`${BASE}/api/wheel/spin`, {
@@ -150,6 +155,19 @@ export interface UserProfile {
   streakDays: number;
   monthlyWithdrawalLimit: number;
   remainingWithdrawalLimit: number;
+  hasAvatar?: boolean;
+  avatarFrameColor?: string | null;
+  invitedFriends?: number;
+  /** ISO yyyy-MM-dd; null у старых записей и пока бэкенд не обновлён. */
+  joinedAt?: string | null;
+  totalEarnedExc?: number;
+  earnedLast30DaysExc?: number;
+}
+
+export interface ReferralFriend {
+  nickname: string;
+  joinedAt: string | null;
+  completedQuests: number;
 }
 
 export interface Submission {
