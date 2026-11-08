@@ -147,11 +147,11 @@ export default function PartnersPage() {
           {!ready && (<><div className="pt-live-skel" /><div className="pt-live-skel" /><div className="pt-live-skel" /></>)}
           {hasLive && (
             <>
-              {stats && <div className="pt-live-row"><span>игроков в базе</span><b><CountUp value={stats.total} />+</b></div>}
-              {stats && stats.newWeek > 0 && <div className="pt-live-row"><span>новых за неделю</span><b><CountUp value={stats.newWeek} />+</b></div>}
+              {stats && <div className="pt-live-row"><span>игроков в базе</span><b><CountUp value={stats.total} /><i>+</i></b></div>}
+              {stats && stats.newWeek > 0 && <div className="pt-live-row"><span>новых за неделю</span><b><CountUp value={stats.newWeek} /><i>+</i></b></div>}
               {proof && <div className="pt-live-row"><span>активных за неделю</span><b><CountUp value={proof.activeWeek} /></b></div>}
-              {proof?.autoApprovedPercent != null && <div className="pt-live-row"><span>результатов подтверждает автоматика</span><b className="green"><CountUp value={proof.autoApprovedPercent} />%</b></div>}
-              {proof?.retention7Percent != null && <div className="pt-live-row"><span>новых активны через неделю</span><b className="green"><CountUp value={proof.retention7Percent} />%</b></div>}
+              {proof?.autoApprovedPercent != null && <div className="pt-live-row"><span>результатов подтверждает автоматика</span><b className="green"><CountUp value={proof.autoApprovedPercent} /><i>%</i></b></div>}
+              {proof?.retention7Percent != null && <div className="pt-live-row"><span>новых активны через неделю</span><b className="green"><CountUp value={proof.retention7Percent} /><i>%</i></b></div>}
             </>
           )}
           <div className="pt-live-foot"><span>Цифры обновляются автоматически</span><Link href="/partners/proof">Все цифры проверки →</Link></div>
