@@ -20,7 +20,7 @@ export default function CountUp({ value, duration = 1200 }: { value: number; dur
         observer.disconnect();
         const t0 = performance.now();
         const tick = (now: number) => {
-          const p = Math.min(1, (now - t0) / duration);
+          const p = Math.max(0, Math.min(1, (now - t0) / duration)); // первый кадр rAF может прийти раньше t0: без max(0) число мигало отрицательным
           setShown(Math.round(value * (1 - Math.pow(1 - p, 3))));
           if (p < 1) raf = requestAnimationFrame(tick);
         };
