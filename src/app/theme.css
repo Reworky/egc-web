@@ -208,16 +208,28 @@ h3 { letter-spacing: 0.02em; }
   color: transparent;
 }
 .hm-hero p { color: var(--muted); }
-.hm-hero-art { margin: 0 auto; max-width: 560px; position: relative; }
+/* Арт растворяется в фон по всем краям (closest-side: затухание доходит до середины каждой стороны), под ним фиолетовое свечение */
+.hm-hero-art { margin: 0 auto; max-width: 600px; position: relative; display: grid; place-items: center; }
+.hm-hero-art::before {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 70%;
+  background: radial-gradient(closest-side, rgba(124, 58, 237, 0.55), transparent);
+  filter: blur(30px);
+  pointer-events: none;
+}
 .hm-hero-art img {
+  position: relative;
   display: block;
   width: 100%;
   height: auto;
   border-radius: 0;
   filter: none;
-  -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, #000 55%, transparent 100%);
-  mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, #000 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(closest-side, #000 52%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 52%, transparent 100%);
 }
+@media (min-width: 960px) { .hm-hero-art img { width: 112%; max-width: none; } }
 @media (min-width: 960px) {
   .hm-hero { text-align: left; padding: 56px 0 8px; }
   .hm-hero-grid { grid-template-columns: 1.05fr 1fr; gap: 20px; }
