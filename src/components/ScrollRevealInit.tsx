@@ -36,7 +36,11 @@ export default function ScrollRevealInit() {
 
     const watchNew = () => document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
     watchNew();
-    const mutations = new MutationObserver(watchNew);
+    let queued = 0;
+    const mutations = new MutationObserver(() => {
+      if (queued) return;
+      queued = window.requestAnimationFrame(() => { queued = 0; watchNew(); });
+    });
     mutations.observe(document.body, { childList: true, subtree: true });
     // Страховка: если наблюдатель не сработал, видимую часть страницы всё равно показываем.
     const fallback = window.setTimeout(() => {
@@ -44,7 +48,7 @@ export default function ScrollRevealInit() {
         if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
       });
     }, 1200);
-    return () => { observer.disconnect(); mutations.disconnect(); window.clearTimeout(fallback); };
+    return () => { observer.disconnect(); mutations.disconnect(); window.clearTimeout(fallback); if (queued) window.cancelAnimationFrame(queued); };
   }, [pathname]);
 
   return null;

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { fetchPayoutsFeed } from '@/lib/payoutsFeed';
 
 interface FeedItem {
   rub: number;
@@ -25,12 +26,9 @@ export default function PayoutTicker() {
   const [items, setItems] = useState<FeedItem[]>([]);
 
   useEffect(() => {
-    fetch('/api/payouts/feed')
-      .then(r => (r.ok ? r.json() : null))
-      .then(d => {
-        if (d?.items?.length) setItems(d.items);
-      })
-      .catch(() => {});
+    fetchPayoutsFeed<{ items?: FeedItem[] }>().then(d => {
+      if (d?.items?.length) setItems(d.items);
+    });
   }, []);
 
   if (items.length === 0) return null;

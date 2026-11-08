@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import Link from 'next/link';
+import './fonts.css';
 import './globals.css';
 import './home.css';
 import './theme.css';
@@ -25,9 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3" />
         <link rel="shortcut icon" href="/favicon-32.png?v=3" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&family=Exo+2:wght@500;600;700;800;900&family=Orbitron:wght@700;800;900&family=Russo+One&display=swap" rel="stylesheet" />
+        {/* Основные шрифты лежат на сайте (fonts.css); заранее просим только те наборы, что нужны на каждой странице */}
+        <link rel="preload" href="/fonts/exo-2-500-900-cyrillic.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/exo-2-500-900-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/russo-one-400-cyrillic.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-W5XKYX6MDJ" strategy="afterInteractive" />
         <Script id="ga4" strategy="afterInteractive">{`
           window.dataLayer = window.dataLayer || [];
@@ -38,7 +40,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Script id="yandex-rtb-init" strategy="afterInteractive">{`
           window.yaContextCb = window.yaContextCb || [];
         `}</Script>
-        <Script src="https://yandex.ru/ads/system/context.js" strategy="afterInteractive" async />
+        {/* Реклама грузится после основной страницы, чтобы не отнимать у неё процессор на старте */}
+        <Script src="https://yandex.ru/ads/system/context.js" strategy="lazyOnload" async />
       </head>
       <body className="min-h-full flex flex-col">
         <AuthProvider>
@@ -59,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </nav>
           <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
             <span className="font-semibold flex items-center gap-2" style={{ color: 'white' }}>
-              <img src="/logo.png" alt="EGC" style={{ width: 28, height: 28, objectFit: 'contain', mixBlendMode: 'screen', flexShrink: 0 }} />
+              <img src="/logo.png" alt="EGC" width={28} height={28} style={{ width: 28, height: 28, objectFit: 'contain', flexShrink: 0 }} />
               Experience Gaming Club
             </span>
             <SocialLinks />

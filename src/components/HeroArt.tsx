@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, type ReactNode } from 'react';
+import { fetchPayoutsFeed } from '@/lib/payoutsFeed';
 
 interface FeedItem { amountText?: string; rub: number; method: string; minutesAgo: number }
 type Kind = 'sbp' | 'stars' | 'gems' | 'ton';
@@ -58,10 +59,8 @@ export default function HeroArt() {
 
   useEffect(() => {
     let alive = true;
-    fetch('/api/payouts/feed')
-      .then(r => (r.ok ? r.json() : null))
-      .then(d => { if (alive && d?.items?.length) setFeed(d.items); })
-      .catch(() => {});
+    fetchPayoutsFeed<{ items?: FeedItem[] }>()
+      .then(d => { if (alive && d?.items?.length) setFeed(d.items); });
     return () => { alive = false; };
   }, []);
 

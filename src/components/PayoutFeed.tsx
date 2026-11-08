@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { fetchPayoutsFeed } from '@/lib/payoutsFeed';
 
 interface FeedItem {
   rub: number;
@@ -61,14 +62,11 @@ export default function PayoutFeed() {
   useEffect(() => {
     let alive = true;
     const load = () =>
-      fetch('/api/payouts/feed')
-        .then(r => (r.ok ? r.json() : null))
-        .then((d: Feed | null) => {
-          if (!alive) return;
-          if (d?.items?.length) setFeed(d);
-          else if (!feed) setFailed(true);
-        })
-        .catch(() => { if (alive && !feed) setFailed(true); });
+      fetchPayoutsFeed<Feed>().then(d => {
+        if (!alive) return;
+        if (d?.items?.length) setFeed(d);
+        else if (!feed) setFailed(true);
+      });
     load();
     const t = setInterval(load, REFRESH_MS);
     return () => { alive = false; clearInterval(t); };

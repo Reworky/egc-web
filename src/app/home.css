@@ -2,9 +2,9 @@
 
 .hm-hero { position: relative; text-align: center; padding: 56px 0 8px; }
 .hm-hero-glow { position: absolute; inset: -40px 0 auto; height: 420px; pointer-events: none; overflow: hidden; }
-.hm-hero-glow::before, .hm-hero-glow::after { content: ''; position: absolute; border-radius: 50%; filter: blur(70px); opacity: .55; }
-.hm-hero-glow::before { width: 360px; height: 360px; left: 12%; top: 0; background: radial-gradient(circle, rgba(124,58,237,.55), transparent 70%); animation: hm-float 9s ease-in-out infinite; }
-.hm-hero-glow::after { width: 300px; height: 300px; right: 12%; top: 60px; background: radial-gradient(circle, rgba(236,72,153,.4), transparent 70%); animation: hm-float 11s ease-in-out infinite reverse; }
+.hm-hero-glow::before, .hm-hero-glow::after { content: ''; position: absolute; border-radius: 50%; opacity: .55; will-change: transform; } /* без filter: blur - градиент и так мягкий, а размытие анимированного пятна перерисовывалось каждый кадр */
+.hm-hero-glow::before { width: 460px; height: 460px; left: 12%; top: 0; background: radial-gradient(circle, rgba(124,58,237,.55), transparent 70%); animation: hm-float 9s ease-in-out infinite; }
+.hm-hero-glow::after { width: 390px; height: 390px; right: 12%; top: 60px; background: radial-gradient(circle, rgba(236,72,153,.4), transparent 70%); animation: hm-float 11s ease-in-out infinite reverse; }
 @keyframes hm-float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(24px) } }
 
 .hm-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #c4b5fd; background: rgba(124,58,237,.14); border: 1px solid rgba(168,85,247,.35); }
@@ -159,7 +159,7 @@
 
 /* Шапка внутренних страниц */
 .pg-head { position: relative; padding: 8px 0 26px; }
-.pg-head::before { content: ''; position: absolute; left: -40px; top: -30px; width: 340px; height: 220px; background: radial-gradient(circle, rgba(124,58,237,.35), transparent 70%); filter: blur(50px); pointer-events: none; }
+.pg-head::before { content: ''; position: absolute; left: -40px; top: -30px; width: 340px; height: 220px; background: radial-gradient(circle, rgba(124,58,237,.35), transparent 70%); pointer-events: none; }
 .pg-head > * { position: relative; }
 .pg-head h1 { margin-top: 6px; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.05; color: #fff; letter-spacing: .04em; }
 .pg-head p { margin-top: 12px; max-width: 620px; color: #94a3b8; font-size: 16px; line-height: 1.6; }
@@ -215,6 +215,7 @@
 @media (prefers-reduced-motion: reduce) {
   .hm-hero-glow::before, .hm-hero-glow::after, .hm-shimmer, .hm-eyebrow i, .hm-live i, 
   .hm-btn, .hm-step, .hm-quest, .hm-game, .hm-pill, .hm-item { transition: none; }
+  .hm-hero-glow::before, .hm-hero-glow::after { animation: none; }
 }
 
 /* ── Страница «Партнёрам» ── */

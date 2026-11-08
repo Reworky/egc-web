@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import CountUp from '@/components/CountUp';
+import { fetchPayoutsFeed } from '@/lib/payoutsFeed';
 
 interface Feed {
   weekRub: number;
@@ -16,10 +17,7 @@ export default function TrustStats({ players }: { players: number }) {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    fetch('/api/payouts/feed')
-      .then(r => (r.ok ? r.json() : null))
-      .then((d: Feed | null) => (d ? setFeed(d) : setFailed(true)))
-      .catch(() => setFailed(true));
+    fetchPayoutsFeed<Feed>().then(d => (d ? setFeed(d) : setFailed(true)));
   }, []);
 
   const total = !!feed?.totalRub;

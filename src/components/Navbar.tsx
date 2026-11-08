@@ -49,10 +49,9 @@ export default function Navbar() {
           position: 'sticky',
           top: 0,
           zIndex: 50,
-          background: 'rgba(20,21,35,0.94)',
+          // Без backdrop-filter: размытие под липкой шапкой пересчитывалось на каждом кадре прокрутки (подлагивания), а фон и так почти непрозрачный
+          background: 'rgba(20,21,35,0.98)',
           borderBottom: '1px solid rgba(255,255,255,0.07)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
         }}
       >
         <div
@@ -65,7 +64,9 @@ export default function Navbar() {
             <img
               src="/logo.png"
               alt="EGC"
-              style={{ width: 36, height: 36, objectFit: 'contain', mixBlendMode: 'screen', flexShrink: 0 }}
+              width={36}
+              height={36}
+              style={{ width: 36, height: 36, objectFit: 'contain', flexShrink: 0 }}
             />
           </Link>
 
