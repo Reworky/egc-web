@@ -108,7 +108,7 @@ export default async function Home() {
               <Link href="/profile" className="hm-btn hm-btn-ghost">Войти на сайт</Link>
             </div>
           </div>
-          <HeroArt />
+          <HeroArt reward={typical} />
         </div>
       </section>
 
