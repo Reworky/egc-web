@@ -1,15 +1,13 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import Link from 'next/link';
 import './fonts.css';
 import './globals.css';
 import './home.css';
 import './theme.css';
 import Navbar from '@/components/Navbar';
 import ScrollRevealInit from '@/components/ScrollRevealInit';
-import YandexAd from '@/components/YandexAd';
-import SocialLinks from '@/components/SocialLinks';
 import RouteGuard from '@/components/RouteGuard';
+import SiteFooter from '@/components/SiteFooter';
 import { AuthProvider } from '@/lib/useAuth';
 
 export const metadata: Metadata = {
@@ -49,26 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ScrollRevealInit />
           <main className="flex-1 page-content"><RouteGuard>{children}</RouteGuard></main>
         </AuthProvider>
-        <footer className="page-content border-t py-8 text-center text-sm" style={{ borderColor: 'var(--border)', color: 'var(--muted)', background: 'var(--bg)' }}>
-          <div className="max-w-6xl mx-auto px-4 mb-6">
-            <YandexAd blockId="R-A-19801285-1" />
-          </div>
-          <nav className="ft-links max-w-6xl mx-auto px-4" aria-label="Разделы и документы">
-            <Link href="/partners">Сотрудничество</Link>
-            <Link href="/contacts">Контакты</Link>
-            <Link href="/terms">Пользовательское соглашение</Link>
-            <Link href="/rules">Правила выплат</Link>
-            <Link href="/privacy">Политика конфиденциальности</Link>
-          </nav>
-          <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <span className="font-semibold flex items-center gap-2" style={{ color: 'white' }}>
-              <img src="/logo.png" alt="EGC" width={28} height={28} style={{ width: 28, height: 28, objectFit: 'contain', flexShrink: 0 }} />
-              Experience Gaming Club
-            </span>
-            <SocialLinks />
-            <span>© {new Date().getFullYear()} EGC. Все права защищены.</span>
-          </div>
-        </footer>
+        <SiteFooter />
       </body>
     </html>
   );

@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/useAuth';
+import { PartnersNav, isPartnersPath } from '@/components/PartnersChrome';
 
 // Гостю: презентация клуба. Игроку: рабочие разделы кабинета.
 const guestLinks = [
   { href: '/',         label: 'Главная'     },
-  { href: '/partners', label: 'Сотрудничество' },
 ];
 const memberLinks = [
   { href: '/',         label: 'Главная'     },
@@ -39,6 +39,9 @@ export default function Navbar() {
     color: '#ddd6fe',
   };
   const idleStyle = { color: 'var(--muted)', border: '1px solid transparent' };
+
+  // Раздел для партнёров - отдельный лендинг со своей шапкой, меню игроков там не показываем
+  if (isPartnersPath(pathname)) return <PartnersNav />;
 
   return (
     <>

@@ -286,6 +286,9 @@
 .ft-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin-bottom: 18px; }
 .ft-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
 .ft-links a:hover { color: #fff; }
+.ft-partners { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 4px 10px; margin: -6px auto 18px; font-size: 13px; color: var(--muted); opacity: .85; }
+.ft-partners a { color: var(--accent2); text-decoration: none; }
+.ft-partners a:hover { color: #fff; }
 
 /* Блок «Мы в Telegram» */
 .hm-community { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; padding: 24px 26px; }
