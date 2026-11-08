@@ -1,15 +1,20 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 
 interface FeedItem { amountText?: string; rub: number; method: string; minutesAgo: number }
-interface Notice { id: string; amount: string; label: string; note: string; tone: 'green' | 'gold' | 'cyan' }
+type Kind = 'sbp' | 'stars' | 'gems' | 'ton';
+interface Variant { amount: string; note: string }
 
-const WELCOME_BONUS_EXC = 200; // те же числа, что в боте (WELCOME_BONUS_EXC)
-const SLOTS = 3;
 const TICK_MS = 2800;
 
-const METHOD_LABEL: Record<string, string> = { sbp: 'выплата по СБП', stars: 'выплата Telegram Stars', ton: 'выплата GRAM', reward: 'награда магазина' };
+/** Четыре способа получить деньги или награду: по одному уведомлению на способ, чтобы на картинке были видны все варианты вывода. */
+const KINDS: { kind: Kind; label: string; tone: 'green' | 'gold' | 'cyan' | 'blue'; fallback: Variant[] }[] = [
+  { kind: 'sbp', label: 'выплата по СБП', tone: 'green', fallback: [{ amount: '+106 ₽', note: 'на карту' }] },
+  { kind: 'stars', label: 'вывод в Telegram Stars', tone: 'gold', fallback: [{ amount: '+50 ⭐', note: 'на аккаунт Telegram' }] },
+  { kind: 'gems', label: 'гемы в игру из магазина', tone: 'cyan', fallback: [{ amount: '+30 гемов', note: 'за EXC' }, { amount: '+80 гемов', note: 'за EXC' }] },
+  { kind: 'ton', label: 'вывод в GRAM (TON)', tone: 'blue', fallback: [{ amount: '+1.2 GRAM', note: 'на кошелёк' }] },
+];
 
 function ago(m: number): string {
   if (m < 1) return 'только что';
@@ -18,32 +23,36 @@ function ago(m: number): string {
   return `${Math.floor(m / 1440)} д назад`;
 }
 
-/** Настоящие выплаты из публичной ленты и пополнения баланса EXC (типичная награда за квест и стартовый подарок), вперемешку. */
-function buildNotices(feed: FeedItem[], reward: number): Notice[] {
-  const credits: Notice[] = [];
-  if (reward > 0) credits.push({ id: 'quest', amount: `+${reward.toLocaleString('ru')} EXC`, label: 'награда за квест', note: 'зачислено на баланс', tone: 'gold' });
-  credits.push({ id: 'welcome', amount: `+${WELCOME_BONUS_EXC} EXC`, label: 'подарок за вход', note: 'на старте клуба', tone: 'cyan' });
-  // одинаковые суммы по одному способу подряд не повторяем: уведомления должны выглядеть разными
+/** Варианты по способу: сначала настоящие суммы из публичной ленты выплат (без повторов), потом запасной пример, чтобы уведомление было всегда. */
+function variantsFor(kind: Kind, feed: FeedItem[]): Variant[] {
+  const spec = KINDS.find(k => k.kind === kind)!;
   const seen = new Set<string>();
-  const unique = feed.filter(p => { const k = `${p.method}:${p.amountText ?? p.rub}`; if (seen.has(k)) return false; seen.add(k); return true; });
-  const payouts: Notice[] = unique.slice(0, 4).map((p, i) => ({
-    id: `p${i}`,
-    amount: `${p.amountText?.startsWith('~') ? '' : '+'}${p.amountText ?? `${p.rub} ₽`}`,
-    label: METHOD_LABEL[p.method] ?? 'выплата',
-    note: ago(p.minutesAgo),
-    tone: 'green' as const,
-  }));
-  const out: Notice[] = [];
-  for (let i = 0; i < Math.max(credits.length, payouts.length); i++) {
-    if (credits[i]) out.push(credits[i]);
-    if (payouts[i]) out.push(payouts[i]);
+  const real: Variant[] = [];
+  for (const p of feed) {
+    if (p.method !== kind) continue;
+    const raw = (p.amountText ?? `${p.rub} ₽`).replace('~', '');
+    if (seen.has(raw)) continue;
+    seen.add(raw);
+    real.push({ amount: `+${raw}`, note: ago(p.minutesAgo) });
   }
-  return out;
+  const extra = spec.fallback.filter(f => !seen.has(f.amount.replace('+', '')));
+  return [...real.slice(0, 3), ...extra].slice(0, 3);
 }
 
-/** Арт первого экрана: Экси с телефоном и вылетающие уведомления о пополнениях и выплатах. Уведомления берут числа из публичной ленты выплат; если лента недоступна, остаются только пополнения EXC. */
-export default function HeroArt({ reward = 0 }: { reward?: number }) {
-  const [notices, setNotices] = useState<Notice[]>(() => buildNotices([], reward));
+function KindIcon({ kind }: { kind: Kind }) {
+  const p = { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true };
+  const icons: Record<Kind, ReactNode> = {
+    sbp: <path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18" />,
+    stars: <path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" />,
+    gems: <><path d="M6 4h12l3 5-9 11L3 9z" /><path d="M3 9h18" /></>,
+    ton: <><path d="M12 3l8 4v6c0 4-3.4 6.6-8 8-4.6-1.4-8-4-8-8V7z" /><path d="M12 8v8M9 11l3-3 3 3" /></>,
+  };
+  return <svg {...p}>{icons[kind]}</svg>;
+}
+
+/** Арт первого экрана: Экси играет в телефон, вокруг по очереди вылетают четыре уведомления (СБП, звёзды, гемы, GRAM). Числа берутся из публичной ленты выплат, если способ в ней есть, иначе показывается пример. */
+export default function HeroArt() {
+  const [feed, setFeed] = useState<FeedItem[]>([]);
   const [tick, setTick] = useState(0);
   const [still, setStill] = useState(false);
 
@@ -51,10 +60,10 @@ export default function HeroArt({ reward = 0 }: { reward?: number }) {
     let alive = true;
     fetch('/api/payouts/feed')
       .then(r => (r.ok ? r.json() : null))
-      .then(d => { if (alive && d?.items?.length) setNotices(buildNotices(d.items, reward)); })
+      .then(d => { if (alive && d?.items?.length) setFeed(d.items); })
       .catch(() => {});
     return () => { alive = false; };
-  }, [reward]);
+  }, []);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setStill(true); return; }
@@ -62,11 +71,13 @@ export default function HeroArt({ reward = 0 }: { reward?: number }) {
     return () => window.clearInterval(t);
   }, []);
 
-  // В слоте A, B, C по очереди появляется следующее уведомление, поэтому на экране всегда три разных
-  const slots = Array.from({ length: SLOTS }, (_, s) => {
-    // последний тик, на котором этот слот получил уведомление (слоты 1 и 2 в начале берут тики 1 и 2)
-    const last = still ? s : Math.max(tick - ((((tick - s) % SLOTS) + SLOTS) % SLOTS), s);
-    return { notice: notices[last % notices.length], key: `${s}-${last}` };
+  const n = KINDS.length;
+  const slots = KINDS.map((spec, s) => {
+    // тик, на котором этот слот обновлялся в последний раз: слоты обновляются по очереди, каждый раз с новой суммой
+    const last = still ? s : Math.max(tick - ((((tick - s) % n) + n) % n), s);
+    const variants = variantsFor(spec.kind, feed);
+    const round = Math.floor(last / n);
+    return { spec, v: variants[round % variants.length], key: `${s}-${last}` };
   });
 
   return (
@@ -74,10 +85,11 @@ export default function HeroArt({ reward = 0 }: { reward?: number }) {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/hero-exi.jpg" alt="Экси, маскот клуба EGC, играет в телефон на кресле-мешке" width={1300} height={1063} fetchPriority="high" />
       <div className="hn-layer" aria-hidden="true">
-        {slots.map((s, i) => s.notice && (
-          <div key={s.key} className={`hn-chip hn-s${i} ${s.notice.tone}`}>
-            <b>{s.notice.amount}</b>
-            <span>{s.notice.label}<small>{s.notice.note}</small></span>
+        {slots.map((s, i) => (
+          <div key={s.key} className={`hn-chip hn-s${i} ${s.spec.tone}`}>
+            <i className="hn-ic"><KindIcon kind={s.spec.kind} /></i>
+            <b>{s.v.amount}</b>
+            <span>{s.spec.label}<small>{s.v.note}</small></span>
           </div>
         ))}
       </div>
