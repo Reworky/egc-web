@@ -94,17 +94,19 @@ export default async function Home() {
       {/* ── Первый экран ── */}
       <section className="hm-hero">
         <div className="hm-hero-glow" />
-        <div className="relative space-y-5">
-          <span className="hm-eyebrow"><i />Experience Gaming Club · реальные выплаты</span>
-          <h1 className="font-gaming">
-            Занимайтесь <em>любимым делом</em>.<br />Мы вас за это <em>вознаградим</em>.
-          </h1>
-          <p className="text-lg sm:text-xl max-w-xl mx-auto" style={{ color: 'var(--muted)' }}>
-            Выполняй квесты в играх, получай <strong className="gradient-text-gold">EXC</strong>, трать в магазине или выводи деньгами. Бесплатно
-          </p>
-          <div className="hm-cta-row">
-            <a href={botLink('site_hero')} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">Открыть в Telegram</a>
-            <Link href="/profile" className="hm-btn hm-btn-ghost">Войти на сайт</Link>
+        <div className="hm-hero-grid relative">
+          <div className="space-y-5">
+            <span className="hm-eyebrow"><i />Experience Gaming Club · реальные выплаты</span>
+            <h1 className="font-gaming">
+              Занимайтесь <em>любимым делом</em>.<br />Мы вас за это <em>вознаградим</em>.
+            </h1>
+            <p className="text-lg sm:text-xl max-w-xl mx-auto" style={{ color: 'var(--muted)' }}>
+              Выполняй квесты в играх, получай <strong className="gradient-text-gold">EXC</strong>, трать в магазине или выводи деньгами. Бесплатно
+            </p>
+            <div className="hm-cta-row">
+              <a href={botLink('site_hero')} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">Открыть в Telegram</a>
+              <Link href="/profile" className="hm-btn hm-btn-ghost">Войти на сайт</Link>
+            </div>
           </div>
           <HeroArt />
         </div>
