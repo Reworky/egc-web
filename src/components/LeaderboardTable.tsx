@@ -6,7 +6,7 @@ function Avatar({ name }: { name: string }) {
   return (
     <div
       className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
-      style={{ background: 'linear-gradient(135deg, #7c3aed, #ec4899)' }}
+      style={{ background: 'linear-gradient(135deg, #7c3aed, #22d3ee)' }}
     >
       {name.charAt(0).toUpperCase()}
     </div>

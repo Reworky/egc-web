@@ -56,7 +56,7 @@ function Avatar({ nickname, hasAvatar, frameColor }: { nickname: string; hasAvat
   }, [hasAvatar]);
   return (
     <div className="shrink-0 rounded-full overflow-hidden flex items-center justify-center"
-      style={{ width: 104, height: 104, border: `3px solid ${frameColor}`, background: 'linear-gradient(135deg,#7c3aed,#ec4899)' }}>
+      style={{ width: 104, height: 104, border: `3px solid ${frameColor}`, background: 'linear-gradient(135deg,#7c3aed,#22d3ee)' }}>
       {src
         // eslint-disable-next-line @next/next/no-img-element
         ? <img src={src} alt="" className="w-full h-full object-cover" />

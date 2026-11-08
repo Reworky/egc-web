@@ -259,7 +259,7 @@ export default function WheelPage() {
         {result && (
           <div
             className="w-full rounded-2xl p-5 text-center space-y-2"
-            style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.2), rgba(236,72,153,0.1))', border: '1px solid rgba(168,85,247,0.4)' }}
+            style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.2), rgba(34,211,238,0.1))', border: '1px solid rgba(168,85,247,0.4)' }}
           >
             <div className="text-2xl font-black text-white">{result.label}</div>
             {result.type === 'EXC' && (

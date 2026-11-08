@@ -313,6 +313,19 @@ h3 { letter-spacing: 0.02em; }
 .sw-tile { border-radius: 0; }
 .sw-card { border-radius: 0; }
 
+/* Кабинет игрока (Tailwind-классы в страницах квестов, магазина, вывода, профиля): те же углы и цвета, что в остальном сайте */
+:root { --pink: #22d3ee; }
+.rounded-lg, .rounded-xl, .rounded-2xl { border-radius: 6px; }
+.rounded-3xl { border-radius: 10px; }
+select, input, textarea { font-family: var(--font-body); }
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--border-bright); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2); }
+
+/* Документы (правила, политика, соглашение): один панельный блок */
+.lg-doc { padding: 30px; border: 1px solid var(--border); border-radius: 6px; background: rgba(8, 10, 28, 0.62); }
+.lg-doc h2 { font-size: 1.05rem; line-height: 1.3; color: #fff; }
+.lg-doc ul li::marker { color: var(--accent); }
+@media (max-width: 640px) { .lg-doc { padding: 20px 16px; } }
+
 /* Подвал */
 footer.page-content { background: rgba(5, 6, 15, 0.9) !important; border-color: rgba(139, 92, 246, 0.3) !important; }
 .social-link { border-radius: 0; clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px); }
