@@ -226,11 +226,9 @@ h3 { letter-spacing: 0.02em; }
   height: auto;
   border-radius: 0;
   filter: none;
-  -webkit-mask-image: radial-gradient(closest-side, #000 52%, transparent 100%);
-  mask-image: radial-gradient(closest-side, #000 52%, transparent 100%);
 }
 @media (min-width: 960px) { .hm-hero-art img { width: 100%; } }
-.hm-hero-art img { -webkit-mask-image: radial-gradient(closest-side, #000 70%, transparent 100%); mask-image: radial-gradient(closest-side, #000 70%, transparent 100%); }
+/* края картинки растворены прямо в файле (альфа-канал hero-exi.webp), CSS-маска не нужна: работает в любом браузере */
 
 /* Вылетающие уведомления о пополнениях и выплатах вокруг Экси */
 .hn-layer { position: absolute; inset: 0; z-index: 3; pointer-events: none; }

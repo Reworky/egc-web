@@ -83,7 +83,7 @@ export default function HeroArt() {
   return (
     <figure className="hm-hero-art">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/hero-exi.jpg" alt="Экси, маскот клуба EGC, играет в телефон на кресле-мешке" width={1300} height={1063} fetchPriority="high" />
+      <img src="/hero-exi.webp" alt="Экси, маскот клуба EGC, играет в телефон на кресле-мешке" width={1300} height={1114} fetchPriority="high" />
       <div className="hn-layer" aria-hidden="true">
         {slots.map((s, i) => (
           <div key={s.key} className={`hn-chip hn-s${i} ${s.spec.tone}`}>
