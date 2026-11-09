@@ -9,6 +9,7 @@ import { PartnersNav, isPartnersPath } from '@/components/PartnersChrome';
 // Гостю: презентация клуба. Игроку: рабочие разделы кабинета.
 const guestLinks = [
   { href: '/',         label: 'Главная'     },
+  { href: '/cashout',  label: 'Вывод'       },
 ];
 const memberLinks = [
   { href: '/',         label: 'Главная'     },

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import { api, Wallet, Withdrawal, StarsItem, TonQuote } from '@/lib/api';
 import { useAuth } from '@/lib/useAuth';
 import { DataTable, RelDate, StatusBadge } from '@/components/ProfileTabs';
+import GuestCashout from '@/components/GuestCashout';
 
 const MIN_WITHDRAWAL = 5000;
 
@@ -218,7 +219,7 @@ function WithdrawalsTable({ rows }: { rows: Withdrawal[] | null }) {
 }
 
 export default function CashoutPage() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [tab, setTab] = useState<'cashout' | 'mine'>('cashout');
   const [wallet, setWallet] = useState<Wallet | null>(null);
   const [withdrawals, setWithdrawals] = useState<Withdrawal[] | null>(null);
@@ -232,6 +233,8 @@ export default function CashoutPage() {
 
   useEffect(() => { if (user) reload(); }, [user, reload]);
 
+  // Гостю вместо кошелька - страница о выводе и донате (как у входа: сначала дожидаемся ответа авторизации)
+  if (!loading && !user) return <GuestCashout />;
   if (!user || !wallet) {
     return <div className="flex items-center justify-center py-32"><p style={{ color: 'var(--muted)' }}>Загрузка...</p></div>;
   }

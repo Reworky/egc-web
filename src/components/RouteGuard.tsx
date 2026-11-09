@@ -6,8 +6,8 @@ import { useAuth } from '@/lib/useAuth';
 import TelegramLoginButton from '@/components/TelegramLoginButton';
 import PageHead from '@/components/PageHead';
 
-/** Разделы, которые видны только после входа. Гость вместо них получает экран входа. */
-const MEMBER_ONLY = ['/quests', '/shop', '/wheel', '/cashout'];
+/** Разделы, которые видны только после входа. Гость вместо них получает экран входа (/cashout исключён: у него своя гостевая страница). */
+const MEMBER_ONLY = ['/quests', '/shop', '/wheel'];
 
 export default function RouteGuard({ children }: { children: ReactNode }) {
   const pathname = usePathname();
