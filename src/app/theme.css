@@ -218,6 +218,12 @@ h3 { letter-spacing: 0.02em; }
   background: radial-gradient(closest-side, rgba(124, 58, 237, 0.55), transparent);
   pointer-events: none;
 }
+/* Свечение ::before смещено вправо и выступало за край узкого экрана, из-за чего страница на телефоне сдвигалась вбок: на экранах уже десктопа обрезаем по рамке арта */
+@media (max-width: 1023px) {
+  .hm-hero-art { overflow: clip; }
+  /* и ставим свечение строго по центру арта: раньше оно сидело правее центра и в обрезку упиралась его правая часть */
+  .hm-hero-art::before { left: 50%; top: 50%; translate: -50% -50%; }
+}
 .hm-hero-art img {
   position: relative;
   display: block;

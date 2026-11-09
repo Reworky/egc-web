@@ -26,7 +26,18 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
+  overflow-x: clip;
 }
+
+/* Страница прокручивается только вниз и вверх: боковой сдвиг запрещён и жестом, и содержимым.
+   overflow: clip (в отличие от hidden) не создаёт прокручиваемый контейнер, поэтому липкая шапка продолжает липнуть;
+   в старых браузерах без clip остаётся hidden на body. pinch-zoom разрешён. */
+html {
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+  touch-action: pan-y pinch-zoom;
+}
+body { touch-action: pan-y pinch-zoom; max-width: 100%; }
 
 h1, h2 {
   font-family: 'Exo 2', 'Inter', system-ui, sans-serif;
