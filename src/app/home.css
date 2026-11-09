@@ -318,7 +318,9 @@
 .pf-ic.gold { color: #fbbf24; background: rgba(251, 191, 36, .14); }
 .pf-ic.blue { color: #60a5fa; background: rgba(96, 165, 250, .14); }
 .pf-ic.violet { color: #c4b5fd; background: rgba(167, 139, 250, .16); }
-.pf-amt { font-size: 18px; font-weight: 700; color: #fff; white-space: nowrap; }
+.pf-amt { font-size: 18px; font-weight: 700; color: #fff; white-space: nowrap; min-width: 0; }
+/* Длинное название награды (например «PUBG Mobile 60 UC») переносится и не залезает в соседнюю колонку */
+.pf-amt.long { font-size: 14px; line-height: 1.25; white-space: normal; overflow-wrap: anywhere; }
 .pf-who { font-size: 14px; color: #cfcfe6; }
 .pf-who small { display: block; margin-top: 1px; font-size: 12px; color: var(--muted); }
 .pf-ago { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); white-space: nowrap; }

@@ -29,6 +29,7 @@ const METHOD: Record<string, { label: string; filter: string; kind: Kind; tone: 
   stars: { label: 'Telegram Stars', filter: 'Stars', kind: 'star', tone: 'gold' },
   ton: { label: 'GRAM (TON)', filter: 'GRAM', kind: 'gem', tone: 'blue' },
   reward: { label: 'Награда магазина', filter: 'Награды', kind: 'gift', tone: 'violet' },
+  donat: { label: 'Донат в игру', filter: 'Донат', kind: 'gift', tone: 'violet' },
 };
 
 const PAGE = 6;
@@ -124,7 +125,7 @@ export default function PayoutFeed() {
               return (
                 <div key={`${it.name}-${it.minutesAgo}-${i}`} className={`pf-row${isNew ? ' fresh' : ''}`}>
                   <span className={`pf-ic ${m.tone}`}><Icon kind={m.kind} /></span>
-                  <span className="pf-amt">{it.amountText ?? rub(it.rub)}</span>
+                  <span className={`pf-amt${(it.amountText ?? '').length > 9 ? ' long' : ''}`}>{it.amountText ?? rub(it.rub)}</span>
                   <span className="pf-who">{m.label}<small>{it.name}</small></span>
                   <span className="pf-ago">{ago(it.minutesAgo)}{isNew && <em>новая</em>}</span>
                 </div>
