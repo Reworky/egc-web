@@ -1,10 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import PayoutFeed from '@/components/PayoutFeed';
-import TrustStats from '@/components/TrustStats';
-import { useEffect, useState } from 'react';
-import { api } from '@/lib/api';
 import { BOT_URL } from '@/lib/contacts';
 import '@/app/cashout/cashout.css';
 
@@ -34,19 +30,8 @@ const STEPS = [
   { title: 'Отправь заявку', text: 'Выбери способ и укажи реквизиты. Выплата в течение 24 часов, одна заявка в сутки.' },
 ];
 
-const FAQ = [
-  { q: 'Сколько ждать выплату?', a: 'Заявку проверяет администратор, затем выплата уходит выбранным способом, обычно в течение 24 часов. Статус заявки виден в боте и на сайте, а готовые выплаты появляются в ленте выше.' },
-  { q: 'Какой минимум для вывода?', a: '5 000 EXC. Вывод открывается через 3 дня после регистрации и 3 выполненных квеста, подать можно одну заявку в сутки. По номиналу 100 EXC = 1 ₽, итоговую сумму определяет курс фонда клуба: он виден в боте перед заявкой.' },
-  { q: 'Это правда бесплатно?', a: 'Да. Вступить и играть в клубе бесплатно, регистрация проходит через Telegram. Пароли от игровых аккаунтов нам не нужны, и мы их никогда не просим.' },
-];
-
 /** Страница «Вывод» для гостя: куда можно вывести заработанное и на что потратить EXC. После входа вместо неё открывается кошелёк. */
 export default function GuestCashout() {
-  const [players, setPlayers] = useState<number | null>(null);
-  useEffect(() => {
-    api.stats().then(s => setPlayers(s.totalPlayers)).catch(() => {});
-  }, []);
-
   return (
     <div>
       {/* ── Первый экран ── */}
@@ -128,28 +113,6 @@ export default function GuestCashout() {
           </div>
         </section>
 
-        {/* ── Доказательства: цифры и лента выплат ── */}
-        {players != null && <TrustStats players={players} />}
-        <PayoutFeed />
-
-        {/* ── Частые вопросы ── */}
-        <section className="hm-section reveal">
-          <div className="hm-head">
-            <div>
-              <div className="hm-kicker">Коротко о главном</div>
-              <h2 className="section-title">Частые вопросы</h2>
-            </div>
-          </div>
-          <div className="hm-faq">
-            {FAQ.map(f => (
-              <details key={f.q} className="hm-faq-item">
-                <summary>{f.q}</summary>
-                <p>{f.a}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-
         {/* ── Финальный призыв ── */}
         <section className="hm-final reveal">
           <h2 className="font-heading">Готов начать?</h2>
@@ -161,7 +124,7 @@ export default function GuestCashout() {
         </section>
 
         <p className="hm-disclaimer">
-          Награды и выплаты зависят от выполнения квестов и проверки результата, они не гарантируются. Суммы в рублях ориентировочные: курс вывода зависит от состояния фонда клуба. Цифры на странице обновляются автоматически.
+          Награды и выплаты зависят от выполнения квестов и проверки результата, они не гарантируются. Суммы в рублях ориентировочные: курс вывода зависит от состояния фонда клуба.
         </p>
       </div>
     </div>
