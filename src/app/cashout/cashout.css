@@ -28,7 +28,6 @@
 .gc-method-art.cover img { max-width: none; max-height: none; width: 100%; height: 100%; object-fit: cover; }
 .gc-method b { color: #fff; font-size: 18px; }
 .gc-method span { color: var(--muted); font-size: 13px; }
-.gc-method em { font-style: normal; color: var(--accent2); font-size: 13px; font-weight: 700; }
 
 /* Донат в игры: плитки в ряд, неполный последний ряд по центру */
 .gc-games { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 18px; }

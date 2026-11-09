@@ -6,7 +6,6 @@ import '@/app/cashout/cashout.css';
 
 // Метка источника трафика: бот считает клики и регистрации по src_<код> (код заводится в «📈 Трафик»)
 const botLink = (src: string) => `${BOT_URL}?start=src_${src}`;
-const MIN_EXC = 5000;
 
 const METHODS = [
   { title: 'Рубли по СБП', sub: 'на карту любого банка', img: '/cashout/sbp.png', bg: '#ffffff', cover: false },
@@ -68,7 +67,6 @@ export default function GuestCashout() {
                 </div>
                 <b>{m.title}</b>
                 <span>{m.sub}</span>
-                <em>от {MIN_EXC.toLocaleString('ru')} EXC · заявка до 24 часов</em>
               </div>
             ))}
           </div>
