@@ -40,7 +40,7 @@ export default function GuestCashout() {
           <h1 className="font-gaming">Зарегистрируйся и выводи <em>заработанное</em></h1>
           <p>
             Выполняй квесты в играх, получай <b>EXC</b> и выводи их на карту по СБП, в Telegram Stars или GRAM.
-            Или трать в магазине на донат в любимые игры. Бесплатно
+            Также доступны траты в магазине на донат в любимые игры.
           </p>
           <div className="hm-cta-row">
             <a href={botLink('site_cashout')} target="_blank" rel="noopener noreferrer" className="hm-btn hm-btn-main">Открыть в Telegram</a>
