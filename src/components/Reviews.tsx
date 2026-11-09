@@ -10,8 +10,8 @@ interface Review {
   date?: string;
 }
 
-/** Сколько отзывов видно до «Показать все»: при меньшем числе блок не сворачивается. */
-const COLLAPSED_FROM = 7;
+/** Сколько отзывов показываем: случайные из пришедших с бэкенда (при каждом заходе набор свой). */
+const SHOWN = 9;
 
 const AVATAR_TONES = [
   { bg: 'rgba(124,58,237,.28)', fg: '#c4b5fd' },
@@ -27,6 +27,15 @@ function tone(name: string) {
   return AVATAR_TONES[h % AVATAR_TONES.length];
 }
 
+function pickRandom<T>(list: T[], n: number): T[] {
+  const a = [...list];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a.slice(0, n);
+}
+
 function formatDate(iso?: string): string {
   const m = iso?.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (!m) return '';
@@ -34,26 +43,22 @@ function formatDate(iso?: string): string {
 }
 
 /** Отзывы игроков из бота (публичный /api/public/reviews: только опубликованные в канале выплат, ники замаскированы).
- *  Три колонки «кирпичиком», внизу затухание и «Показать все». Нет отзывов или эндпоинт недоступен: блок скрывается. */
+ *  Девять случайных отзывов тремя колонками «кирпичиком». Нет отзывов или эндпоинт недоступен: блок скрывается. */
 export default function Reviews({ channelUrl }: { channelUrl: string }) {
   const [items, setItems] = useState<Review[] | null>(null);
   const [failed, setFailed] = useState(false);
-  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     fetch('/api/public/reviews')
       .then(r => (r.ok ? r.json() : null))
       .then(d => {
-        if (d?.items?.length) setItems(d.items);
+        if (d?.items?.length) setItems(pickRandom<Review>(d.items, SHOWN));
         else setFailed(true);
       })
       .catch(() => setFailed(true));
   }, []);
 
   if (failed) return null;
-
-  const collapsible = !!items && items.length >= COLLAPSED_FROM;
-  const folded = collapsible && !expanded;
 
   return (
     <section className="hm-section reveal" aria-label="Отзывы игроков">
@@ -67,7 +72,7 @@ export default function Reviews({ channelUrl }: { channelUrl: string }) {
 
       {items ? (
         <>
-          <div className={`rv-wrap${folded ? ' folded' : ''}`}>
+          <div className="rv-wrap">
             <div className="rv-grid">
               {items.map((r, i) => {
                 const t = tone(r.name);
@@ -90,13 +95,6 @@ export default function Reviews({ channelUrl }: { channelUrl: string }) {
               })}
             </div>
           </div>
-          {collapsible && (
-            <div className="rv-more">
-              <button type="button" className="hm-btn hm-btn-ghost" onClick={() => setExpanded(e => !e)} aria-expanded={expanded}>
-                {expanded ? 'Свернуть отзывы' : `Показать все отзывы (${items.length})`}
-              </button>
-            </div>
-          )}
         </>
       ) : (
         <div className="rv-grid">
